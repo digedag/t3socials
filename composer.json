@@ -37,7 +37,6 @@
         "issues": "https://github.com/DMKEBUSINESSGMBH/typo3-t3socials/issues"
     },
     "replace": {
-        "t3socials": "self.version",
         "typo3-ter/t3socials": "self.version"
     },
     "require": {
@@ -84,6 +83,7 @@
     "extra": {
         "typo3/cms": {
             "cms-package-dir": "{$vendor-dir}/typo3/cms",
+            "extension-key": "t3socials",
             "web-dir": ".Build/Web"
       }
     }
