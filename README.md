@@ -1,10 +1,11 @@
 t3socials
 =======
 
-[![Latest Stable Version](https://img.shields.io/packagist/v/dmk/t3socials.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/t3socials)
+![TYPO3 compatibility](https://img.shields.io/badge/TYPO3-6.2%20%7C%207.8%20%7C%208.7-orange?maxAge=3600&style=flat-square&logo=typo3)
+[![Latest Stable Version](https://img.shields.io/packagist/v/dmk/t3socials.svg?maxAge=3600&style=flat-square&logo=composer)](https://packagist.org/packages/dmk/t3socials)
 [![Total Downloads](https://img.shields.io/packagist/dt/dmk/t3socials.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/t3socials)
-[![Build Status](https://img.shields.io/travis/DMKEBUSINESSGMBH/typo3-t3socials.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/DMKEBUSINESSGMBH/typo3-t3socials)
-[![License](https://img.shields.io/packagist/l/dmk/t3socials.svg?maxAge=3600&style=flat-square)](https://packagist.org/packages/dmk/t3socials)
+[![Build Status](https://img.shields.io/travis/DMKEBUSINESSGMBH/typo3-t3socials.svg?maxAge=3600&style=flat-square&logo=travis)](https://travis-ci.com/DMKEBUSINESSGMBH/typo3-t3socials)
+[![License](https://img.shields.io/packagist/l/dmk/t3socials.svg?maxAge=3600&style=flat-square&logo=gnu)](https://packagist.org/packages/dmk/t3socials)
 
 What does it do?
 ----------------
