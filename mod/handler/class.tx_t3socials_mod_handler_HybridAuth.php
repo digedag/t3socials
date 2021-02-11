@@ -28,25 +28,21 @@ tx_rnbase::load('tx_t3socials_mod_util_Template');
 tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
- * Basis handler für HybridAuth
+ * Basis handler für HybridAuth.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IModHandler
 {
-
     /**
-     *
      * @var Tx_Rnbase_Domain_Model_Base
      */
     private $formData = null;
 
     /**
-     * liefert die network id. (twitter, xing, ...)
+     * liefert die network id. (twitter, xing, ...).
      *
      * @return string
      */
@@ -57,6 +53,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
      * um die Message anzupassen oder zu validieren.
      *
      * @param tx_t3socials_models_Message $message
+     *
      * @return tx_t3socials_models_Message|string with error message
      */
     protected function prepareMessage(tx_t3socials_models_Message $message)
@@ -65,7 +62,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
     }
 
     /**
-     * liefert die Handler ID anhand der Netzwerk ID
+     * liefert die Handler ID anhand der Netzwerk ID.
      *
      * @return string
      */
@@ -75,17 +72,17 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
     }
 
     /**
-     * Liefert den namen des Submitbuttons
+     * Liefert den namen des Submitbuttons.
      *
      * @return string
      */
     protected function getSubmitName()
     {
-        return 'send' . $this->getNetworkId() . 'message';
+        return 'send'.$this->getNetworkId().'message';
     }
 
     /**
-     * Liefert die Netzwerkkonfiguration
+     * Liefert die Netzwerkkonfiguration.
      *
      * @return tx_t3socials_models_NetworkConfig
      */
@@ -111,11 +108,11 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
      */
     protected function getVisibleFormFields()
     {
-        return array('headline', 'intro', 'message', 'url');
+        return ['headline', 'intro', 'message', 'url'];
     }
 
     /**
-     * Liefert die eventuell abgesendeten Formulardaten
+     * Liefert die eventuell abgesendeten Formulardaten.
      *
      * @return tx_t3socials_models_Base
      */
@@ -123,7 +120,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
     {
         if (is_null($this->formData)) {
             $data = tx_rnbase_parameters::getPostOrGetParameter('data');
-            $data = empty($data) || !is_array($data) ? array() : $data;
+            $data = empty($data) || !is_array($data) ? [] : $data;
             $this->formData = tx_rnbase::makeInstance('tx_t3socials_models_Base', $data);
         }
 
@@ -157,6 +154,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
      * to handle request data.
      *
      * @param tx_rnbase_mod_IModule $mod
+     *
      * @return string|null
      */
     public function handleRequest(tx_rnbase_mod_IModule $mod)
@@ -202,11 +200,12 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
     }
 
     /**
-     * Display the user interface for this handler
+     * Display the user interface for this handler.
      *
      * @param string $template the subpart for handler in func template
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
+     *
      * @return string
      */
     public function showScreen($template, tx_rnbase_mod_IModule $mod, $options)
@@ -220,9 +219,9 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
 
         $formTool = $mod->getFormTool();
 
-        $markerArr = array();
-        $subpartArr = array();
-        $wrappedSubpartArr = array();
+        $markerArr = [];
+        $subpartArr = [];
+        $wrappedSubpartArr = [];
 
         $markerArr['###NETWORK_TITLE###'] = $this->getSubLabel();
 
@@ -231,7 +230,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
         // wir haben keine Accounts, an die wir versenden könnten
         if (empty($accounts)) {
             $mod->addMessage(
-                'Es wurde kein Account für "' . $this->getNetworkConfig()->getProviderTitle() .
+                'Es wurde kein Account für "'.$this->getNetworkConfig()->getProviderTitle().
                 '" gefunden.',
                 '###LABEL_MESSAGE###',
                 0
@@ -261,9 +260,10 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
 
     /**
      * Prüft den Status der Authentifikation
-     * und erzeugt eine Entsprechende Ausgabe
+     * und erzeugt eine Entsprechende Ausgabe.
      *
      * @param int $networkId
+     *
      * @return string
      *
      * @TODO: not an popup, do an ajax call / iframe in a lightbox!
@@ -284,11 +284,11 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
         /* @var $adapter Hybrid_Provider_Model_OAuth1 */
         $adapter = $connection->getProvider()->adapter;
         $connected = $adapter->isUserConnected();
-        $out  = '<div class="typo3-message ' . ($connected ? 'message-ok' : 'message-error') . '">';
-        $out .=    '<div class="message-header">' . ($connected ? 'Connected' : 'Disconnected') .
+        $out = '<div class="typo3-message '.($connected ? 'message-ok' : 'message-error').'">';
+        $out .= '<div class="message-header">'.($connected ? 'Connected' : 'Disconnected').
                     '</div>';
-        $out .=    '<div class="message-body">';
-        $popup  =    'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', ' .
+        $out .= '<div class="message-body">';
+        $popup = 'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', '.
                     '\'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
         $popup .= ' fenster.focus(); return false;';
         // dienst ist verbunden
@@ -297,9 +297,9 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
                 $networkId,
                 tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_LOGOUT
             );
-            $out .= '<a href="' . $url .
-                    '" target="_blank" onclick="if (!confirm(\'Do you really want to log out?\')) {return false;}' .
-                    $popup . '"><strong>Logout</strong></a>';
+            $out .= '<a href="'.$url.
+                    '" target="_blank" onclick="if (!confirm(\'Do you really want to log out?\')) {return false;}'.
+                    $popup.'"><strong>Logout</strong></a>';
             $out .= ' <small>(To see the new status you haveto refresh this page after the popup is closed!)</small>';
         } // es besteht keine verbindung zum dienst
         else {
@@ -308,25 +308,26 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
                 $networkId,
                 tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_STATE
             );
-            $out .= '<a href="' . $url . '" target="_blank" onclick="' . $popup . '"><strong>Connect</strong></a>';
+            $out .= '<a href="'.$url.'" target="_blank" onclick="'.$popup.'"><strong>Connect</strong></a>';
             $out .= ' <small>(To see the new status you haveto refresh this page after the popup is closed!)</small>';
         }
-        $out .=    '</div>';
+        $out .= '</div>';
         $out .= '</div>';
 
         return $out;
     }
 
     /**
-     * Returns all rounds of current bet game
+     * Returns all rounds of current bet game.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $accounts
+     *
      * @return array
      */
     private function getAccountSelector(tx_rnbase_mod_IModule $mod, $accounts)
     {
-        $entries = array('' => '');
+        $entries = ['' => ''];
         foreach ($accounts as $account) {
             $entries[$account->getUid()] = $account->getName();
         }
@@ -339,5 +340,5 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php'];
 }

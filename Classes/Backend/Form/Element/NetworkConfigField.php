@@ -1,4 +1,5 @@
 <?php
+
 namespace DMK\T3socials\Backend\Form\Element;
 
 /***************************************************************
@@ -25,10 +26,8 @@ namespace DMK\T3socials\Backend\Form\Element;
  ***************************************************************/
 
 /**
- * DMK\T3socials\Backend\Form\Element$NetworkConfigField
+ * DMK\T3socials\Backend\Form\Element$NetworkConfigField.
  *
- * @package         TYPO3
- * @subpackage      t3socials
  * @author          Hannes Bochmann
  * @license         http://www.gnu.org/licenses/lgpl.html
  *                  GNU Lesser General Public License, version 3 or later
@@ -36,7 +35,8 @@ namespace DMK\T3socials\Backend\Form\Element;
 class NetworkConfigField extends \TYPO3\CMS\Backend\Form\Element\TextElement
 {
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see TYPO3\CMS\Backend\Form\Element\TextElement::render()
      */
     public function render()
@@ -55,7 +55,8 @@ class NetworkConfigField extends \TYPO3\CMS\Backend\Form\Element\TextElement
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see TYPO3\CMS\Backend\Form\Element\TextElement::render()
      */
     protected function callRenderOnParent()

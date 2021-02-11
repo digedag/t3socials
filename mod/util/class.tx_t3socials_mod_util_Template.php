@@ -25,25 +25,23 @@ tx_rnbase::load('tx_rnbase_util_Files');
 tx_rnbase::load('tx_rnbase_util_Network');
 
 /**
- * Basis handler für HybridAuth
+ * Basis handler für HybridAuth.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_mod_util_Template
 {
-
     /**
-     * Display the user interface for this handler
+     * Display the user interface for this handler.
      *
      * @param string $template the subpart for handler in func template
      * @param tx_rnbase_mod_IModule $mod
      * @param tx_t3socials_models_Base $formData
      * @param array $formFields
      * @param array $options
+     *
      * @return string
      */
     public static function parseMessageFormFields(
@@ -51,7 +49,7 @@ class tx_t3socials_mod_util_Template
         tx_rnbase_mod_IModule $mod,
         tx_t3socials_models_Base $formData,
         array $formFields,
-        array $options = array()
+        array $options = []
     ) {
         if (empty($template)) {
             $template = self::getDefaultMessageTemplate($mod, $options);
@@ -62,9 +60,9 @@ class tx_t3socials_mod_util_Template
 
         $formTool = $mod->getFormTool();
 
-        $markerArr = array();
-        $subpartArr = array();
-        $wrappedSubpartArr = array();
+        $markerArr = [];
+        $subpartArr = [];
+        $wrappedSubpartArr = [];
 
         if (isset($formFields['headline'])) {
             $markerArr['###INPUT_HEADLINE###'] = $formTool->createTxtInput('data[headline]', $formData->getHeadline(), 30);
@@ -101,10 +99,11 @@ class tx_t3socials_mod_util_Template
     }
 
     /**
-     * Erzeugt ein Default Template
+     * Erzeugt ein Default Template.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
+     *
      * @return string
      */
     public static function getDefaultMessageTemplate(tx_rnbase_mod_IModule $mod, $options)
@@ -116,8 +115,8 @@ class tx_t3socials_mod_util_Template
         $templateCode = tx_rnbase_util_Network::getURL($file);
 
         if (empty($templateCode)) {
-            $out  = '<br />Template ConfId: communicator.hybridauth.template';
-            $out .= '<br />Configured Template: ' . $configurations->get('communicator.hybridauth.template');
+            $out = '<br />Template ConfId: communicator.hybridauth.template';
+            $out .= '<br />Configured Template: '.$configurations->get('communicator.hybridauth.template');
             $mod->addMessage($out, 'Template not Found!', 2);
 
             return '';
@@ -126,10 +125,10 @@ class tx_t3socials_mod_util_Template
         $template = tx_rnbase_util_Templates::getSubpart($templateCode, '###HYBRIDAUTH_DEFAULT###');
 
         if (empty($template)) {
-            $out  = '<br />Template ConfId: communicator.hybridauth.template';
-            $out .= '<br />Configured Template: ' . $configurations->get('communicator.hybridauth.template');
+            $out = '<br />Template ConfId: communicator.hybridauth.template';
+            $out .= '<br />Configured Template: '.$configurations->get('communicator.hybridauth.template');
             $out .= '<br />Missing Subpart Template: ###HYBRIDAUTH_DEFAULT###';
-            $out .= '<br />Template: <pre>' . (htmlspecialchars($templateCode)) . '</pre>';
+            $out .= '<br />Template: <pre>'.(htmlspecialchars($templateCode)).'</pre>';
             $mod->addMessage($out, 'Subpart not Found!', 2);
 
             return '';
@@ -140,9 +139,10 @@ class tx_t3socials_mod_util_Template
 
     /**
      * Prüft den Status der Authentifikation
-     * und erzeugt eine Entsprechende Ausgabe
+     * und erzeugt eine Entsprechende Ausgabe.
      *
      * @param int $network
+     *
      * @return string
      *
      * @TODO: not an popup, do an ajax call / iframe in a lightbox!
@@ -169,11 +169,11 @@ class tx_t3socials_mod_util_Template
         } catch (Exception $e) {
             $errMsg = $e->getMessage();
         }
-        $out  = '<div class="typo3-message ' . ($connected ? 'message-ok' : 'message-error') . '">';
+        $out = '<div class="typo3-message '.($connected ? 'message-ok' : 'message-error').'">';
         $head = $connected ? '###LABEL_T3SOCIALS_STATE_connectED###' : '###LABEL_T3SOCIALS_STATE_DISconnectED###';
-        $out .=    '<div class="message-header">' . $head . '</div>';
-        $out .=    '<div class="message-body">';
-        $popup  =    'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', ' .
+        $out .= '<div class="message-header">'.$head.'</div>';
+        $out .= '<div class="message-body">';
+        $popup = 'fenster = window.open(this.href, \'T3SOCIALS CONNECTION\', '.
                     '\'toolbar=no,scrollbars=yes,resizable=yes,width=800,height=600\');';
         $popup .= ' fenster.focus(); return false;';
         // dienst ist verbunden
@@ -183,25 +183,25 @@ class tx_t3socials_mod_util_Template
                 $network->getUid(),
                 tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_LOGOUT
             );
-            $out .= '<a href="' . $url . '" target="_blank"' .
-                ' onclick="if (!confirm(\'###LABEL_T3SOCIALS_STATE_LOGOUT_CONFIRM###\')) {return false;}' . $popup . '">' .
+            $out .= '<a href="'.$url.'" target="_blank"'.
+                ' onclick="if (!confirm(\'###LABEL_T3SOCIALS_STATE_LOGOUT_CONFIRM###\')) {return false;}'.$popup.'">'.
                 '<strong>###LABEL_T3SOCIALS_STATE_LOGOUT###</strong></a>';
             $out .= ' <small>(###LABEL_T3SOCIALS_STATE_REFRESH_POPUP###)</small>';
         } // es besteht keine verbindung zum dienst
         else {
             $out .= '###LABEL_T3SOCIALS_STATE_DISconnectED_DESC### <br />';
             if ($errMsg) {
-                $out .= '<br/><strong>' . $errMsg . '</strong><br/></br/>';
+                $out .= '<br/><strong>'.$errMsg.'</strong><br/></br/>';
             }
             $url = tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(
                 $network->getUid(),
                 tx_t3socials_network_hybridauth_OAuthCall::OAUT_CALL_STATE
             );
-            $out .= '<a href="' . $url . '" target="_blank"' .
-                ' onclick="' . $popup . '"><strong>###LABEL_T3SOCIALS_STATE_LOGIN###</strong></a>';
+            $out .= '<a href="'.$url.'" target="_blank"'.
+                ' onclick="'.$popup.'"><strong>###LABEL_T3SOCIALS_STATE_LOGIN###</strong></a>';
             $out .= ' <small>(###LABEL_T3SOCIALS_STATE_REFRESH_POPUP###)</small>';
         }
-        $out .=    '</div>';
+        $out .= '</div>';
         $out .= '</div>';
 
         return $out;
@@ -211,5 +211,5 @@ class tx_t3socials_mod_util_Template
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php'];
 }

@@ -1,8 +1,9 @@
 <?php
+
 namespace DMK\T3socials\Backend\Form\Element;
 
 /**
- *  Copyright notice
+ *  Copyright notice.
  *
  *  (c) Hannes Bochmann <dev@dmk-ebusiness.de>
  *  All rights reserved
@@ -25,17 +26,14 @@ namespace DMK\T3socials\Backend\Form\Element;
  */
 
 /**
- * DMK\T3socials\Backend\Form\Element$NetworkConfigFieldTest
+ * DMK\T3socials\Backend\Form\Element$NetworkConfigFieldTest.
  *
- * @package         TYPO3
- * @subpackage      t3socials
  * @author          Hannes Bochmann
  * @license         http://www.gnu.org/licenses/lgpl.html
  *                  GNU Lesser General Public License, version 3 or later
  */
 class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
 {
-
     /**
      * @group unit
      */
@@ -43,10 +41,10 @@ class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
     {
         $field = $this->getAccessibleMock(
             'DMK\\T3socials\\Backend\\Form\\Element\\NetworkConfigField',
-            array('callRenderOnParent'), array(), '', false
+            ['callRenderOnParent'], [], '', false
         );
 
-        $field->_set('data', array('databaseRow' => array('config' => 'someInfo')));
+        $field->_set('data', ['databaseRow' => ['config' => 'someInfo']]);
 
         $field
             ->expects(self::once())
@@ -64,10 +62,10 @@ class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
     {
         $field = $this->getAccessibleMock(
             'DMK\\T3socials\\Backend\\Form\\Element\\NetworkConfigField',
-            array('callRenderOnParent'), array(), '', false
+            ['callRenderOnParent'], [], '', false
         );
 
-        $field->_set('data', array('databaseRow' => array('config' => '')));
+        $field->_set('data', ['databaseRow' => ['config' => '']]);
 
         $field
             ->expects(self::once())
@@ -93,10 +91,10 @@ class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
 
         $field = $this->getAccessibleMock(
             'DMK\\T3socials\\Backend\\Form\\Element\\NetworkConfigField',
-            array('callRenderOnParent'), array(), '', false
+            ['callRenderOnParent'], [], '', false
         );
 
-        $field->_set('data', array('databaseRow' => array('config' => '', 'network' => array(0 => 'twitter'))));
+        $field->_set('data', ['databaseRow' => ['config' => '', 'network' => [0 => 'twitter']]]);
 
         $field
             ->expects(self::once())
@@ -105,10 +103,10 @@ class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
 
         self::assertEquals('test', $field->render());
         self::assertEquals(
-            'twitter {' . CRLF .
-                '    useHybridAuthLib = 1' . CRLF .
-                '    access_token =' . CRLF .
-                '    access_token_secret =' . CRLF .
+            'twitter {'.CRLF.
+                '    useHybridAuthLib = 1'.CRLF.
+                '    access_token ='.CRLF.
+                '    access_token_secret ='.CRLF.
             '}',
             $field->_get('data')['parameterArray']['itemFormElValue']
         );
@@ -121,10 +119,10 @@ class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
     {
         $field = $this->getAccessibleMock(
             'DMK\\T3socials\\Backend\\Form\\Element\\NetworkConfigField',
-            array('callRenderOnParent'), array(), '', false
+            ['callRenderOnParent'], [], '', false
         );
 
-        $field->_set('data', array('databaseRow' => array('config' => '', 'network' => array(0 => 'unknown'))));
+        $field->_set('data', ['databaseRow' => ['config' => '', 'network' => [0 => 'unknown']]]);
 
         $field
             ->expects(self::once())

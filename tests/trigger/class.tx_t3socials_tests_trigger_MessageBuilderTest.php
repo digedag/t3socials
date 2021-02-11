@@ -26,19 +26,16 @@ tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
 tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 
 /**
- * Message Builder Testcase
+ * Message Builder Testcase.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_tests
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_trigger_MessageBuilderTest extends tx_t3socials_tests_BaseTestCase
 {
-
     /**
-     * Test build Method
+     * Test build Method.
      *
      * @group unit
      * @test
@@ -52,16 +49,16 @@ class tx_t3socials_tests_trigger_MessageBuilderTest extends tx_t3socials_tests_B
 
         $triger = tx_rnbase::makeInstance(
             'tx_t3socials_models_TriggerConfig',
-            array(
-                'table' => 'pages'
-            )
+            [
+                'table' => 'pages',
+            ]
         );
         /* @var $model tx_t3socials_models_Base */
         $model = tx_rnbase::makeInstance(
             'tx_t3socials_models_Base',
-            array(
-                'uid' => '5'
-            )
+            [
+                'uid' => '5',
+            ]
         );
         $model->setTableName('pages');
 
@@ -75,5 +72,5 @@ class tx_t3socials_tests_trigger_MessageBuilderTest extends tx_t3socials_tests_B
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_MessageBuilderTest.php'];
 }

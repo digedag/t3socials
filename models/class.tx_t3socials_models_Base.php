@@ -23,17 +23,14 @@
 ***************************************************************/
 
 /**
- * Basismodel
+ * Basismodel.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_models_Base extends Tx_Rnbase_Domain_Model_Base
 {
-
     /**
      * Most model-classes will be initialized by a uid or a database record. So
      * this is a common contructor.
@@ -49,5 +46,5 @@ class tx_t3socials_models_Base extends Tx_Rnbase_Domain_Model_Base
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php'];
 }

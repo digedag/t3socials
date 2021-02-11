@@ -24,22 +24,19 @@
 tx_rnbase::load('tx_rnbase_util_Typo3Classes');
 
 /**
- * Util für Nachrichten
+ * Util für Nachrichten.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_util_Message
 {
-
-
     /**
-     * Erzeugt eine Flash Message
+     * Erzeugt eine Flash Message.
      *
      * @param string|array $message
+     *
      * @return void
      */
     public static function showFlashMessage($message)
@@ -62,11 +59,11 @@ class tx_t3socials_util_Message
             $msg = $message->getMessage();
             $severity = $flashMessageClass::NOTICE;
             if ($message->isStateSuccess()) {
-                $severity = $message->getState() === tx_t3socials_models_State::STATE_INFO ? $flashMessageClass::INFO : $flashMessageClass::OK;
+                $severity = tx_t3socials_models_State::STATE_INFO === $message->getState() ? $flashMessageClass::INFO : $flashMessageClass::OK;
             } elseif ($message->isStateFailure()) {
                 $severity = $flashMessageClass::WARNING;
                 if ($message->getErrorCode()) {
-                    $title .= ' - Error (' . $message->getErrorCode() . '):';
+                    $title .= ' - Error ('.$message->getErrorCode().'):';
                 }
             }
         } // wir haben nur eine meldung
@@ -84,6 +81,7 @@ class tx_t3socials_util_Message
      * @param string $title
      * @param int $severity
      * @param bool $storeInSession
+     *
      * @return void
      */
     private static function addMessage(
@@ -97,5 +95,5 @@ class tx_t3socials_util_Message
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Message.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Message.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Message.php'];
 }

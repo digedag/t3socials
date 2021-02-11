@@ -25,10 +25,8 @@
 tx_rnbase::load('tx_t3socials_models_IMessage');
 
 /**
- * A generic message class
+ * A generic message class.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -36,11 +34,11 @@ tx_rnbase::load('tx_t3socials_models_IMessage');
  */
 class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx_t3socials_models_IMessage
 {
-
     /**
-     * Liefert eine Instanz des Objekts
+     * Liefert eine Instanz des Objekts.
      *
      * @param array|string $messageType
+     *
      * @return tx_t3socials_models_Message
      */
     public static function getInstance($messageType = 'manually')
@@ -49,10 +47,11 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
     }
 
     /**
-     * Initialisieren
+     * Initialisieren.
      *
      * @param string|array $rowOrUid message type or array with message data
      *      array can contain (message_type, headline, intro, message, url, data)
+     *
      * @return void
      */
     public function init($rowOrUid = null)
@@ -73,7 +72,6 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
         }
     }
 
-
     /**
      * Liefert den Typ.
      *
@@ -83,10 +81,12 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
     {
         return $this->getProperty('message_type');
     }
+
     /**
      * SetzSetzt den Typ.
      *
      * @param string $value
+     *
      * @return tx_t3socials_models_Message
      */
     public function setMessageType($value)
@@ -103,17 +103,18 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
     {
         return $this->getProperty('headline');
     }
+
     /**
      * Setzt die Headline.
      *
      * @param string $value
+     *
      * @return tx_t3socials_models_Message
      */
     public function setHeadline($value)
     {
         return $this->setProperty('headline', $value);
     }
-
 
     /**
      * Liefert den Introtext.
@@ -129,13 +130,13 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
      * Setzt den Introtext.
      *
      * @param string $value
+     *
      * @return tx_t3socials_models_Message
      */
     public function setIntro($value)
     {
         return $this->setProperty('intro', $value);
     }
-
 
     /**
      * Liefert den Nachrichtentext.
@@ -151,13 +152,13 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
      * Setzt den Nachrichtentext.
      *
      * @param string $value
+     *
      * @return tx_t3socials_models_Message
      */
     public function setMessage($value)
     {
         return $this->setProperty('message', $value);
     }
-
 
     /**
      * Liefert die URL.
@@ -173,13 +174,13 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
      * Setzt die URL.
      *
      * @param string $value
+     *
      * @return tx_t3socials_models_Message
      */
     public function setUrl($value)
     {
         return $this->setProperty('url', $value);
     }
-
 
     /**
      * Liefert die Ursprungsdaten.
@@ -195,6 +196,7 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
      * Setzt die Ursprungsdaten.
      *
      * @param string $value
+     *
      * @return tx_t3socials_models_Message
      */
     public function setData($value)
@@ -206,5 +208,5 @@ class tx_t3socials_models_Message extends tx_t3socials_models_Base implements tx
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Message.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Message.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Message.php'];
 }

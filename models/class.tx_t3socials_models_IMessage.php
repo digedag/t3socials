@@ -22,12 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * A generic message class
+ * A generic message class.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -35,7 +32,6 @@
  */
 interface tx_t3socials_models_IMessage
 {
-
     /**
      * Liefert den Typ.
      *
@@ -49,14 +45,15 @@ interface tx_t3socials_models_IMessage
      * @return string
      */
     public function getHeadline();
+
     /**
      * Setzt die Headline.
      *
      * @param string $value
+     *
      * @return void
      */
     public function setHeadline($value);
-
 
     /**
      * Liefert den Introtext.
@@ -69,10 +66,10 @@ interface tx_t3socials_models_IMessage
      * Setzt den Introtext.
      *
      * @param string $value
+     *
      * @return void
      */
     public function setIntro($value);
-
 
     /**
      * Liefert den Nachrichtentext.
@@ -85,10 +82,10 @@ interface tx_t3socials_models_IMessage
      * Setztden Nachrichtentext.
      *
      * @param string $value
+     *
      * @return void
      */
     public function setMessage($value);
-
 
     /**
      * Liefert die URL.
@@ -101,10 +98,10 @@ interface tx_t3socials_models_IMessage
      * Setzt die URL.
      *
      * @param string $value
+     *
      * @return void
      */
     public function setUrl($value);
-
 
     /**
      * Liefert die Ursprungsdaten.
@@ -117,6 +114,7 @@ interface tx_t3socials_models_IMessage
      * Setzt die Ursprungsdaten.
      *
      * @param string $value
+     *
      * @return void
      */
     public function setData($value);
@@ -125,5 +123,5 @@ interface tx_t3socials_models_IMessage
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_IMessage.php'];
 }

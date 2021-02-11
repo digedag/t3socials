@@ -26,19 +26,16 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 tx_rnbase::load('tx_t3socials_network_Connection');
 
 /**
- * Connection Testcase
+ * Connection Testcase.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_tests
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_tests_BaseTestCase
 {
-
     /**
-     * Test getHybridAuthConfig Method
+     * Test getHybridAuthConfig Method.
      *
      * @group unit
      * @test
@@ -70,7 +67,7 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
     }
 
     /**
-     * Test getProvider Method
+     * Test getProvider Method.
      *
      * @group unit
      * @test
@@ -94,7 +91,7 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
     }
 
     /**
-     * Test buildStatusMessage Method
+     * Test buildStatusMessage Method.
      *
      * @group unit
      * @test
@@ -117,33 +114,32 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
         $this->assertEquals($this->getBuiltMessage(), $status);
     }
 
-
     /**
-     * returns network data or object of network
+     * returns network data or object of network.
      *
      * @return array|tx_t3socials_models_Network
      */
     abstract protected function getNetwork();
 
     /**
-     * returns classname or object of connection
+     * returns classname or object of connection.
      *
      * @return string|tx_t3socials_network_Connection
      */
     abstract protected function getConnection();
 
     /**
-     * Liefert die vom MessageBuilder gebaute Nachricht
+     * Liefert die vom MessageBuilder gebaute Nachricht.
      *
      * @return string|tx_t3socials_network_Connection
      */
     abstract protected function getBuiltMessage();
 
-
     /**
-     * returns object of network
+     * returns object of network.
      *
      * @throws Exception
+     *
      * @return tx_t3socials_models_Network
      */
     protected function getNetworkMock()
@@ -164,12 +160,11 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
                 $network
             );
         }
-        throw new Exception(get_class($this) . '->getNetwork() has to return an array with record data or an object instance of tx_t3socials_models_Network');
+        throw new Exception(get_class($this).'->getNetwork() has to return an array with record data or an object instance of tx_t3socials_models_Network');
     }
 
-
     /**
-     * returns object of network
+     * returns object of network.
      *
      * @return tx_t3socials_network_Connection
      */
@@ -180,7 +175,7 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
             $connection = tx_rnbase::makeInstance($connection);
         }
         if (!$connection instanceof tx_t3socials_network_Connection) {
-            throw new Exception(get_class($this) . '->getConnection() has to return an string with connection class or an object instance of tx_t3socials_network_Connection');
+            throw new Exception(get_class($this).'->getConnection() has to return an string with connection class or an object instance of tx_t3socials_network_Connection');
         }
         $connection->setNetwork($this->getNetworkMock());
 
@@ -189,5 +184,5 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_ConnectionTest.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_ConnectionTest.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/network/class.tx_t3socials_tests_network_ConnectionTest.php'];
 }

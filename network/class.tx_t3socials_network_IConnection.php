@@ -22,12 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Interface für eine Connection
+ * Interface für eine Connection.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -35,11 +32,11 @@
  */
 interface tx_t3socials_network_IConnection
 {
-
     /**
      * Setzt das zu verwendende Netzwerk-Model.
      *
      * @param tx_t3socials_models_Network $network
+     *
      * @return tx_t3socials_network_Connection
      */
     public function setNetwork(tx_t3socials_models_Network $network);
@@ -48,13 +45,14 @@ interface tx_t3socials_network_IConnection
      * Post data to network.
      *
      * @param tx_t3socials_models_Message $message
+     *
      * @return null or error message
-     * @return null|string with error
+     * @return string|null with error
      */
     public function sendMessage(tx_t3socials_models_IMessage $message);
 
     /**
-     * Verify connection is valid
+     * Verify connection is valid.
      *
      * @return bool
      */
@@ -64,5 +62,5 @@ interface tx_t3socials_network_IConnection
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_IConnection.php'];
 }

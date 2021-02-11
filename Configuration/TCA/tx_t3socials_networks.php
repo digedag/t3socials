@@ -1,116 +1,117 @@
 <?php
+
 if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
+    exit('Access denied.');
 }
 
-$configFieldWizards = tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? array() : array(
-    'appendDefaultTSConfig' => array(
-        'type'   => 'userFunc',
+$configFieldWizards = tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? [] : [
+    'appendDefaultTSConfig' => [
+        'type' => 'userFunc',
         'notNewRecords' => 1,
         'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDefaultConfig',
-        'params' => array(
-            'insertBetween' => array('>', '</textarea'),
+        'params' => [
+            'insertBetween' => ['>', '</textarea'],
             'onMatchOnly' => '/^\s*$/',
-        ),
-    ),
-);
+        ],
+    ],
+];
 
-$t3socials_Network = array(
-    'ctrl' => array(
+$t3socials_Network = [
+    'ctrl' => [
         'title' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks',
         'label' => 'name',
-        'tstamp'    => 'tstamp',
-        'crdate'    => 'crdate',
+        'tstamp' => 'tstamp',
+        'crdate' => 'crdate',
         'cruser_id' => 'cruser_id',
         'dividers2tabs' => true,
         'default_sortby' => 'ORDER BY name asc',
         'delete' => 'deleted',
-        'enablecolumns' => array(
+        'enablecolumns' => [
             'disabled' => 'hidden',
-        ),
+        ],
         'requestUpdate' => 'network',
-        'iconfile'          => 'EXT:t3socials/ext_icon.gif',
-    ),
-    'interface' => array(
-        'showRecordFieldList' => 'hidden,name,username,autosend'
-    ),
-    'feInterface' => array(
+        'iconfile' => 'EXT:t3socials/ext_icon.gif',
+    ],
+    'interface' => [
+        'showRecordFieldList' => 'hidden,name,username,autosend',
+    ],
+    'feInterface' => [
         'fe_admin_fieldList' => 'name,username,password,config',
-    ),
-    'columns' => array(
-        'hidden' => array(
+    ],
+    'columns' => [
+        'hidden' => [
             'exclude' => 1,
-            'label'   => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
-            'config'  => array(
-                'type'    => 'check',
-                'default' => '0'
-            )
-        ),
-        'network' => array(
+            'label' => 'LLL:EXT:lang/locallang_general.xml:LGL.hidden',
+            'config' => [
+                'type' => 'check',
+                'default' => '0',
+            ],
+        ],
+        'network' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_network',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
-                'items' => array(array('','')),
+                'items' => [['', '']],
                 'itemsProcFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->getNetworks',
                 'size' => '1',
                 'maxitems' => '1',
-            ),
-            'onChange' => 'reload'
-        ),
-        'name' => array(
+            ],
+            'onChange' => 'reload',
+        ],
+        'name' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_name',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim,required',
-            )
-        ),
-        'username' => array(
+            ],
+        ],
+        'username' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_username',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            )
-        ),
-        'password' => array(
+            ],
+        ],
+        'password' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_password',
-            'config' => array(
+            'config' => [
                 'type' => 'input',
                 'size' => '30',
                 'eval' => 'trim',
-            )
-        ),
-        'actions' => array(
+            ],
+        ],
+        'actions' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_actions',
-            'config' => array(
+            'config' => [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'itemsProcFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->getTriggers',
                 'size' => '5',
                 'maxitems' => '999',
-            ),
-        ),
-        'autosend' => array(
+            ],
+        ],
+        'autosend' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_autosend',
-            'config'  => array(
-                'type'    => 'check',
-                'default' => '0'
-            ),
-        ),
-        'config' => array(
+            'config' => [
+                'type' => 'check',
+                'default' => '0',
+            ],
+        ],
+        'config' => [
             'exclude' => 1,
             'label' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_networks_config',
             // Show only, if an Network was Set!
             'displayCond' => 'FIELD:network:REQ:TRUE',
-            'config' => array(
+            'config' => [
                 'type' => 'text',
                 'cols' => '30',
                 'rows' => '5',
@@ -118,26 +119,25 @@ $t3socials_Network = array(
                 'wizards' => $configFieldWizards,
                 // @see DMK\T3socials\Backend\Form\Element\NetworkConfigField
                 'renderType' => 'networkConfigField',
-            )
-        ),
-        'description' => array(
+            ],
+        ],
+        'description' => [
             'exclude' => 0,
             'label' => '',
             // Show only, if an Network was Set!
             'displayCond' => 'FIELD:network:REQ:TRUE',
-            'config' => array(
+            'config' => [
                 'type' => 'user',
                 'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDescription',
-            ),
-        ),
-    ),
-    'types' => array(
-        '0' => array('showitem' => 'hidden,--palette--;;network_palette,name,username,password,actions,autosend,config')
-    ),
-    'palettes' => array(
-        'network_palette' => array('showitem' => '--linebreak--,network,description'),
-    )
-);
-
+            ],
+        ],
+    ],
+    'types' => [
+        '0' => ['showitem' => 'hidden,--palette--;;network_palette,name,username,password,actions,autosend,config'],
+    ],
+    'palettes' => [
+        'network_palette' => ['showitem' => '--linebreak--,network,description'],
+    ],
+];
 
 return $t3socials_Network;

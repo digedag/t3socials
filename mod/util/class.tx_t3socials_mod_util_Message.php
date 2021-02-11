@@ -22,26 +22,23 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Util für Nachrichten
+ * Util für Nachrichten.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_mod_util_Message
 {
-
-
     /**
-     * Erzeugt eine Flash Message
+     * Erzeugt eine Flash Message.
      *
      * @param string|array $message
+     *
      * @return void
-     * @deprecated use tx_t3socials_util_Message::showFlashMessage instead.
+     *
+     * @deprecated use tx_t3socials_util_Message::showFlashMessage instead
      */
     public static function showMessage($message)
     {
@@ -53,5 +50,5 @@ class tx_t3socials_mod_util_Message
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php'];
 }

@@ -25,21 +25,19 @@ tx_rnbase::load('tx_rnbase_parameters');
 tx_rnbase::load('tx_rnbase_mod_IModHandler');
 
 /**
- * PUSHD Handler
+ * PUSHD Handler.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
 {
-    private $data = array();
-    private $warnings = array();
+    private $data = [];
+    private $warnings = [];
 
     /**
-     * liefert die Handler ID anhand der Netzwerk ID
+     * liefert die Handler ID anhand der Netzwerk ID.
      *
      * @return string
      */
@@ -63,6 +61,7 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
      * to handle request data.
      *
      * @param tx_rnbase_mod_IModule $mod
+     *
      * @return string|null
      */
     public function handleRequest(tx_rnbase_mod_IModule $mod)
@@ -76,7 +75,7 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
         $msg = trim($this->data['msg']);
         $title = trim($this->data['title']);
         $set = tx_rnbase_parameters::getPostOrGetParameter('SET');
-        if (strlen($msg) == 0) {
+        if (0 == strlen($msg)) {
             $info = 'Bitte einen Text eingeben.<br />';
             $mod->addMessage($info, '###LABEL_MESSAGE###', 1);
 
@@ -100,21 +99,22 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Display the user interface for this handler
+     * Display the user interface for this handler.
      *
      * @param string $template the subpart for handler in func template
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
+     *
      * @return string
      */
     public function showScreen($template, tx_rnbase_mod_IModule $mod, $options)
     {
         $formTool = $mod->getFormTool();
-        $options = array();
+        $options = [];
 
-        $markerArr = array();
-        $subpartArr = array();
-        $wrappedSubpartArr = array();
+        $markerArr = [];
+        $subpartArr = [];
+        $wrappedSubpartArr = [];
         // Auswahlbox mit den vorhandenen Accounts
         $accounts = tx_t3socials_srv_ServiceRegistry::getNetworkService()->findAccountsByType('pushd');
         // wir haben accounts, die wir nun auflisten
@@ -130,7 +130,7 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
 
             $markerArr['###ACCOUNT_SEL###'] = $accMenu['menu'];
             $markerArr['###ACCOUNT_EDITLINK###'] = $formTool->createEditLink('tx_t3socials_networks', $accMenu['value']);
-            $markerArr['###EVENT_SEL###'] = $eventMenu === false ? '<strong>###LABEL_PUSHD_NOEVENTS###</strong>' : $eventMenu['menu'];
+            $markerArr['###EVENT_SEL###'] = false === $eventMenu ? '<strong>###LABEL_PUSHD_NOEVENTS###</strong>' : $eventMenu['menu'];
             $markerArr['###INPUT_MESSAGE###'] = $formTool->createTextArea('data[msg]', $this->data['msg']);
             $markerArr['###INPUT_TITLE###'] = $formTool->createTxtInput('data[title]', $this->data['title'], 50);
             $markerArr['###BTN_SEND###'] = $formTool->createSubmit('sendpushd', '###LABEL_SUBMIT###');
@@ -148,15 +148,16 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Returns all accounts
+     * Returns all accounts.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param array $accounts
+     *
      * @return array
      */
     private function getAccountSelector(tx_rnbase_mod_IModule $mod, $accounts)
     {
-        $entries = array();
+        $entries = [];
         foreach ($accounts as $account) {
             $entries[$account->uid] = $account->getName();
         }
@@ -165,23 +166,24 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Liefert die Events
+     * Liefert die Events.
      *
      * @param tx_rnbase_mod_IModule $mod
      * @param unknown_type $account
+     *
      * @return array
      */
     private function getEventSelector(tx_rnbase_mod_IModule $mod, $account)
     {
-        $entries = array();
+        $entries = [];
         $confId = 'pushd.events.';
         $events = $account->getConfigurations()->getKeyNames($confId);
         foreach ($events as $event) {
-            $entries[$event] = $account->getConfigData($confId . $event . '.label');
+            $entries[$event] = $account->getConfigData($confId.$event.'.label');
             $entries[$event] = $entries[$event] ? $entries[$event] : $event;
         }
         if (empty($entries)) {
-            return array();
+            return [];
         }
 
         return $mod->getFormTool()->showMenu($mod->getPid(), 'event', $mod->getName(), $entries);
@@ -191,5 +193,5 @@ class tx_t3socials_mod_handler_Pushd implements tx_rnbase_mod_IModHandler
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Pushd.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Pushd.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Pushd.php'];
 }

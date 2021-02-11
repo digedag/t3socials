@@ -29,15 +29,12 @@ tx_rnbase::load('tx_rnbase_util_Network');
  * OAuth Klasse für die Authentifizierung für HybridAuth.
  * Kann über eID fürs FE und ajaxID fürs BE angesprochen werden.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_hybridauth_OAuthCall
 {
-
     // prüft den status und fürt ggf. ein AUTHENTICATE durch
     const OAUT_CALL_STATE = 'state';
     // prüft den status und fürt ggf. ein AUTHENTICATE durch
@@ -46,45 +43,47 @@ class tx_t3socials_network_hybridauth_OAuthCall
     const OAUT_CALL_AUTHENTICATE = 'authenticate';
 
     /**
-     * Liefert die URL für die OAUTH
+     * Liefert die URL für die OAUTH.
      *
      * @param int $networkId
      * @param string $type
+     *
      * @return string
      */
     public static function getOAuthCallBaseUrl($networkId, $type = self::OAUT_CALL_AUTHENTICATE)
     {
         // FE-URL
         if (TYPO3_MODE === 'FE') {
-            $url = tx_rnbase_util_Misc::getIndpEnv('TYPO3_REQUEST_HOST') . '/index.php?eID=t3socials-hybridauth';
+            $url = tx_rnbase_util_Misc::getIndpEnv('TYPO3_REQUEST_HOST').'/index.php?eID=t3socials-hybridauth';
         } // BE-URL
         else {
-            $url = tx_rnbase_util_Misc::getIndpEnv('TYPO3_REQUEST_HOST') . '/typo3/ajax.php?ajaxID=t3socials-hybridauth';
+            $url = tx_rnbase_util_Misc::getIndpEnv('TYPO3_REQUEST_HOST').'/typo3/ajax.php?ajaxID=t3socials-hybridauth';
         }
-        $url .= '&oAuthCallType=' . $type;
+        $url .= '&oAuthCallType='.$type;
         if ($networkId > 0) {
-            $url .= '&network=' . (int) $networkId;
+            $url .= '&network='.(int) $networkId;
         }
 
         return $url;
     }
 
     /**
-     * ajaxID (BE) für autorizatioin redirects
+     * ajaxID (BE) für autorizatioin redirects.
      *
      * @param array &$params
      * @param \TYPO3\CMS\Core\Http\AjaxRequestHandler &$ref
+     *
      * @return void
      */
     public function ajaxId(array &$params, &$ref)
     {
         $content = $this->oAuthCall();
         $ref->setContentFormat('plain');
-        $ref->setContent(array($content));
+        $ref->setContent([$content]);
     }
 
     /**
-     * eid (FE) für autorizatioin redirects
+     * eid (FE) für autorizatioin redirects.
      *
      * @return void
      */
@@ -101,7 +100,7 @@ class tx_t3socials_network_hybridauth_OAuthCall
     }
 
     /**
-     * eid (FE) für autorizatioin redirects
+     * eid (FE) für autorizatioin redirects.
      *
      * @return string
      */
@@ -121,20 +120,17 @@ class tx_t3socials_network_hybridauth_OAuthCall
 
         /* @var $connection instanceof tx_t3socials_network_hybridauth_Interface */
         if (!$connection instanceof tx_t3socials_network_hybridauth_Interface) {
-            throw new Exception(
-                'The connection "' . get_class($connection) .
-                '" has to implement the interface "tx_t3socials_network_hybridauth_Interface".'
-            );
+            throw new Exception('The connection "'.get_class($connection).'" has to implement the interface "tx_t3socials_network_hybridauth_Interface".');
         }
 
         try {
             $adapter = $connection->getProvider()->adapter;
             // es wurde der status angefragt
-            if ($type === self::OAUT_CALL_STATE) {
+            if (self::OAUT_CALL_STATE === $type) {
                 // Wenn angemeldet, Info ausgeben
                 if ($adapter->isUserConnected()) {
                     $template = tx_rnbase_util_Network::getURL(
-                        tx_rnbase_util_Extensions::extPath('t3socials') . '/Resources/Private/Templates/eIDstatus.html'
+                        tx_rnbase_util_Extensions::extPath('t3socials').'/Resources/Private/Templates/eIDstatus.html'
                     );
                     $data = $network->getRecord();
                     $data['access_token'] = $adapter->token('access_token');
@@ -160,27 +156,27 @@ class tx_t3socials_network_hybridauth_OAuthCall
                     return 'REDIRECT TO AUTH PAGE!';
                 }
             } // abmelden
-            elseif ($type === self::OAUT_CALL_LOGOUT) {
+            elseif (self::OAUT_CALL_LOGOUT === $type) {
                 $connection->getProvider()->logout();
                 // @TODO: template erstellen.
                 return
-                '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" ' .
-                '"http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
-                '<h1>LOGGED OUT!</h1>' .
-                '<script type="text/javascript">alert("You have been successfully logged out!");window.close();</script>' .
+                '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" '.
+                '"http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>'.
+                '<h1>LOGGED OUT!</h1>'.
+                '<script type="text/javascript">alert("You have been successfully logged out!");window.close();</script>'.
                 '</body></html>';
             } // hybridauth login prozess
-            elseif ($type === self::OAUT_CALL_AUTHENTICATE) {
+            elseif (self::OAUT_CALL_AUTHENTICATE === $type) {
                 // die anfrage bearbeiten
                 Hybrid_Endpoint::process();
             }
         } catch (Exception $e) {
             // @TODO: template erstellen.
             return
-            '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" ' .
-            '"http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>' .
-            '<h1>CONNECTION ERROR!</h1>' .
-            '<script type="text/javascript">alert("' . $e->getMessage() . '");window.close();</script>' .
+            '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" '.
+            '"http://www.w3.org/TR/html4/loose.dtd"><html><head></head><body>'.
+            '<h1>CONNECTION ERROR!</h1>'.
+            '<script type="text/javascript">alert("'.$e->getMessage().'");window.close();</script>'.
             '</body></html>';
         }
     }
@@ -189,13 +185,11 @@ class tx_t3socials_network_hybridauth_OAuthCall
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'];
 }
 
 // eid Aufruf?
-if (TYPO3_MODE === 'FE' && tx_rnbase_parameters::getPostOrGetParameter('eID') == 't3socials-hybridauth') {
+if (TYPO3_MODE === 'FE' && 't3socials-hybridauth' == tx_rnbase_parameters::getPostOrGetParameter('eID')) {
     $auth = tx_rnbase::makeInstance('tx_t3socials_network_hybridauth_OAuthCall');
     $auth->eID();
 }

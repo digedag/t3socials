@@ -22,23 +22,20 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Util Klasse für die TCA
+ * Util Klasse für die TCA.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_util
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_util_TCA
 {
-
     /**
-     * Insert default TS configuration of the given indexer
+     * Insert default TS configuration of the given indexer.
      *
      * @param array &$params
+     *
      * @return string
      */
     public static function insertNetworkDescription(array &$params)
@@ -59,17 +56,18 @@ class tx_t3socials_util_TCA
         $desc = nl2br($desc);
 
         return empty($desc) ? '' :
-            '<div class="t3-tceforms-fieldReadOnly" style="width:284px;white-space: normal;">' .
-                self::handleMoreLink($desc, $params['row']['uid'] . '_' . $network) .
+            '<div class="t3-tceforms-fieldReadOnly" style="width:284px;white-space: normal;">'.
+                self::handleMoreLink($desc, $params['row']['uid'].'_'.$network).
             '</div>';
     }
 
-
     /**
-     * Insert default TS configuration of the given indexer
+     * Insert default TS configuration of the given indexer.
      *
      * @param array &$params
+     *
      * @return string
+     *
      * @deprecated will be dropped when support for TYPO3 6.2 is removed
      */
     public static function insertNetworkDefaultConfig(array &$params)
@@ -83,24 +81,25 @@ class tx_t3socials_util_TCA
         if (!empty($params['row']['config'])) {
             return '';
         }
-        
+
         try {
             $config = tx_t3socials_network_Config::getNetworkConfig($params['row']['network']);
         } catch (Exception $e) {
             // No Config found
             return '';
         }
-        
+
         return self::insertBetween($config->getDefaultConfiguration(), $params);
     }
 
     /**
      * Fügt Content zwischen HTML ein.
-     * Das ist ein Hack! Hier wird kein Wizard geliefert, sondern der ITEM string in den $params manipiliert. 
+     * Das ist ein Hack! Hier wird kein Wizard geliefert, sondern der ITEM string in den $params manipiliert.
      * Dafür wäre ein TCA-Hook für den Datensatz sicher besser geeignet!
      *
      * @param string $content
      * @param array &$params
+     *
      * @return void
      */
     private static function insertBetween($content, array &$params)
@@ -113,14 +112,14 @@ class tx_t3socials_util_TCA
             return;
         }
         $lpos = strpos($params['item'], $params['params']['insertBetween'][0]);
-        if ($lpos === false) {
+        if (false === $lpos) {
             return;
         }
 
         $lpos += strlen($params['params']['insertBetween'][0]);
         $rpos = strrpos($params['item'], $params['params']['insertBetween'][1]);
-        
-        if ($rpos === false || $lpos > $rpos) {
+
+        if (false === $rpos || $lpos > $rpos) {
             return;
         }
 
@@ -128,16 +127,17 @@ class tx_t3socials_util_TCA
         if (!isset($params['params']['onMatchOnly'])
             || preg_match($params['params']['onMatchOnly'], $between)
         ) {
-            $params['item'] = substr($params['item'], 0, $lpos) .
-                $content .
+            $params['item'] = substr($params['item'], 0, $lpos).
+                $content.
                 substr($params['item'], $rpos, strlen($params['item']) - $rpos);
         }
     }
 
     /**
-     * Get content types keys of the given indexer extension
+     * Get content types keys of the given indexer extension.
      *
      * @param array &$params
+     *
      * @return void
      */
     public static function getNetworks(array &$params)
@@ -146,14 +146,15 @@ class tx_t3socials_util_TCA
         // wir sortieren vorher, damit bestehende items nicht mit sortiert werden!
         sort($networks);
         foreach ($networks as $k) {
-            $params['items'][] = array(tx_t3socials_network_Config::translateNetwork($k), $k);
+            $params['items'][] = [tx_t3socials_network_Config::translateNetwork($k), $k];
         }
     }
 
     /**
-     * Get content types keys of the given indexer extension
+     * Get content types keys of the given indexer extension.
      *
      * @param array &$params
+     *
      * @return void
      */
     public static function getTriggers(array &$params)
@@ -162,7 +163,7 @@ class tx_t3socials_util_TCA
         // wir sortieren vorher, damit bestehende items nicht mit sortiert werden!
         sort($networks);
         foreach ($networks as $k) {
-            $params['items'][] = array(tx_t3socials_trigger_Config::translateTrigger($k), $k);
+            $params['items'][] = [tx_t3socials_trigger_Config::translateTrigger($k), $k];
         }
     }
 
@@ -173,22 +174,23 @@ class tx_t3socials_util_TCA
      *
      * @param string $content
      * @param string $htmlid
+     *
      * @return string
      */
     private static function handleMoreLink($content, $htmlid = 'more')
     {
         if (strpos($content, '###MORE###') > 0) {
             list($smal, $big) = explode('###MORE###', $content);
-            $htmlid = 't3socials_descmore_' . $htmlid;
-            $onclick = 'document.getElementById(\'' . $htmlid . '\').style.display = \'block\'; this.style.display = \'none\';';
-            $linkStyle  = 'background: url(\'../../typo3/sysext/t3skin/images/arrows/module-menu-right.png\') no-repeat scroll 0 4px;';
+            $htmlid = 't3socials_descmore_'.$htmlid;
+            $onclick = 'document.getElementById(\''.$htmlid.'\').style.display = \'block\'; this.style.display = \'none\';';
+            $linkStyle = 'background: url(\'../../typo3/sysext/t3skin/images/arrows/module-menu-right.png\') no-repeat scroll 0 4px;';
             $linkStyle .= 'display: block; padding-left: 10px';
-            $moreLink =  '<a href="#" onclick="' . $onclick . '" style="' . $linkStyle . '">more</a>';
-            $content  = '<div>';
+            $moreLink = '<a href="#" onclick="'.$onclick.'" style="'.$linkStyle.'">more</a>';
+            $content = '<div>';
             $content .= $smal;
             $content .= $moreLink;
             $content .= '</div>';
-            $content .= '<div id="' . $htmlid . '" style="display:none;">';
+            $content .= '<div id="'.$htmlid.'" style="display:none;">';
             $content .= $big;
             $content .= '</div>';
         }
@@ -198,5 +200,5 @@ class tx_t3socials_util_TCA
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php'];
 }

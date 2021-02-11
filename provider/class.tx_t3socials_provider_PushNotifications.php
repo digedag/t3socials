@@ -28,32 +28,28 @@ tx_rnbase::load('tx_t3rest_util_Objects');
 tx_rnbase::load('tx_rnbase_filter_BaseFilter');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
-
-
 /**
  * This is a REST provider for T3socials pushd network
  * UseCases:
  * get = teamUid -> return a specific team
- * getdefined = cfc1 -> return a specific preconfigured team
+ * getdefined = cfc1 -> return a specific preconfigured team.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_provider
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_AbstractBase
 {
-
     /**
      * @param tx_rnbase_configurations $configurations
      * @param string $confId
+     *
      * @return tx_t3socials_model_Network
      */
     protected function handleRequest($configurations, $confId)
     {
         if ($tableAlias = $configurations->getParameters()->get('get')) {
-            $data = $this->getNetwork($tableAlias, $configurations, $confId . 'get.');
+            $data = $this->getNetwork($tableAlias, $configurations, $confId.'get.');
         }
 
         return $data;
@@ -66,7 +62,7 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
     {
         return 't3socials.pushd.';
     }
-    
+
     /**
      * @return string
      */
@@ -76,7 +72,7 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
     }
 
     /**
-     * Lädt einen Account
+     * Lädt einen Account.
      *
      * @param string $tableAlias string-Identifier
      *
@@ -86,10 +82,10 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
     {
         $ret = false;
         // Prüfen, ob der Dienst konfiguriert ist
-        $defined = $configurations->getKeyNames($confId . 'defined.');
+        $defined = $configurations->getKeyNames($confId.'defined.');
         if (in_array($tableAlias, $defined)) {
             $ret = new stdClass();
-            $itemId = $configurations->get($confId . 'defined.' . $tableAlias . '.network');
+            $itemId = $configurations->get($confId.'defined.'.$tableAlias.'.network');
             $account = tx_rnbase::makeInstance('tx_t3socials_models_Network', $itemId);
             $ret = $this->getEvents($account);
         }
@@ -98,24 +94,24 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
     }
 
     /**
-     *
      * @param tx_t3socials_models_Network $account
+     *
      * @return array
      */
     private function getEvents($account)
     {
-        $entries = array();
+        $entries = [];
         $confId = 'pushd.events.';
 
         $events = $account->getConfigurations()->getKeyNames($confId);
         foreach ($events as $event) {
             $label = $account->getConfigData($confId.$event.'.label');
             $hidden = $account->getConfigData($confId.$event.'.hidden');
-            if (intval($hidden) != 1) {
-                $entries[] = array(
+            if (1 != intval($hidden)) {
+                $entries[] = [
                     'label' => $label ? $label : $event,
-                    'event' => $event
-                );
+                    'event' => $event,
+                ];
             }
         }
 
@@ -124,5 +120,5 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php'];
 }

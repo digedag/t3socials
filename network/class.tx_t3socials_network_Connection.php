@@ -25,30 +25,27 @@
 tx_rnbase::load('tx_t3socials_network_IConnection');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
-
 /**
- * Basis Connection
+ * Basis Connection.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_network_Connection implements tx_t3socials_network_IConnection
 {
-
     /**
-     * Liefert den Klassennamen der Message Builder Klasse
+     * Liefert den Klassennamen der Message Builder Klasse.
      *
      * @return string
      */
     abstract protected function getBuilderClass();
 
     /**
-     * Post data on network
+     * Post data on network.
      *
      * @param string $message
+     *
      * @return  void
      */
     abstract public function setUserStatus($message);
@@ -57,6 +54,7 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
      * Setzt das zu verwendende Netzwerk-Model.
      *
      * @param tx_t3socials_models_Network $network
+     *
      * @return tx_t3socials_network_Connection
      */
     public function setNetwork(tx_t3socials_models_Network $network)
@@ -65,8 +63,9 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
 
         return $this;
     }
+
     /**
-     * Returns the network account
+     * Returns the network account.
      *
      * @return tx_t3socials_models_Network
      */
@@ -79,7 +78,9 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
      * Liest eine Konfiguration aus dem Netzwerk-Model aus.
      *
      * @param string $confId
+     *
      * @throws Exception
+     *
      * @return mixed
      */
     protected function getConfigData($confId)
@@ -89,13 +90,14 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
             throw new Exception('Missing network. The network has to be inject into the connection!');
         }
 
-        return $network->getConfigData($network->getNetwork() . '.' . $confId);
+        return $network->getConfigData($network->getNetwork().'.'.$confId);
     }
 
     /**
      * Erzeugt aus dem Message Model einen eine Text-Nachricht.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return string|array string with message or array with post data
      */
     protected function buildStatusMessage(tx_t3socials_models_IMessage $message)
@@ -114,8 +116,9 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
      * Post data to network.
      *
      * @param tx_t3socials_models_Message $message
+     *
      * @return null or error message
-     * @return null|string with error
+     * @return string|null with error
      */
     public function sendMessage(tx_t3socials_models_IMessage $message)
     {
@@ -128,11 +131,11 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
             tx_rnbase_util_Logger::warn(
                 'Message is empty!',
                 't3socials',
-                array(
+                [
                     'status' => $status,
                     'message' => (string) $message,
-                    'builder class' => get_class($builder)
-                )
+                    'builder class' => get_class($builder),
+                ]
             );
 
             return 'Message is empty!';
@@ -142,30 +145,28 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
     }
 
     /**
-     * Erzeugt einen Message Builder
+     * Erzeugt einen Message Builder.
      *
      * @param tx_t3socials_models_Message $message
+     *
      * @return tx_t3socials_network_MessageBuilder
      */
     protected function getBuilder(tx_t3socials_models_Message $message)
     {
         $network = $this->getNetwork();
-        $class = $this->getConfigData($message->getMessageType() . '.builder');
+        $class = $this->getConfigData($message->getMessageType().'.builder');
         $class = $class ? $class : $this->getConfigData('builder');
         $class = $class ? $class : $this->getBuilderClass();
         $builder = tx_rnbase::makeInstance($class);
         if (!$builder instanceof tx_t3socials_network_MessageBuilder) {
-            throw new Exception(
-                'The builder "' . get_class($builder) .
-                '" has to abstract from "tx_t3socials_network_MessageBuilder".'
-            );
+            throw new Exception('The builder "'.get_class($builder).'" has to abstract from "tx_t3socials_network_MessageBuilder".');
         }
 
         return $builder;
     }
 
     /**
-     * Verify connection is valid
+     * Verify connection is valid.
      *
      * @return bool
      * @TODO: implement verification!
@@ -191,5 +192,5 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Connection.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Connection.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Connection.php'];
 }

@@ -24,16 +24,13 @@
 
 tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
 
-
 /**
- * Twitter Connector
+ * Twitter Connector.
  *
  * If you get an 401 Authentification error,
  * be shure in the twitter ap was an callback url defined!
  *     > Desktop applications only support the oauth_callback value 'oob'
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -41,9 +38,8 @@ tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
  */
 class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybridauth_Connection
 {
-
     /**
-     * Liefert den Klassennamen der Message Builder Klasse
+     * Liefert den Klassennamen der Message Builder Klasse.
      *
      * @return string
      */
@@ -82,9 +78,10 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
     }
 
     /**
-     * Post data
+     * Post data.
      *
      * @param string $message
+     *
      * @return void
      */
     public function setUserStatus($message)
@@ -105,7 +102,7 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
      * *** ****************************** *** */
 
     /**
-     * is the HybridAut active? (default is true)
+     * is the HybridAut active? (default is true).
      *
      * @deprecated
      *
@@ -122,20 +119,23 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
      * Prüft das Result nach Fehlern.
      *
      * @param stdClass $result
+     *
      * @deprecated
+     *
      * @throws Exception
+     *
      * @return void
      */
     protected function handleErrorsFromResult(stdClass $result)
     {
-        $errors = $result->errors ? $result->errors : array();
+        $errors = $result->errors ? $result->errors : [];
         if (!empty($result->error)) {
             $errors[] = $result->error;
         }
         if (!empty($errors)) {
-            $errMsg = array();
+            $errMsg = [];
             foreach ($errors as $error) {
-                $errMsg[] = is_object($error) ? $error->message . ' (Code ' . $error->code . ')' : 'twitteroauth: ' . $error;
+                $errMsg[] = is_object($error) ? $error->message.' (Code '.$error->code.')' : 'twitteroauth: '.$error;
             }
             throw new Exception(implode("\n", $errMsg));
         }
@@ -145,7 +145,9 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
      * Post data on Twitter using Curl.
      *
      * @param string $message
+     *
      * @deprecated
+     *
      * @return string|array
      */
     public function sendTweet($message)
@@ -156,23 +158,24 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
         require_once 'twitteroauth/twitteroauth.php';
 
         $connection = $this->getConnection();
-        $result = $connection->post('statuses/update', array('status' => $message));
+        $result = $connection->post('statuses/update', ['status' => $message]);
 
         $this->handleErrorsFromResult($result);
 
         tx_rnbase_util_Logger::info(
             'Tweet was posted to Twitter!',
             't3socials',
-            array('Tweet' => $message, 'Account' => $this->getNetwork()->getName())
+            ['Tweet' => $message, 'Account' => $this->getNetwork()->getName()]
         );
 
         return $result;
     }
 
     /**
-     * liefert die OAuth Connection
+     * liefert die OAuth Connection.
      *
      * @deprecated
+     *
      * @return TwitterOAuth
      */
     private function getConnection()
@@ -191,17 +194,19 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
     }
 
     /**
-     * liefert die zugangsdaten für oauth
+     * liefert die zugangsdaten für oauth.
      *
      * @param tx_t3socials_models_Network $network
+     *
      * @deprecated
+     *
      * @return array
      */
     private function getCredentials(tx_t3socials_models_Network $network)
     {
         $data = $network->getConfigData('twitter.');
         if (empty($data)) {
-            throw new Exception('No credentials for twitter found! UID: ' . $network->getUid());
+            throw new Exception('No credentials for twitter found! UID: '.$network->getUid());
         }
 
         return $data;
@@ -211,7 +216,5 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php'];
 }

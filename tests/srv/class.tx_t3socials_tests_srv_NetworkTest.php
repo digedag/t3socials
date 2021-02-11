@@ -26,21 +26,19 @@ tx_rnbase::load('tx_t3socials_srv_Network');
 tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 
 /**
- * Network Testcase
+ * Network Testcase.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_tests
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_srv_NetworkTest extends tx_t3socials_tests_BaseTestCase
 {
-
     /**
      * Testet die getByRefererCallsSearchCorrect Methode.
      *
      * @param string $trigger
+     *
      * @return void
      *
      * @group unit
@@ -49,13 +47,13 @@ class tx_t3socials_tests_srv_NetworkTest extends tx_t3socials_tests_BaseTestCase
      */
     public function testGetByRefererCallsSearchCorrect($trigger, $autosend)
     {
-        $fields = $options = array();
+        $fields = $options = [];
         $fields['NETWORK.actions'][OP_INSET_INT] = $triggers;
         $fields['NETWORK.autosend'][OP_EQ_INT] = $autosend;
 
         $service = $this->getMock(
             'tx_t3socials_srv_Network',
-            array('search')
+            ['search']
         );
         $service->expects($this->once())
             ->method('search')
@@ -71,11 +69,11 @@ class tx_t3socials_tests_srv_NetworkTest extends tx_t3socials_tests_BaseTestCase
      */
     public function getByRefererCallsSearchData()
     {
-        return array(
-            __LINE__ => array('trigger' => 'tt_news', 'autosend' => 1),
-            __LINE__ => array('trigger' => 'tt_news,tt_content', 'autosend' => 0),
-            __LINE__ => array('trigger' => array('tt_news', 'tt_content'), 'autosend' => 1),
-            __LINE__ => array('trigger' => 'news', 'autosend' => 1),
-        );
+        return [
+            __LINE__ => ['trigger' => 'tt_news', 'autosend' => 1],
+            __LINE__ => ['trigger' => 'tt_news,tt_content', 'autosend' => 0],
+            __LINE__ => ['trigger' => ['tt_news', 'tt_content'], 'autosend' => 1],
+            __LINE__ => ['trigger' => 'news', 'autosend' => 1],
+        ];
     }
 }

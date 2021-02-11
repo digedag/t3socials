@@ -26,10 +26,8 @@ tx_rnbase::load('tx_rnbase_mod_IModHandler');
 tx_rnbase::load('tx_t3socials_models_Message');
 
 /**
- * Trigger Handler
+ * Trigger Handler.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -40,15 +38,15 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     private $resourceModel = false;
     private $accountSelector = false;
     /**
-     *
      * @var Tx_Rnbase_Domain_Model_Base
      */
     private $formData = null;
 
     /**
-     * Setzt den Trigger
+     * Setzt den Trigger.
      *
      * @param tx_t3socials_models_TriggerConfig $triggerConfig
+     *
      * @return tx_t3socials_mod_handler_Trigger
      */
     public function setTriggerConfig(
@@ -58,8 +56,9 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
 
         return $this;
     }
+
     /**
-     * Liefert den Trigger
+     * Liefert den Trigger.
      *
      * @return tx_t3socials_models_TriggerConfig
      */
@@ -69,9 +68,10 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Setzt das Resource Model
+     * Setzt das Resource Model.
      *
      * @param tx_t3socials_models_Base $resourceModel
+     *
      * @return tx_t3socials_mod_handler_Trigger
      */
     public function setResourceModel(
@@ -81,8 +81,9 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
 
         return $this;
     }
+
     /**
-     * Liefert das Resource Model
+     * Liefert das Resource Model.
      *
      * @return tx_t3socials_models_Base
      */
@@ -92,15 +93,15 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Liefert die eventuell abgesendeten Formulardaten
+     * Liefert die eventuell abgesendeten Formulardaten.
      *
      * @return tx_t3socials_models_Base
      */
     protected function getFormData()
     {
-        if ($this->formData === null) {
+        if (null === $this->formData) {
             $data = tx_rnbase_parameters::getPostOrGetParameter('data');
-            $data = empty($data) || !is_array($data) ? array() : $data;
+            $data = empty($data) || !is_array($data) ? [] : $data;
             // keine formdaten vorhanden? dann die vom record nutzen!
             if (empty($data) && $this->getTriggerConfig() && $this->getResourceModel()) {
                 $builder = tx_t3socials_trigger_Config::getMessageBuilder($this->getTriggerConfig());
@@ -112,7 +113,6 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
 
         return $this->formData;
     }
-
 
     /**
      * Liefert die generische Nachricht für den versand.
@@ -139,7 +139,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      */
     protected function getVisibleFormFields()
     {
-        return array('headline', 'intro', 'message', 'url');
+        return ['headline', 'intro', 'message', 'url'];
     }
 
     /**
@@ -154,7 +154,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Liefert das Label des Moduls
+     * Liefert das Label des Moduls.
      *
      * @return string
      */
@@ -168,7 +168,8 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      * to handle request data.
      *
      * @param tx_rnbase_mod_IModule $mod
-     * @return null|string
+     *
+     * @return string|null
      */
     public function handleRequest(tx_rnbase_mod_IModule $mod)
     {
@@ -239,14 +240,14 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                 $error = $connection->sendMessage($messageCopy);
                 // fehler beim senden?
                 if ($error) {
-                    $mod->addMessage($error, '###LABEL_ERROR### (' . $account->getName() . ')', 1);
+                    $mod->addMessage($error, '###LABEL_ERROR### ('.$account->getName().')', 1);
                 } // erfolgreich versendet
                 else {
-                    $mod->addMessage('###LABEL_MESSAGE_SENT###', '###LABEL_NOTE### (' . $account->getName() . ')', 0);
+                    $mod->addMessage('###LABEL_MESSAGE_SENT###', '###LABEL_NOTE### ('.$account->getName().')', 0);
                     $hasSend = true;
                 }
             } catch (Exception $e) {
-                $mod->addMessage($e->getMessage(), '###LABEL_ERROR### (' . $account->getName() . ')', 2);
+                $mod->addMessage($e->getMessage(), '###LABEL_ERROR### ('.$account->getName().')', 2);
             }
         }
 
@@ -261,11 +262,12 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Display the user interface for this handler
+     * Display the user interface for this handler.
      *
      * @param string $template
      * @param tx_rnbase_mod_IModule $mod
      * @param array $options
+     *
      * @return string
      */
     public function showScreen($template, tx_rnbase_mod_IModule $mod, $options)
@@ -279,7 +281,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
             $options
         );
 
-        $markerArr = array();
+        $markerArr = [];
         // felder vom basistemplate befüllen
         $markerArr['###NETWORK_TITLE###'] = 'Accounts and Message';
         $markerArr['###AUTH_STATE###'] = $this->getResourceModelInfo($mod);
@@ -291,9 +293,10 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     }
 
     /**
-     * Liefert eine Kurze Info über das verwendete Resource-Model
+     * Liefert eine Kurze Info über das verwendete Resource-Model.
      *
      * @param tx_rnbase_mod_IModule $mod
+     *
      * @return string
      */
     protected function getResourceModelInfo(tx_rnbase_mod_IModule $mod)
@@ -304,36 +307,36 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
         if ($model) {
             $tableName = $trigger->getTableName();
             $labelField = $GLOBALS['TCA'][$tableName]['ctrl']['label'];
-            $row = array();
-            $row[] = array('###LABEL_RESOURCE_INFO###', '');
-            $row[] = array(
+            $row = [];
+            $row[] = ['###LABEL_RESOURCE_INFO###', ''];
+            $row[] = [
                 '###LABEL_T3SOCIALS_TRIGGER###',
                 $trigger->getTriggerId(),
-            );
+            ];
             $networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
             $hasSend = $networkSrv->hasSent($model->getUid(), $tableName);
-            $wrap = array(
-                '<span style="color:#' . ($hasSend ? 'AA0225' : '3B7826') . ';">',
-                '</span>'
-            );
-            $row[] = array(
-                $wrap[0] . '###LABEL_T3SOCIALS_HASSEND_LABEL###' . $wrap[1],
-                $wrap[0] . ($hasSend ? '###LABEL_T3SOCIALS_HASSEND_YES###' : '###LABEL_T3SOCIALS_HASSEND_NO###') . $wrap[1],
-            );
-            $row[] = array(
+            $wrap = [
+                '<span style="color:#'.($hasSend ? 'AA0225' : '3B7826').';">',
+                '</span>',
+            ];
+            $row[] = [
+                $wrap[0].'###LABEL_T3SOCIALS_HASSEND_LABEL###'.$wrap[1],
+                $wrap[0].($hasSend ? '###LABEL_T3SOCIALS_HASSEND_YES###' : '###LABEL_T3SOCIALS_HASSEND_NO###').$wrap[1],
+            ];
+            $row[] = [
                 '###LABEL_TABLE###',
                 $tableName,
-            );
-            $row[] = array(
+            ];
+            $row[] = [
                 'UID',
                 $model->getUid(),
-            );
-            $row[] = array(
+            ];
+            $row[] = [
                 '###LABEL_TITLE###',
                 $model->getProperty[$labelField],
-            );
+            ];
             // gelöscht oder hidden? dann meldung ausgeben!
-            $state = array();
+            $state = [];
             if ($model->isDeleted()) {
                 $state[] = 'deleted';
             }
@@ -341,14 +344,14 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                 $state[] = 'hidden';
             }
             if (!empty($state)) {
-                $wrap = array(
+                $wrap = [
                     '<span style="color:#AA0225;">',
-                    '</span>'
-                );
-                $row[] = array(
-                    $wrap[0] . 'State' . $wrap[1],
-                    $wrap[0] . implode(' and ', $state) . '!' . $wrap[1]
-                );
+                    '</span>',
+                ];
+                $row[] = [
+                    $wrap[0].'State'.$wrap[1],
+                    $wrap[0].implode(' and ', $state).'!'.$wrap[1],
+                ];
             }
 
             $out = tx_rnbase::makeInstance('Tx_Rnbase_Backend_Utility_Tables')->buildTable($row);
@@ -361,17 +364,18 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      * Liefert alle Accounts für die Auswahl zum versenden.
      *
      * @param tx_rnbase_mod_IModule $mod
+     *
      * @return array
      */
     private function getAccountSelector(tx_rnbase_mod_IModule $mod)
     {
-        if ($this->accountSelector === false) {
+        if (false === $this->accountSelector) {
             $this->accountSelector = '';
 
             $formTool = $mod->getFormTool();
             $srv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
 
-            $accounts = array();
+            $accounts = [];
             $triggerConfig = $this->getTriggerConfig();
             // nur accounts für einen bestimmten Trigger liefern
             if ($triggerConfig) {
@@ -381,9 +385,9 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                 $accounts = $srv->findAll();
             }
 
-            $rows = array();
+            $rows = [];
             // tabellenüberschrift
-            $rows[] = array('', '###LABEL_ACCOUNT###', '###LABEL_STATE###');
+            $rows[] = ['', '###LABEL_ACCOUNT###', '###LABEL_STATE###'];
 
             foreach ($accounts as $account) {
                 $rows[] = $this->getAccountRow($account, $mod);
@@ -401,6 +405,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      *
      * @param tx_t3socials_models_Network $account
      * @param tx_rnbase_mod_IModule $mod
+     *
      * @return array
      */
     protected function getAccountRow(
@@ -408,26 +413,26 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
         tx_rnbase_mod_IModule $mod
     ) {
         $checked = tx_rnbase_parameters::getPostOrGetParameter('network');
-        $checked = is_array($checked) ? $checked : array();
+        $checked = is_array($checked) ? $checked : [];
 
         $uid = $account->getUid();
         $title = $account->getName();
 
-        $row = array();
+        $row = [];
 
-        $html  = '';
+        $html = '';
         $html .= '<input type="checkbox"';
-        $html .= ' name="network[' . $uid . ']"';
-        $html .= ' id="network_' . $uid . '"';
-        $html .= ' value="' . $uid . '"';
+        $html .= ' name="network['.$uid.']"';
+        $html .= ' id="network_'.$uid.'"';
+        $html .= ' value="'.$uid.'"';
         $html .= empty($checked[$uid]) ? '' : ' checked="checked"';
         $html .= ' /> ';
         $row[] = $html;
 
-        $html  = '';
+        $html = '';
         $html .= $mod->getFormTool()->createEditLink($account->getTableName(), $uid, '');
-        $html .= ' <label for="network_' . $uid . '">';
-        $html .= ' <strong>' . $title . '</strong>';
+        $html .= ' <label for="network_'.$uid.'">';
+        $html .= ' <strong>'.$title.'</strong>';
         $html .= ' </label>';
         $row[] = $html;
 
@@ -440,5 +445,5 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Trigger.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Trigger.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Trigger.php'];
 }

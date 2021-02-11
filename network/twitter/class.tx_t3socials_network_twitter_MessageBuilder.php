@@ -24,12 +24,9 @@
 
 tx_rnbase::load('tx_t3socials_network_MessageBuilder');
 
-
 /**
- * Message Builder für eine Twittermeldung
+ * Message Builder für eine Twittermeldung.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -37,11 +34,11 @@ tx_rnbase::load('tx_t3socials_network_MessageBuilder');
  */
 class tx_t3socials_network_twitter_MessageBuilder extends tx_t3socials_network_MessageBuilder
 {
-
     /**
      * Liefert den Verbinder zwischen Titel und Content.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return int
      */
     protected function getContentDelimiter(tx_t3socials_models_IMessage $message)
@@ -51,9 +48,10 @@ class tx_t3socials_network_twitter_MessageBuilder extends tx_t3socials_network_M
 
     /**
      * Liefert die Maximale Anzahl an Zeichen für den Inhalt.
-     * 0 = Unlimited
+     * 0 = Unlimited.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return int
      */
     protected function getMaxContentLength(tx_t3socials_models_IMessage $message)
@@ -64,16 +62,17 @@ class tx_t3socials_network_twitter_MessageBuilder extends tx_t3socials_network_M
     }
 
     /**
-     * Convert HTML to plain text
+     * Convert HTML to plain text.
      *
      * Removes HTML tags and HTML comments and converts HTML entities
      * to their applicable characters.
      *
      * @param string $text
      * @param array $options
+     *
      * @return string Converted string (utf8-encoded)
      */
-    protected function html2plain($text, array $options = array())
+    protected function html2plain($text, array $options = [])
     {
         // for Twitter remove the linebreaks!
         if (empty($options['lineendings'])) {
@@ -87,7 +86,5 @@ class tx_t3socials_network_twitter_MessageBuilder extends tx_t3socials_network_M
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php'];
 }

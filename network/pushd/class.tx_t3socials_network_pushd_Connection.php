@@ -26,18 +26,16 @@ tx_rnbase::load('tx_t3socials_network_IConnection');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
 /**
- * Pushd Connection
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
+ * Pushd Connection.
+ *
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_IConnection
 {
-
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      *
      * @see tx_t3socials_network_IConnection::setNetwork()
      *
@@ -49,7 +47,7 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
     }
 
     /**
-     * Returns the network account
+     * Returns the network account.
      *
      * @return tx_t3socials_models_Network
      */
@@ -59,16 +57,18 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @see tx_t3socials_network_IConnection::sendMessage()
-     * @return null|string with error
+     *
+     * @return string|null with error
      */
     public function sendMessage(tx_t3socials_models_IMessage $message)
     {
         $builder = $this->getBuilder($message->getMessageType());
-        $data = $builder->build($message, $this->getNetwork(), 'pushd.' . $message->getMessageType() . '.');
+        $data = $builder->build($message, $this->getNetwork(), 'pushd.'.$message->getMessageType().'.');
         // Der Builder entscheidet, ob etwas verschickt wird.
         if (!$data) {
             return null;
@@ -82,29 +82,29 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
         }
         // Beim Push beachten wir nur Titel und Message
         $url = $this->getNetwork()->getConfigData('pushd.url');
-        $url .= 'event/' . $event;
+        $url .= 'event/'.$event;
         // Add collapse_key for GCM
         $data['data.collapse_key'] = $event;
 
         // use key 'http' even if you send the request to https://...
-        $options = array(
-            'http' => array(
-                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                'method'  => 'POST',
+        $options = [
+            'http' => [
+                'header' => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method' => 'POST',
                 'content' => http_build_query($data),
-            ),
-        );
-        $context  = stream_context_create($options);
+            ],
+        ];
+        $context = stream_context_create($options);
         $result = file_get_contents($url, false, $context);
-        if ($result === false) {
+        if (false === $result) {
             $data = $message->getData();
             if (is_object($data) && $data->getRecord()) {
                 $message->setData($data->getRecord());
             }
             tx_rnbase_util_Logger::fatal(
-                'Error sending pushd-message (' . $message->getMessageType() . ')!',
+                'Error sending pushd-message ('.$message->getMessageType().')!',
                 't3socials',
-                array('message' => (array) $message, 'options' => $options, 'url' => $url)
+                ['message' => (array) $message, 'options' => $options, 'url' => $url]
             );
 
             return 'Error sending pushd-message';
@@ -115,19 +115,21 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
 
     /**
      * @param unknown $messageType
+     *
      * @return tx_t3socials_network_pushd_MessageBuilder
      */
     protected function getBuilder($messageType)
     {
         $network = $this->getNetwork();
-        $builderClass = $network->getConfigData('pushd.' . $messageType . '.builder');
+        $builderClass = $network->getConfigData('pushd.'.$messageType.'.builder');
         $builderClass = $builderClass ? $builderClass : 'tx_t3socials_network_pushd_MessageBuilder';
 
         return tx_rnbase::makeInstance($builderClass);
     }
 
     /**
-     * (non-PHPdoc)
+     * (non-PHPdoc).
+     *
      * @see tx_t3socials_network_IConnection::verify()
      */
     public function verify()
@@ -140,14 +142,15 @@ class tx_t3socials_network_pushd_Connection implements tx_t3socials_network_ICon
      * Leider nur die Anzahl der Nachrichten.
      *
      * @param string $event
+     *
      * @return bool
      */
     public function getEventStatus($event)
     {
         $url = $this->getNetwork()->getConfigData('pushd.url');
-        $url .= 'event/' . $event;
+        $url .= 'event/'.$event;
         $result = file_get_contents($url);
-        if ($result === false) {
+        if (false === $result) {
             return true;
         } else {
             return false;

@@ -25,10 +25,8 @@
 tx_rnbase::load('tx_t3socials_models_Base');
 
 /**
- * Model eines Versandstatus
+ * Model eines Versandstatus.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -47,11 +45,12 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
      * As the result the instance should be completly loaded.
      *
      * @param mixed $rowOrUid
+     *
      * @return void
      */
     public function init($rowOrUid = null)
     {
-        $rowOrUid = is_array($rowOrUid) ? $rowOrUid : array('state' => $rowOrUid);
+        $rowOrUid = is_array($rowOrUid) ? $rowOrUid : ['state' => $rowOrUid];
         $rowOrUid['uid'] = 0;
         parent::init($rowOrUid);
         $this->setState(
@@ -60,7 +59,7 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     }
 
     /**
-     * Liefert den Status
+     * Liefert den Status.
      *
      * @return int
      */
@@ -68,11 +67,13 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     {
         return $this->getProperty('state');
     }
+
     /**
-     * Setzt den status
+     * Setzt den status.
      *
      * @param int $state
      * @param mixed $error
+     *
      * @return void
      */
     public function setState($state, $error = null)
@@ -89,7 +90,7 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
                 $this->setProperty('state', self::STATE_UNKNOWN);
                 break;
         }
-        if ($error !== null) {
+        if (null !== $error) {
             if ($error instanceof Exception) {
                 $this->setMessage($error->getMessage());
                 $this->setErrorCode($error->getCode());
@@ -110,8 +111,9 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     {
         $state = $this->getProperty('state');
 
-        return $state === self::STATE_OK || $state === self::STATE_INFO;
+        return self::STATE_OK === $state || self::STATE_INFO === $state;
     }
+
     /**
      * Ist der Status FAILURE?
      *
@@ -123,7 +125,7 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     }
 
     /**
-     * Liefert den Fehlercode
+     * Liefert den Fehlercode.
      *
      * @return int
      */
@@ -133,7 +135,7 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
     }
 
     /**
-     * Liefert die Fehlermeldung
+     * Liefert die Fehlermeldung.
      *
      * @return string
      */
@@ -144,5 +146,5 @@ class tx_t3socials_models_State extends tx_t3socials_models_Base
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_State.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_State.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_State.php'];
 }

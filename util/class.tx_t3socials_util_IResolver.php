@@ -22,29 +22,26 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Resolver Interface
+ * Resolver Interface.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 interface tx_t3socials_util_IResolver
 {
-
     /**
-     * Der Resolver lädt den zu indizierenden Datensatz auf der Datenbank. D
+     * Der Resolver lädt den zu indizierenden Datensatz auf der Datenbank. D.
      *
      * @param string $tableName
      * @param int $uid
+     *
      * @return tx_t3socials_models_Base
      */
     public function getRecord($tableName, $uid);
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_IResolver.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_IResolver.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_IResolver.php'];
 }

@@ -25,22 +25,20 @@
 tx_rnbase::load('tx_t3socials_models_Base');
 
 /**
- * Model einer netzwerk Konfiguration
+ * Model einer netzwerk Konfiguration.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
 {
-
     /**
      * Inits the model instance either with uid or a complete data record.
      * As the result the instance should be completly loaded.
      *
      * @param mixed $rowOrUid
+     *
      * @return void
      */
     public function init($rowOrUid = null)
@@ -52,7 +50,7 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
         } // wir haben nur eine uid
         else {
             $this->uid = $rowOrUid;
-            $this->setProperty(array());
+            $this->setProperty([]);
         }
         $this->initConfig();
     }
@@ -79,22 +77,22 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
         if (!$this->hasProperty('description')) {
             $this->setProperty(
                 'description',
-                'Please enter the customer key into the field "Username"' .
-                ' and the customer secret into the field "Password".' . CRLF .
-                ' ###MORE###' . CRLF .
-                ' To authenticate with a specific account, you have to ' .
-                ' put the customer token in the fields "access_token" and' .
-                ' "access_token_secret" of the Configuration.' . CRLF .
-                ' You can go to the T3Socials User Tools to autehtificate.' . CRLF .
-                ' A customer end get the tokens from there.' . CRLF
+                'Please enter the customer key into the field "Username"'.
+                ' and the customer secret into the field "Password".'.CRLF.
+                ' ###MORE###'.CRLF.
+                ' To authenticate with a specific account, you have to '.
+                ' put the customer token in the fields "access_token" and'.
+                ' "access_token_secret" of the Configuration.'.CRLF.
+                ' You can go to the T3Socials User Tools to autehtificate.'.CRLF.
+                ' A customer end get the tokens from there.'.CRLF
             );
         }
         if (!$this->hasProperty('default_configuration')) {
             $this->setProperty(
                 'default_configuration',
-                $this->getProviderId() . ' {' .
-                    '    access_token = ' . CRLF .
-                    '    access_token_secret =' . CRLF .
+                $this->getProviderId().' {'.
+                    '    access_token = '.CRLF.
+                    '    access_token_secret ='.CRLF.
                 '}'
             );
         }
@@ -131,7 +129,7 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
     }
 
     /**
-     * Liefert die Beschreibung
+     * Liefert die Beschreibung.
      *
      * @return string
      */
@@ -174,5 +172,5 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_NetworkConfig.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_NetworkConfig.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_NetworkConfig.php'];
 }

@@ -25,10 +25,8 @@
 tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
 
 /**
- * Backend Modul für Nachrichtenversand
+ * Backend Modul für Nachrichtenversand.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -36,9 +34,8 @@ tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
  */
 class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
 {
-
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return  string
      */
@@ -46,8 +43,9 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
     {
         return 'communicator';
     }
+
     /**
-     * It is possible to overwrite this method and return an array of tab functions
+     * It is possible to overwrite this method and return an array of tab functions.
      *
      * @return array
      */
@@ -61,7 +59,7 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
         tx_rnbase_util_Misc::callHook(
             't3socials',
             'modCommunicator_tabItems',
-            array('tabItems' => &$menuItems),
+            ['tabItems' => &$menuItems],
             $this
         );
 
@@ -73,6 +71,7 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
      * Sonst ein Array mit den ausgewählten Werten.
      *
      * @param string &$selectorStr
+     *
      * @return array or false if not needed. Return empty array if no item found
      */
     protected function makeSubSelectors(&$selectorStr)
@@ -84,7 +83,5 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php'];
 }

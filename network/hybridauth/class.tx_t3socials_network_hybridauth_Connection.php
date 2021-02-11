@@ -26,19 +26,15 @@ tx_rnbase::load('tx_t3socials_network_Connection');
 tx_rnbase::load('tx_t3socials_network_hybridauth_Interface');
 tx_rnbase::load('tx_rnbase_util_Logger');
 
-
 /**
- * Basisklasse einer HybridAuth Verbindung
+ * Basisklasse einer HybridAuth Verbindung.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_network_hybridauth_Connection extends tx_t3socials_network_Connection implements tx_t3socials_network_hybridauth_Interface
 {
-
     /**
      * @var Hybrid_Providers_Twitter
      */
@@ -65,14 +61,14 @@ abstract class tx_t3socials_network_hybridauth_Connection extends tx_t3socials_n
         if (!$network instanceof tx_t3socials_models_Network) {
             throw new Exception('Missing network. The network has to be inject into the connection!');
         }
-        $config = array(
+        $config = [
             'enabled' => true,
             'networkUid' => $network->getUid(),
-            'keys' => array(
+            'keys' => [
                 'key' => $network->getUsername(),
                 'secret' => $network->getPassword(),
-            )
-        );
+            ],
+        ];
         $accessToken = $this->getConfigData('access_token');
         $accessTokenSecret = $this->getConfigData('access_token_secret');
         if ($accessToken && $accessTokenSecret) {
@@ -83,9 +79,8 @@ abstract class tx_t3socials_network_hybridauth_Connection extends tx_t3socials_n
         return $config;
     }
 
-
     /**
-     * Liefert den HybridAuth Provider
+     * Liefert den HybridAuth Provider.
      *
      * @return Hybrid_Provider_Adapter
      */
@@ -106,6 +101,7 @@ abstract class tx_t3socials_network_hybridauth_Connection extends tx_t3socials_n
      * Post data on Twitter using Curl.
      *
      * @param string $message
+     *
      * @return void
      */
     public function setUserStatus($message)
@@ -117,18 +113,18 @@ abstract class tx_t3socials_network_hybridauth_Connection extends tx_t3socials_n
             // try to catch error from responce
             $last = $provider->api()->last_response;
             if ($last && $last->error) {
-                $e = new Exception('HybridAuth: ' . $last->error, null, $e);
+                $e = new Exception('HybridAuth: '.$last->error, null, $e);
             }
             throw $e;
         }
 
         tx_rnbase_util_Logger::info(
-            'Status was posted to "' . $this->getHybridAuthProviderId() . '"!',
+            'Status was posted to "'.$this->getHybridAuthProviderId().'"!',
             't3socials',
-            array(
+            [
                 'status' => $message,
-                'account' => $this->getNetwork()->getName() . '(' . $this->getNetwork()->getUid() . ')'
-            )
+                'account' => $this->getNetwork()->getName().'('.$this->getNetwork()->getUid().')',
+            ]
         );
     }
 }
@@ -136,7 +132,5 @@ abstract class tx_t3socials_network_hybridauth_Connection extends tx_t3socials_n
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Connection.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Connection.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_Connection.php'];
 }

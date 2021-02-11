@@ -24,24 +24,21 @@
 
 tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
 
-
 /**
- * Message Builder für eine Twittermeldung
+ * Message Builder für eine Twittermeldung.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_MessageBuilder
 {
-
     /**
      * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
      *
      * @param tx_t3socials_models_Message $message
      * @param tx_t3socials_models_Base $model
+     *
      * @return tx_t3socials_models_IMessage
      */
     protected function buildMessage(
@@ -62,6 +59,7 @@ class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_Mess
      * @param tx_t3socials_models_IMessage &$message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
+     *
      * @return void
      */
     public function prepareMessageForNetwork(
@@ -69,7 +67,7 @@ class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_Mess
         tx_t3socials_models_Network $network,
         tx_t3socials_models_TriggerConfig $trigger
     ) {
-        $confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
+        $confId = $network->getNetwork().'.'.$trigger->getTriggerId().'.';
 
         tx_rnbase::load('tx_rnbase_util_Misc');
         $tsfe = tx_rnbase_util_Misc::prepareTSFE();
@@ -79,9 +77,9 @@ class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_Mess
         $link = $config->createLink();
         // tx_ttnews[tt_news]
         $link->designator('tx_ttnews');
-        $link->initByTS($config, $confId . 'link.show.', array('tt_news' => $news->getUid()));
+        $link->initByTS($config, $confId.'link.show.', ['tt_news' => $news->getUid()]);
         // wenn nicht anders konfiguriert, immer eine absolute url setzen!
-        if (!$config->get($confId . 'link.show.absurl')) {
+        if (!$config->get($confId.'link.show.absurl')) {
             $link->setAbsUrl(true);
         }
         tx_rnbase::load('tx_t3socials_util_Link');
@@ -92,5 +90,5 @@ class tx_t3socials_trigger_news_MessageBuilder extends tx_t3socials_trigger_Mess
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_MessageBuilder.php'];
 }

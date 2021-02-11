@@ -25,23 +25,20 @@
 tx_rnbase::load('tx_t3socials_network_hybridauth_OAuthCall');
 
 /**
- * HybridAut Utilities
+ * HybridAut Utilities.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_HybridAuth
 {
-
     /**
      * Enables the HybridAuth.LOG.
      * This Log will be written in the root of the t3socials extension.
-     * tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG'
+     * tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG'.
      *
-     * @var boolean
+     * @var bool
      */
     const DEBUG_ENABLED = false;
 
@@ -49,11 +46,12 @@ class tx_t3socials_network_HybridAuth
      * Liefert die Basiskonfiguration für HybridAuth.
      *
      * @param array $providers
+     *
      * @return array
      */
-    private static function getBasicConfiguration(array $providers = array())
+    private static function getBasicConfiguration(array $providers = [])
     {
-        $basic = array(
+        $basic = [
             'base_url' => tx_t3socials_network_hybridauth_OAuthCall::getOAuthCallBaseUrl(0),
             // if you want to enable logging, set
             // 'debug_mode' to true  then provide
@@ -61,10 +59,10 @@ class tx_t3socials_network_HybridAuth
             'debug_mode' => false,
             'debug_file' => '',
             'providers' => $providers,
-        );
+        ];
         if (self::DEBUG_ENABLED) {
             $basic['debug_mode'] = true;
-            $basic['debug_file'] = tx_rnbase_util_Extensions::extPath('t3socials') . 'HybridAuth.LOG';
+            $basic['debug_file'] = tx_rnbase_util_Extensions::extPath('t3socials').'HybridAuth.LOG';
             touch($basic['debug_file']);
         }
 
@@ -72,7 +70,7 @@ class tx_t3socials_network_HybridAuth
     }
 
     /**
-     * lädt die HybridAuth Klassen
+     * lädt die HybridAuth Klassen.
      *
      * @return void
      */
@@ -89,10 +87,12 @@ class tx_t3socials_network_HybridAuth
             );
         }
     }
+
     /**
-     * Erzeugt die HybridAuth Klasse
+     * Erzeugt die HybridAuth Klasse.
      *
      * @param array $config
+     *
      * @return Hybrid_Auth
      */
     private static function getHybridAuth($config)
@@ -108,26 +108,29 @@ class tx_t3socials_network_HybridAuth
      * @param string $providerId
      * @param string $token
      * @param string $secret
+     *
      * @return void
      */
     private static function storeAccesToken($providerId, $token, $secret)
     {
-        $key = 'hauth_session.' . $providerId . '.';
+        $key = 'hauth_session.'.$providerId.'.';
         self::loadHybridAuth();
         // store the keys
-        Hybrid_Auth::storage()->set($key . 'token.access_token', $token);
-        Hybrid_Auth::storage()->set($key . 'token.access_token_secret', $secret);
+        Hybrid_Auth::storage()->set($key.'token.access_token', $token);
+        Hybrid_Auth::storage()->set($key.'token.access_token_secret', $secret);
         // set the user as loged in!
-        Hybrid_Auth::storage()->set($key . 'is_logged_in', 1);
+        Hybrid_Auth::storage()->set($key.'is_logged_in', 1);
     }
+
     /**
      * Meldet anhand von OAuth Token einen bestimmten Nutzer automatich an.
      *
      * @param string $providerId
      * @param array $config
+     *
      * @return void
      */
-    private static function storeTokenByConfig($providerId, array $config = array())
+    private static function storeTokenByConfig($providerId, array $config = [])
     {
         if (isset($config['keys']['access_token'])
             || isset($config['keys']['access_token_secret'])
@@ -145,12 +148,13 @@ class tx_t3socials_network_HybridAuth
      *
      * @param string $providerId
      * @param array $config
+     *
      * @return Hybrid_Provider_Adapter
      */
-    public static function getProvider($providerId, array $config = array())
+    public static function getProvider($providerId, array $config = [])
     {
         $allConfigurations = self::getBasicConfiguration(
-            array($providerId => $config)
+            [$providerId => $config]
         );
         // aktuele network id an die base url anhängen
         $allConfigurations['base_url']
@@ -189,5 +193,5 @@ class tx_t3socials_network_HybridAuth
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php'];
 }

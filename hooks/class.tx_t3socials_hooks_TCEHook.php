@@ -24,17 +24,14 @@
 tx_rnbase::load('tx_rnbase_util_Typo3Classes');
 
 /**
- * TCE-HOOK
+ * TCE-HOOK.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_hooks
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_hooks_TCEHook
 {
-
     /**
      * Nachbearbeitungen, unmittelbar NACHDEM die Daten gespeichert wurden.
      *
@@ -43,6 +40,7 @@ class tx_t3socials_hooks_TCEHook
      * @param int $id
      * @param array $fieldArray
      * @param TYPO3\CMS\Core\DataHandling\DataHandler &$tcemain
+     *
      * @return void
      */
     public function processDatamap_afterDatabaseOperations(
@@ -58,14 +56,14 @@ class tx_t3socials_hooks_TCEHook
                 // wurden daten geändert?
                 && !empty($tcemain->datamap)
                 // befinden wir uns im live workspace?
-                && $tcemain->BE_USER->workspace === 0
+                && 0 === $tcemain->BE_USER->workspace
                 // nur beim command new und update!
-                && ($status == 'new' || $status == 'update')
+                && ('new' == $status || 'update' == $status)
             )
         ) {
             return;
         }
-        if ($status == 'new') {
+        if ('new' == $status) {
             $id = $tcemain->substNEWwithIDs[$id];
         }
 
@@ -75,14 +73,16 @@ class tx_t3socials_hooks_TCEHook
 
     /**
      * Hook after performing different record actions in Typo3 backend:
-     * Update indexes according to the just performed action
+     * Update indexes according to the just performed action.
      *
      * @param string $command
      * @param string $table
      * @param int $id
      * @param int $value
      * @param TYPO3\CMS\Core\DataHandling\DataHandler $tce
+     *
      * @return void
+     *
      * @todo Treatment of any additional actions necessary?
      */
     public function processCmdmap_postProcess(
@@ -96,9 +96,9 @@ class tx_t3socials_hooks_TCEHook
                 // gibts trigger für die Tabelle?
                 $this->isTriggerable($table)
                 // wurden änderungen am workspace gemacht?
-                && $command == 'version'
+                && 'version' == $command
                 // wurde die version ausgetauscht?
-                && $value['action'] === 'swap'
+                && 'swap' === $value['action']
                 && $value['swapWith'] > 0
             )
         ) {
@@ -113,6 +113,7 @@ class tx_t3socials_hooks_TCEHook
      * Prüft, ob die übergebene Tabelle Trigger haben kann.
      *
      * @param string $table
+     *
      * @return string
      */
     protected function isTriggerable($table)
@@ -127,6 +128,7 @@ class tx_t3socials_hooks_TCEHook
      *
      * @param string $table
      * @param int $uid
+     *
      * @return void
      */
     protected function handleAutoSend($table, $uid)
@@ -149,6 +151,7 @@ class tx_t3socials_hooks_TCEHook
      *
      * @param string $table
      * @param int $uid
+     *
      * @return void
      *
      * @todo seit TYPO3 7.6 wird auf die nachricht htmlspecialchars ausgeführt. Dadurch
@@ -167,30 +170,30 @@ class tx_t3socials_hooks_TCEHook
             tx_rnbase::load('Tx_Rnbase_Backend_Utility');
             $url = Tx_Rnbase_Backend_Utility::getModuleUrl(
                 'user_txt3socialsM1',
-                array(
+                [
                         'returnUrl' => rawurlencode(tx_rnbase_util_Misc::getIndpEnv('REQUEST_URI')),
-                        'SET' => array(
+                        'SET' => [
                             'function' => 'tx_t3socials_mod_Trigger',
                             'trigger' => reset($triggers),
-                            'resource' => (int) $uid
-                        )
-                    ),
+                            'resource' => (int) $uid,
+                        ],
+                    ],
                 ''
             );
-            $msg  = 'Sie können das eben gespeicherte Element über ' .
-                    'T3 SOCIALS an verschiedene Dienste senden. ' .
-                    'Wechseln Sie in das BE Modul von T3 SOCIALS oder rufen Sie die folgende URL auf, um die Nachricht ' .
-                    'anzupassen und einen manuellen Versand durchzuführen: ' . $url
+            $msg = 'Sie können das eben gespeicherte Element über '.
+                    'T3 SOCIALS an verschiedene Dienste senden. '.
+                    'Wechseln Sie in das BE Modul von T3 SOCIALS oder rufen Sie die folgende URL auf, um die Nachricht '.
+                    'anzupassen und einen manuellen Versand durchzuführen: '.$url
             ;
             $flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
-            $message = array(
+            $message = [
                 'message' => $msg,
                 'title' => 'T3 SOCIALS',
                 'severity' => $flashMessageClass::INFO,
                 // Damit die meldung auch bei akttionen wie
                 // speichern und schließen" ausgegeben wird.
                 'storeinsession' => true,
-            );
+            ];
             tx_rnbase::load('tx_t3socials_util_Message');
             tx_t3socials_util_Message::showFlashMessage($message);
         }
@@ -200,7 +203,5 @@ class tx_t3socials_hooks_TCEHook
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php'];
 }

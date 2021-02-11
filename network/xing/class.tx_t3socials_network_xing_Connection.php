@@ -24,21 +24,17 @@
 
 tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
 
-
 /**
- * XING Connector
+ * XING Connector.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_xing_Connection extends tx_t3socials_network_hybridauth_Connection
 {
-
     /**
-     * Liefert den Klassennamen der Message Builder Klasse
+     * Liefert den Klassennamen der Message Builder Klasse.
      *
      * @return string
      */
@@ -49,5 +45,5 @@ class tx_t3socials_network_xing_Connection extends tx_t3socials_network_hybridau
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php'];
 }

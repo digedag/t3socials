@@ -25,19 +25,16 @@
 tx_rnbase::load('tx_t3socials_tests_Util');
 
 /**
- * Mock Util für Tests
+ * Mock Util für Tests.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_tests
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_tests_Mock
 {
-
     /**
-     * Liefert ein Message Model
+     * Liefert ein Message Model.
      *
      * @return tx_t3socials_models_Message
      */
@@ -47,20 +44,20 @@ class tx_t3socials_tests_Mock
         tx_rnbase::load('tx_t3socials_models_Message');
 
         return tx_t3socials_models_Message::getInstance(
-            array(
+            [
                 'message_type' => 'manually',
                 'headline' => 'Überschrift',
-                'intro' => 'Intro.' . CRLF .
-                        'Enthält bevorzugten Text.' . CRLF . $lorem,
-                'message' => 'Message.' . CRLF .
-                            'Enthält Text, der genutzt wird wenn kein Into existiert.' . CRLF . $lorem,
+                'intro' => 'Intro.'.CRLF.
+                        'Enthält bevorzugten Text.'.CRLF.$lorem,
+                'message' => 'Message.'.CRLF.
+                            'Enthält Text, der genutzt wird wenn kein Into existiert.'.CRLF.$lorem,
                 'url' => 'http://www.dmk-ebusiness.de/',
                 'data' => null,
-            )
+            ]
         );
     }
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/class.tx_t3socials_tests_Mock.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/class.tx_t3socials_tests_Mock.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/tests/class.tx_t3socials_tests_Mock.php'];
 }

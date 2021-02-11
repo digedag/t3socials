@@ -24,22 +24,20 @@
 tx_rnbase::load('tx_rnbase_util_Misc');
 
 /**
- * Util zum handeln von Links und URLs
+ * Util zum handeln von Links und URLs.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_util
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_util_Link
 {
-
     /**
      * Erzeugt eine URl anhand eines Link Objekts
      * Dabei wird die Ausführung von RealURL geprüft!
      *
      * @param tx_rnbase_util_Link $linkObject
+     *
      * @return string
      */
     public static function getRealUrlAbsUrlForLink(
@@ -71,13 +69,13 @@ class tx_t3socials_util_Link
         $link->setAbsUrl(false);
 
         // parameter für die PostProc sammeln
-        $ld = array('totalURL' => $link->makeUrl(false));
-        $params = array(
+        $ld = ['totalURL' => $link->makeUrl(false)];
+        $params = [
             // hier steckt nur die url drin!
             'LD' => &$ld,
             // das ist notwendig, wenn der link aus dem BE heraus erzeugt werden soll!
             'TCEmainHook' => true,
-        );
+        ];
         // jetzt die hooks aufrufen (unter anderem realurl)
         tx_rnbase::load('tx_rnbase_util_Misc');
         tx_rnbase::load('tx_rnbase_util_Typo3Classes');
@@ -91,5 +89,5 @@ class tx_t3socials_util_Link
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Link.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Link.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_Link.php'];
 }

@@ -25,22 +25,20 @@
 tx_rnbase::load('tx_t3socials_models_Base');
 
 /**
- * Model einer trigger Konfiguration
+ * Model einer trigger Konfiguration.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
 {
-
     /**
      * Inits the model instance either with uid or a complete data record.
      * As the result the instance should be completly loaded.
      *
      * @param mixed $rowOrUid
+     *
      * @return void
      */
     public function init($rowOrUid = null)
@@ -53,7 +51,7 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
         } // wir haben nur eine uid
         else {
             $this->uid = $rowOrUid;
-            $this->setProperty(array());
+            $this->setProperty([]);
         }
         $this->initConfig();
     }
@@ -95,7 +93,7 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
     }
 
     /**
-     * Liefert den tamen der Tabelle des Triggers
+     * Liefert den tamen der Tabelle des Triggers.
      *
      * @return string
      */
@@ -123,8 +121,10 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
     {
         return $this->getProperty('resolver');
     }
+
     /**
      * Doppelter Versand kann automatisch verhindert werden.
+     *
      * @return bool
      */
     public function isDoubleSentAllowed()
@@ -136,5 +136,5 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php'];
 }

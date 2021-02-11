@@ -22,24 +22,22 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Netzwerk Config
+ * Netzwerk Config.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_Config
 {
-    private static $networks = array();
+    private static $networks = [];
 
     /**
-     * Wir registrieren ein neues Netzwerk
+     * Wir registrieren ein neues Netzwerk.
      *
      * @param string $connectionClass
+     *
      * @return void
      */
     public static function registerNetwork($config)
@@ -47,14 +45,11 @@ class tx_t3socials_network_Config
         if (!$config instanceof tx_t3socials_models_NetworkConfig) {
             $config = (string) $config;
             if (!tx_rnbase::load($config)) {
-                throw new Exception('Could not load network configuration: ' . $config);
+                throw new Exception('Could not load network configuration: '.$config);
             }
             $config = tx_rnbase::makeInstance($config, $config);
             if (!$config instanceof tx_t3socials_models_NetworkConfig) {
-                throw new Exception(
-                    'The network configuration "' . get_class($config) .
-                    '" has to implement the interface "tx_t3socials_models_NetworkConfig".'
-                );
+                throw new Exception('The network configuration "'.get_class($config).'" has to implement the interface "tx_t3socials_models_NetworkConfig".');
             }
         }
 
@@ -63,7 +58,7 @@ class tx_t3socials_network_Config
     }
 
     /**
-     * Liefert alle Netzwerk ID's
+     * Liefert alle Netzwerk ID's.
      *
      * @return array
      */
@@ -76,14 +71,16 @@ class tx_t3socials_network_Config
      * Liefert eine Netzwerkkonfiguration eines bestimmten Netzwerks.
      *
      * @param string|tx_t3socials_models_Network $network
+     *
      * @throws Exception
+     *
      * @return tx_t3socials_models_NetworkConfig
      */
     public static function getNetworkConfig($network)
     {
         $id = $network instanceof tx_t3socials_models_Network ? $network->getNetwork() : $network;
         if (!isset(self::$networks[$id])) {
-            throw new Exception('Unknown network type: ' . $id);
+            throw new Exception('Unknown network type: '.$id);
         }
 
         return self::$networks[$id];
@@ -96,7 +93,7 @@ class tx_t3socials_network_Config
      */
     public static function getNewtorkCommunicators()
     {
-        $return = array();
+        $return = [];
         /* @var $config tx_t3socials_models_NetworkConfig */
         foreach (self::$networks as $config) {
             $class = $config->getCommunicatorClass();
@@ -105,10 +102,7 @@ class tx_t3socials_network_Config
             }
             $communicator = tx_rnbase::makeInstance($class);
             if (!$communicator instanceof tx_rnbase_mod_IModHandler) {
-                throw new Exception(
-                    'The $communicator "' . get_class($communicator) .
-                    '" has to implement the interface "tx_rnbase_mod_IModHandler".'
-                );
+                throw new Exception('The $communicator "'.get_class($communicator).'" has to implement the interface "tx_rnbase_mod_IModHandler".');
             }
             $return[] = $communicator;
         }
@@ -120,20 +114,19 @@ class tx_t3socials_network_Config
      * Liefert ein Connector für ein Konfigurierter-Netzwerk.
      *
      * @param string|tx_t3socials_models_Network $network
+     *
      * @throws Exception
+     *
      * @return tx_t3socials_network_IConnection
      */
     public static function getNetworkConnection($network)
     {
         if ($network instanceof tx_t3socials_models_Network) {
-            $class = $network->getConfigData($network->getNetwork() . '.connection');
+            $class = $network->getConfigData($network->getNetwork().'.connection');
             if ($class) {
                 $con = tx_rnbase::makeInstance($class);
                 if (!$con instanceof tx_t3socials_network_IConnection) {
-                    throw new Exception(
-                        'The connection "' . get_class($con) .
-                        '" has to implement the interface "tx_t3socials_network_IConnection".'
-                    );
+                    throw new Exception('The connection "'.get_class($con).'" has to implement the interface "tx_t3socials_network_IConnection".');
                 }
                 // Auch hier das Netzwerk setzen...
                 $con->setNetwork($network);
@@ -144,14 +137,11 @@ class tx_t3socials_network_Config
         $config = self::getNetworkConfig($network);
         $class = $config->getConnectorClass();
         if (!tx_rnbase::load($class)) {
-            throw new Exception('Could not load network connection: ' . $class);
+            throw new Exception('Could not load network connection: '.$class);
         }
         $con = tx_rnbase::makeInstance($class);
         if (!$con instanceof tx_t3socials_network_IConnection) {
-            throw new Exception(
-                'The connection "' . get_class($con) .
-                '" has to implement the interface "tx_t3socials_network_IConnection".'
-            );
+            throw new Exception('The connection "'.get_class($con).'" has to implement the interface "tx_t3socials_network_IConnection".');
         }
         if ($network instanceof tx_t3socials_models_Network) {
             $con->setNetwork($network);
@@ -160,7 +150,6 @@ class tx_t3socials_network_Config
         return $con;
     }
 
-
     /**
      * Übersetzt eine NetzwerkID zu einem Titel.
      *
@@ -168,6 +157,7 @@ class tx_t3socials_network_Config
      *  damit jedes Netzwerk seinen eigenen Titel definieren kann!
      *
      * @param string|tx_t3socials_models_Network $network
+     *
      * @return string
      */
     public static function translateNetwork($network)
@@ -175,8 +165,8 @@ class tx_t3socials_network_Config
         $id = $network instanceof tx_t3socials_models_Network ? $network->getNetwork() : $network;
         tx_rnbase::load('tx_rnbase_util_Misc');
         $title = tx_rnbase_util_Misc::translateLLL(
-            'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:' .
-                'tx_t3socials_network_' . $id
+            'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:'.
+                'tx_t3socials_network_'.$id
         );
 
         return empty($title) ? $id : $title;
@@ -186,5 +176,5 @@ class tx_t3socials_network_Config
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Config.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Config.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Config.php'];
 }

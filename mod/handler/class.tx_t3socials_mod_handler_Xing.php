@@ -25,19 +25,16 @@
 tx_rnbase::load('tx_t3socials_mod_handler_HybridAuth');
 
 /**
- * XING Handler
+ * XING Handler.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
 {
-
     /**
-     * liefert die network id. (twitter, xing, ...)
+     * liefert die network id. (twitter, xing, ...).
      *
      * @return string
      */
@@ -53,7 +50,7 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
      */
     protected function getVisibleFormFields()
     {
-        return array('message');
+        return ['message'];
     }
 
     /**
@@ -61,6 +58,7 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
      * um die Message anzupassen oder zu validieren.
      *
      * @param tx_t3socials_models_Message $message
+     *
      * @return tx_t3socials_models_Message|string with error message
      */
     protected function prepareMessage(tx_t3socials_models_Message $message)
@@ -70,7 +68,7 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
             $msg = $message->getMessage();
             if (strlen($msg) > 420) {
                 $info = 'Meldung zu lang. Sie dürfen maximal 420 Zeichen versenden.<br />';
-                $info .= ' Aktuell ' . strlen($msg) . ' Zeichen.';
+                $info .= ' Aktuell '.strlen($msg).' Zeichen.';
 
                 return $info;
             }
@@ -83,5 +81,5 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php'];
 }

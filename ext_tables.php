@@ -1,8 +1,8 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-    die('Access denied.');
-}
 
+if (!defined('TYPO3_MODE')) {
+    exit('Access denied.');
+}
 
 /* *** **************** *** *
  * *** BE Module Config *** *
@@ -10,7 +10,7 @@ if (!defined('TYPO3_MODE')) {
 if (TYPO3_MODE == 'BE') {
     // Einbindung einer PageTSConfig
     tx_rnbase_util_Extensions::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:' . 't3socials' . '/mod/pageTSconfig.txt">'
+        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.'t3socials'.'/mod/pageTSconfig.txt">'
     );
 
     tx_rnbase_util_Extensions::registerModule(
@@ -18,13 +18,13 @@ if (TYPO3_MODE == 'BE') {
         'web',
         'M1',
         'bottom',
-        array(),
-        array(
+        [],
+        [
             'access' => 'user,group',
             'routeTarget' => 'tx_t3socials_mod_Module',
             'icon' => 'EXT:t3socials/mod/moduleicon.png',
             'labels' => 'LLL:EXT:t3socials/mod/locallang.xml',
-        )
+        ]
     );
 
     // communicator

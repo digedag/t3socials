@@ -23,19 +23,17 @@
 ***************************************************************/
 
 /**
- * Backend Modul für t3socials
+ * Backend Modul für t3socials.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
 {
-
     /**
      * {@inheritDoc}
+     *
      * @see tx_rnbase_mod_BaseModule::init()
      */
     public function init()
@@ -46,7 +44,7 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
     }
 
     /**
-     * Method to get the extension key
+     * Method to get the extension key.
      *
      * @return string Extension key
      */

@@ -25,8 +25,6 @@
 tx_rnbase::load('tx_rnbase_util_Logger');
 
 /**
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -34,16 +32,17 @@ tx_rnbase::load('tx_rnbase_util_Logger');
 class tx_t3socials_network_pushd_MessageBuilder
 {
     /**
-     * Creates a push notification from generic message
+     * Creates a push notification from generic message.
      *
      * @param tx_t3socials_models_IMessage $message
      * @param tx_t3socials_models_Network $account
      * @param string $confId
+     *
      * @return array with title and msg
      */
     public function build($message, $account, $confId)
     {
-        $data = array();
+        $data = [];
         // alle Tags entfernen
         // Wenn ein Intro vorhanden ist, wird dieses bevorzugt.
         $msg = htmlspecialchars_decode(strip_tags(trim(
@@ -60,12 +59,13 @@ class tx_t3socials_network_pushd_MessageBuilder
     }
 
     /**
-     * Crop text. This method is taken from TYPO3 stdWrap
+     * Crop text. This method is taken from TYPO3 stdWrap.
      *
      * @param string $text
      * @param int $chars maximum length of string
      * @param string $afterstring Something like "..."
      * @param bool $crop2space crop on last space character
+     *
      * @return string
      */
     protected static function cropText($text, $chars, $afterstring, $crop2space)
@@ -77,8 +77,8 @@ class tx_t3socials_network_pushd_MessageBuilder
         $text = substr($text, 0, ($chars - strlen($afterstring)));
         $truncAt = strrpos($text, ' ');
         $text = ($truncAt && $crop2space) ?
-                    substr($text, 0, $truncAt) . $afterstring :
-                    $text . $afterstring;
+                    substr($text, 0, $truncAt).$afterstring :
+                    $text.$afterstring;
 
         return $text;
     }
@@ -87,7 +87,5 @@ class tx_t3socials_network_pushd_MessageBuilder
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php'];
 }

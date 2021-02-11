@@ -26,10 +26,8 @@ tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
 tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 
 /**
- * Backend Modul für Nachrichtenversand
+ * Backend Modul für Nachrichtenversand.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_mod
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
@@ -42,7 +40,7 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
     private $resourceModel = false;
 
     /**
-     * Method getFuncId
+     * Method getFuncId.
      *
      * @return  string
      */
@@ -51,14 +49,14 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
         return 'trigger';
     }
 
-
     /**
-     * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
+     * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen.
      *
      * @param string $template
      * @param tx_rnbase_configurations &$configurations
      * @param tx_rnbase_util_FormatUtil &$formatter
      * @param tx_rnbase_util_FormTool $formTool
+     *
      * @return string
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
@@ -67,14 +65,14 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
             // @TODO: das funktioniert noch nicht wie es soll.
             // daten bleiben teilweise erhalten
             Tx_Rnbase_Backend_Utility::getModuleData(
-                array('resource' => ''),
-                array('resource' => ''),
+                ['resource' => ''],
+                ['resource' => ''],
                 $this->getModule()->getName()
             );
             $this->resourceModel = null;
         }
 
-        $markerArray = array();
+        $markerArray = [];
 
         $subOut = '';
         if ($this->getTrigger() && $this->getResource()) {
@@ -89,14 +87,14 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
         $returnUrl = tx_rnbase_parameters::getPostOrGetParameter('returnUrl');
         if ($returnUrl) {
             // returnUrl weiter geben!
-            $content .= '<p style="position:absolute; top:-5000px; left:-5000px;">' .
-                    '<input type="hidden" value="' . $returnUrl . '" />' .
+            $content .= '<p style="position:absolute; top:-5000px; left:-5000px;">'.
+                    '<input type="hidden" value="'.$returnUrl.'" />'.
                 '</p>';
             // zurück button an return url generieren.
-            $markerArray['###BTN_BACK###'] = '<input type="submit"' .
-                ' value="###LABEL_BTN_BACK###"' .
-                ' name="trigger_back_resourceselector"' .
-                ' onclick="window.location.href=\'' . rawurldecode($returnUrl) . '\'; return false;"' .
+            $markerArray['###BTN_BACK###'] = '<input type="submit"'.
+                ' value="###LABEL_BTN_BACK###"'.
+                ' name="trigger_back_resourceselector"'.
+                ' onclick="window.location.href=\''.rawurldecode($returnUrl).'\'; return false;"'.
                 ' />';
         }
 
@@ -115,14 +113,14 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
         return $content;
     }
 
-
     /**
-     * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
+     * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen.
      *
      * @param string $template
      * @param tx_rnbase_configurations &$configurations
      * @param tx_rnbase_util_FormatUtil &$formatter
      * @param array &$markerArray
+     *
      * @return string
      */
     protected function showResourceSelector($template, &$configurations, &$formatter, &$markerArray)
@@ -132,20 +130,22 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
 
         return $template;
     }
+
     /**
-     * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen
+     * Kindklassen implementieren diese Methode um den Modulinhalt zu erzeugen.
      *
      * @param string $template
      * @param tx_rnbase_configurations &$configurations
      * @param tx_rnbase_util_FormatUtil &$formatter
      * @param array &$markerArray
+     *
      * @return string
      */
     protected function showNetworks($template, &$configurations, &$formatter, &$markerArray)
     {
         $module = $this->getModule();
 
-        $options = array();
+        $options = [];
         /* @var $handler tx_t3socials_mod_handler_Trigger */
         $handler = tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger');
         $handler->setTriggerConfig($this->getTrigger());
@@ -169,13 +169,13 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     * Liefert den aktuell gewählten Trigger
+     * Liefert den aktuell gewählten Trigger.
      *
      * @return tx_t3socials_models_TriggerConfig
      */
     protected function getTrigger()
     {
-        if ($this->triggerConfig === false) {
+        if (false === $this->triggerConfig) {
             $this->triggerConfig = null;
             $triggerMenu = $this->getTriggerSelector();
             $triggerId = $triggerMenu['value'];
@@ -186,6 +186,7 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
 
         return $this->triggerConfig;
     }
+
     /**
      * Liefert die den aktuell gewählten Datensatze.
      *
@@ -193,7 +194,7 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
      */
     protected function getResource()
     {
-        if ($this->resourceModel === false) {
+        if (false === $this->resourceModel) {
             $this->resourceModel = null;
             $trigger = $this->getTrigger();
             if ($trigger) {
@@ -210,15 +211,15 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
     }
 
     /**
-     * Returns the trigger selector
+     * Returns the trigger selector.
      *
      * @return array
      */
     private function getTriggerSelector()
     {
-        if ($this->triggerSelector === false) {
+        if (false === $this->triggerSelector) {
             $module = $this->getModule();
-            $entries = array('' => '');
+            $entries = ['' => ''];
             $trigger = tx_t3socials_trigger_Config::getTriggerIds();
             sort($trigger);
             foreach ($trigger as $k) {
@@ -247,9 +248,8 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
         return $menue['menu'];
     }
 
-
     /**
-     * Returns resource selector
+     * Returns resource selector.
      *
      * @TODO: das muss anders gestaltet werden!
      * Die Liste kann sehr, sehr lang und unübersichtlich werden.
@@ -260,7 +260,7 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
      */
     private function getResourceSelector()
     {
-        if ($this->resourceSelector === false) {
+        if (false === $this->resourceSelector) {
             $this->resourceSelector = null;
             $trigger = $this->getTrigger();
 
@@ -268,13 +268,13 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
                 $rows = [];
                 $module = $this->getModule();
                 $tableName = $trigger->getTableName();
-                if($tableName) {
+                if ($tableName) {
                     // Not every trigger config is based on database tables!
                     $labelField = $GLOBALS['TCA'][$tableName]['ctrl']['label'];
 
                     $options = [];
-                    $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect (
-                        'uid,' . $labelField,
+                    $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect(
+                        'uid,'.$labelField,
                         $trigger->getTableName(),
                         $options
                     );
@@ -311,5 +311,5 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php'];
 }

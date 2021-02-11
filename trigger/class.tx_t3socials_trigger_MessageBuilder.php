@@ -26,19 +26,16 @@ tx_rnbase::load('tx_t3socials_trigger_IMessageBuilder');
 tx_rnbase::load('tx_t3socials_models_Message');
 
 /**
- * Message Builder für einen Record
+ * Message Builder für einen Record.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigger_IMessageBuilder
 {
-
     /**
-     * Triger Konfiguration
+     * Triger Konfiguration.
      *
      * @var tx_t3socials_models_TriggerConfig
      */
@@ -50,6 +47,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
      *
      * @param tx_t3socials_models_Message $message
      * @param tx_t3socials_models_Base $model
+     *
      * @return tx_t3socials_models_IMessage
      */
     abstract protected function buildMessage(
@@ -61,6 +59,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
      * Erzeugt eine generische Nachricht für den versand über die Netzwerke.
      *
      * @param tx_t3socials_models_Base $model
+     *
      * @return tx_t3socials_models_IMessage
      */
     public function buildGenericMessage(
@@ -73,9 +72,10 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
     }
 
     /**
-     * Liefert eine Instanz des Objekts
+     * Liefert eine Instanz des Objekts.
      *
      * @param array|string $messageType
+     *
      * @return tx_t3socials_models_Message
      */
     protected function makeMessage($messageType = null)
@@ -91,6 +91,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
      * @param tx_t3socials_models_IMessage &$message
      * @param tx_t3socials_models_Network $network
      * @param tx_t3socials_models_TriggerConfig $trigger
+     *
      * @return void
      */
     public function prepareMessageForNetwork(
@@ -98,8 +99,8 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
         tx_t3socials_models_Network $network,
         tx_t3socials_models_TriggerConfig $trigger
     ) {
-        $confId = $network->getNetwork() . '.' . $trigger->getTriggerId() . '.';
-        $message->setUrl($network->getConfigData($confId . 'message.url'));
+        $confId = $network->getNetwork().'.'.$trigger->getTriggerId().'.';
+        $message->setUrl($network->getConfigData($confId.'message.url'));
     }
 
     /**
@@ -116,6 +117,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
      * Setzt den aktuellen Trigger.
      *
      * @param tx_t3socials_models_TriggerConfig $trigger
+     *
      * @return void
      */
     public function setTrigger(
@@ -136,5 +138,5 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
 }
 
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_MessageBuilder.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_MessageBuilder.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_MessageBuilder.php'];
 }

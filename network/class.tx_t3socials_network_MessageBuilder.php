@@ -22,12 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
- * Basis Message Builder
+ * Basis Message Builder.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -35,23 +32,24 @@
  */
 class tx_t3socials_network_MessageBuilder
 {
-
     /**
      * Liefert den Verbinder zwischen Titel und Content.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return int
      */
     protected function getContentDelimiter(tx_t3socials_models_IMessage $message)
     {
-        return CRLF . CRLF;
+        return CRLF.CRLF;
     }
 
     /**
      * Liefert die Maximale Anzahl an Zeichen für den Inhalt.
-     * 0 = Unlimited
+     * 0 = Unlimited.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return int
      */
     protected function getMaxContentLength(tx_t3socials_models_IMessage $message)
@@ -63,6 +61,7 @@ class tx_t3socials_network_MessageBuilder
      * Liefert den text, der angehängt werden soll, wenn der Content zu kurz ist.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return string
      */
     protected function getCropAfterString(tx_t3socials_models_IMessage $message)
@@ -70,11 +69,11 @@ class tx_t3socials_network_MessageBuilder
         return ' ...';
     }
 
-
     /**
      * Erzeugt anhand einers Message Models eine Statusmeldung.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return string|array string with message or array with post data
      */
     public function build(tx_t3socials_models_IMessage $message)
@@ -124,6 +123,7 @@ class tx_t3socials_network_MessageBuilder
      *
      * @param string $text
      * @param string $encoding
+     *
      * @return string
      */
     protected function getStrLen($text, $encoding = 'utf-8')
@@ -134,16 +134,17 @@ class tx_t3socials_network_MessageBuilder
     }
 
     /**
-     * Convert HTML to plain text
+     * Convert HTML to plain text.
      *
      * Removes HTML tags and HTML comments and converts HTML entities
      * to their applicable characters.
      *
      * @param string $text
      * @param array $options
+     *
      * @return string Converted string (utf8-encoded)
      */
-    protected function html2plain($text, array $options = array())
+    protected function html2plain($text, array $options = [])
     {
         if (!is_string($text)) {
             return $text;
@@ -153,12 +154,12 @@ class tx_t3socials_network_MessageBuilder
         $whitespaces = isset($options['lineendings']) && !$options['lineendings'] ? false : true;
         $whitespaces = $whitespaces ? '[ \t\f]' : '\s';
 
-        $replaces = array(
+        $replaces = [
             // whitespaces durch leerzeichen ersetzen
-            '/(' . $whitespaces . '+|(<.*?>)+)/' => ' ',
+            '/('.$whitespaces.'+|(<.*?>)+)/' => ' ',
             // html kommentare entfernen
             '/<!--.*?-->/' => ' ',
-        );
+        ];
 
         return trim(
             html_entity_decode(
@@ -174,11 +175,12 @@ class tx_t3socials_network_MessageBuilder
     }
 
     /**
-     * Crop text. This modified method is taken from TYPO3 stdWrap
+     * Crop text. This modified method is taken from TYPO3 stdWrap.
      *
      * @param string $text
      * @param int $chars maximum length of string
      * @param string $afterstring Something like "..."
+     *
      * @return string
      */
     protected function cropText($text, $chars, $afterstring)
@@ -190,7 +192,7 @@ class tx_t3socials_network_MessageBuilder
         // Kürzen
         $text = substr($text, 0, ($chars - $this->getStrLen($afterstring)));
         $truncAt = strrpos($text, ' ');
-        $text = ($truncAt && $crop2space) ? substr($text, 0, $truncAt) . $afterstring : $text . $afterstring;
+        $text = ($truncAt && $crop2space) ? substr($text, 0, $truncAt).$afterstring : $text.$afterstring;
 
         return $text;
     }
@@ -199,5 +201,5 @@ class tx_t3socials_network_MessageBuilder
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_MessageBuilder.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_MessageBuilder.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_MessageBuilder.php'];
 }

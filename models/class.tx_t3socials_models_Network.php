@@ -24,12 +24,9 @@
 tx_rnbase::load('tx_rnbase_util_Typo3Classes');
 tx_rnbase::load('tx_t3socials_models_Base');
 
-
 /**
- * Das Netzwerk Model
+ * Das Netzwerk Model.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_models
  * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -37,7 +34,6 @@ tx_rnbase::load('tx_t3socials_models_Base');
  */
 class tx_t3socials_models_Network extends tx_t3socials_models_Base
 {
-
     /**
      * @var tx_rnbase_configurations
      */
@@ -48,6 +44,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
      * As the result the instance should be completly loaded.
      *
      * @param mixed $rowOrUid
+     *
      * @return void
      */
     public function init($rowOrUid = null)
@@ -57,7 +54,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     }
 
     /**
-     * Extract data from config
+     * Extract data from config.
      *
      * @return void
      */
@@ -74,8 +71,9 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
         $this->configurations = new tx_rnbase_configurations();
         $this->configurations->init($configArr, false, '', '');
     }
+
     /**
-     * Returns the network identifier
+     * Returns the network identifier.
      *
      * @return string
      */
@@ -83,6 +81,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     {
         return $this->getProperty('network');
     }
+
     /**
      * Liefert den Name.
      *
@@ -92,6 +91,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     {
         return $this->getProperty('name');
     }
+
     /**
      * Liefert den username.
      *
@@ -101,6 +101,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     {
         return $this->getProperty('username');
     }
+
     /**
      * Liefert das password.
      *
@@ -112,17 +113,19 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     }
 
     /**
-     * Returns configured data
+     * Returns configured data.
      *
      * @param string $confId
+     *
      * @return string|array
      */
     public function getConfigData($confId)
     {
         return $this->configurations->get($confId);
     }
+
     /**
-     * Returns the configuration for this account
+     * Returns the configuration for this account.
      *
      * @return tx_rnbase_configurations
      */
@@ -132,7 +135,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     }
 
     /**
-     * Liefert den Namen der gemappten Tabelle
+     * Liefert den Namen der gemappten Tabelle.
      *
      * @return string
      */
@@ -145,5 +148,5 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Network.php']
 ) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Network.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Network.php'];
 }

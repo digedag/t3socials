@@ -24,19 +24,15 @@
 
 tx_rnbase::load('tx_rnbase_util_SearchBase');
 
-
 /**
- * Class to search networks from database
+ * Class to search networks from database.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_search
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
 {
-
     /**
      * Kindklassen müssen ein Array bereitstellen, in denen die Aliases der
      * Tabellen zu den eigentlichen Tabellennamen gemappt werden.
@@ -51,7 +47,7 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
         tx_rnbase_util_Misc::callHook(
             't3socials',
             'search_Network_getTableMapping_hook',
-            array('tableMapping' => &$tableMapping),
+            ['tableMapping' => &$tableMapping],
             $this
         );
 
@@ -59,7 +55,7 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
     }
 
     /**
-     * Name der Basistabelle, in der gesucht wird
+     * Name der Basistabelle, in der gesucht wird.
      *
      * @return string
      */
@@ -69,7 +65,7 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
     }
 
     /**
-     * Name der Klasse, in die die Ergebnisse gemappt werden
+     * Name der Klasse, in die die Ergebnisse gemappt werden.
      *
      * @return string
      */
@@ -80,7 +76,7 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
 
     /**
      * Name des Alias' der Basistabelle, in der gesucht wird
-     * Nicht abstract wg. Abwärts-Kompatibilität
+     * Nicht abstract wg. Abwärts-Kompatibilität.
      *
      * @return string
      */
@@ -107,6 +103,7 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
      * sollte ein leerer String geliefert werden.
      *
      * @param array $tableAliases
+     *
      * @return string
      */
     protected function getJoins($tableAliases)
@@ -117,7 +114,7 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
         tx_rnbase_util_Misc::callHook(
             't3socials',
             'search_Network_getJoins_hook',
-            array('join' => &$join, 'tableAliases' => $tableAliases),
+            ['join' => &$join, 'tableAliases' => $tableAliases],
             $this
         );
 
@@ -125,7 +122,6 @@ class tx_t3socials_search_Network extends tx_rnbase_util_SearchBase
     }
 }
 
-
 if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/search/class.tx_t3socials_search_Network.php']) {
-    include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/search/class.tx_t3socials_search_Network.php']);
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/search/class.tx_t3socials_search_Network.php'];
 }

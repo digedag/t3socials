@@ -25,27 +25,24 @@
 tx_rnbase::load('tx_t3socials_network_MessageBuilder');
 
 /**
- * Message Builder für eine Facebook-Meldung
+ * Message Builder für eine Facebook-Meldung.
  *
- * @package tx_t3socials
- * @subpackage tx_t3socials_network
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
 class tx_t3socials_network_facebook_MessageBuilder extends tx_t3socials_network_MessageBuilder
 {
-
-
     /**
      * Erzeugt anhand einers Message Models eine Statusmeldung.
      *
      * @param tx_t3socials_models_IMessage $message
+     *
      * @return string|array string with message or array with post data
      */
     public function build(tx_t3socials_models_IMessage $message)
     {
-        $parameters = array();
+        $parameters = [];
         $parameters['message'] = parent::build($message);
         $url = $message->getUrl();
         if (!empty($url)) {
@@ -59,7 +56,5 @@ class tx_t3socials_network_facebook_MessageBuilder extends tx_t3socials_network_
 if (defined('TYPO3_MODE') &&
     $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']
 ) {
-    include_once(
-        $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php']
-    );
+    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_facebook_MessageBuilder.php'];
 }
