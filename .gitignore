@@ -1,5 +1,11 @@
-tmp/
+
 .project
 .buildpath
 .settings
+
 HybridAuth.LOG
+
+/.Build
+/composer.lock
+/var
+/.php_cs.cache
