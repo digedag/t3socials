@@ -1,4 +1,9 @@
 <?php
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Utility\Logger;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,9 +27,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_sv1_Base');
-tx_rnbase::load('tx_rnbase_util_DB');
-
 /**
  * Service for accessing network account information.
  *
@@ -33,7 +35,7 @@ tx_rnbase::load('tx_rnbase_util_DB');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
+class tx_t3socials_srv_Network extends AbstractService
 {
     const TABLE_AUTOSEND = 'tx_t3socials_autosends';
 
@@ -131,7 +133,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
             try {
                 $error = $connection->sendMessage($message);
                 if ($error) {
-                    tx_rnbase_util_Logger::warn(
+                    Logger::warn(
                         'Error sending message! '.$msgId,
                         [
                             'error' => (string) $error,
@@ -154,7 +156,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
                     );
                 }
             } catch (Exception $e) {
-                tx_rnbase_util_Logger::fatal(
+                Logger::fatal(
                     'Error sending message! '.$msgId,
                     't3socials',
                     [
@@ -245,8 +247,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
      */
     public function search($fields, $options)
     {
-        tx_rnbase::load('tx_rnbase_util_SearchBase');
-        $searcher = tx_rnbase_util_SearchBase::getInstance('tx_t3socials_search_Network');
+        $searcher = SearchBase::getInstance('tx_t3socials_search_Network');
 
         return $searcher->search($fields, $options);
     }
@@ -263,9 +264,9 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
     {
         // enablefields gibts nicht für die tabelle
         $options['enablefieldsoff'] = 1;
-        $table = $GLOBALS['TYPO3_DB']->fullQuoteStr($table, 'tx_t3socials_autosends');
+        $table = Connection::getInstance()->fullQuoteStr($table, 'tx_t3socials_autosends');
         $options['where'] = 'recid = '.(int) $uid.' AND tablename = '.$table;
-        $result = tx_rnbase_util_DB::doSelect('count(uid) as cnt', self::TABLE_AUTOSEND, $options);
+        $result = Connection::getInstance()->doSelect('count(uid) as cnt', self::TABLE_AUTOSEND, $options);
 
         return (int) $result[0]['cnt'] > 0;
     }
@@ -288,10 +289,7 @@ class tx_t3socials_srv_Network extends tx_rnbase_sv1_Base
             'tablename' => $table,
         ];
 
-        return tx_rnbase_util_DB::doInsert(self::TABLE_AUTOSEND, $values);
+        return Connection::getInstance()->doInsert(self::TABLE_AUTOSEND, $values);
     }
 }
 
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_Network.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_Network.php'];
-}
