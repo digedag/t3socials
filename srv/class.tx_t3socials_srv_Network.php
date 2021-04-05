@@ -1,7 +1,8 @@
 <?php
-use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
+
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Search\SearchBase;
+use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use Sys25\RnBase\Utility\Logger;
 
 /***************************************************************
@@ -292,4 +293,3 @@ class tx_t3socials_srv_Network extends AbstractService
         return Connection::getInstance()->doInsert(self::TABLE_AUTOSEND, $values);
     }
 }
-
