@@ -292,4 +292,28 @@ class tx_t3socials_srv_Network extends AbstractService
 
         return Connection::getInstance()->doInsert(self::TABLE_AUTOSEND, $values);
     }
+
+    /**
+     * Find all records.
+     *
+     * @return array[Tx_Rnbase_Domain_Model_RecordInterface]
+     */
+    public function findAll()
+    {
+        return $this->search([], []);
+    }
+
+    /**
+     * Search the item for the given uid.
+     *
+     * @param int $ct
+     *
+     * @return Tx_Rnbase_Domain_Model_RecordInterface
+     */
+    public function get($uid)
+    {
+        $searcher = SearchBase::getInstance($this->getSearchClass());
+
+        return tx_rnbase::makeInstance($searcher->getWrapperClass(), $uid);
+    }
 }

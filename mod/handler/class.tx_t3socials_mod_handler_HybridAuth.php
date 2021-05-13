@@ -1,4 +1,7 @@
 <?php
+
+use Sys25\RnBase\Frontend\Request\Parameters;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -21,11 +24,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('tx_rnbase_mod_IModHandler');
-tx_rnbase::load('tx_t3socials_models_Message');
-tx_rnbase::load('tx_t3socials_mod_util_Template');
-tx_rnbase::load('tx_rnbase_util_Templates');
 
 /**
  * Basis handler für HybridAuth.
@@ -119,7 +117,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
     protected function getFormData()
     {
         if (is_null($this->formData)) {
-            $data = tx_rnbase_parameters::getPostOrGetParameter('data');
+            $data = Parameters::getPostOrGetParameter('data');
             $data = empty($data) || !is_array($data) ? [] : $data;
             $this->formData = tx_rnbase::makeInstance('tx_t3socials_models_Base', $data);
         }
@@ -159,7 +157,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
      */
     public function handleRequest(tx_rnbase_mod_IModule $mod)
     {
-        $submitted = tx_rnbase_parameters::getPostOrGetParameter($this->getSubmitName());
+        $submitted = Parameters::getPostOrGetParameter($this->getSubmitName());
         if (!$submitted) {
             return null;
         }
@@ -176,7 +174,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
             return null;
         }
 
-        $set = tx_rnbase_parameters::getPostOrGetParameter('SET');
+        $set = Parameters::getPostOrGetParameter('SET');
         $account = tx_t3socials_srv_ServiceRegistry::getNetworkService()->get(
             $set[$this->getNetworkId()]
         );
@@ -331,14 +329,8 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
         foreach ($accounts as $account) {
             $entries[$account->getUid()] = $account->getName();
         }
-        $menue = $mod->getFormTool()->showMenu($pid, $this->getNetworkId(), $mod->getName(), $entries);
+        $menue = $mod->getFormTool()->showMenu($mod->getPid(), $this->getNetworkId(), $mod->getName(), $entries);
 
         return $menue;
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_HybridAuth.php'];
 }

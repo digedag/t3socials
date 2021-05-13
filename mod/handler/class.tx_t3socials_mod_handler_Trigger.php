@@ -1,4 +1,7 @@
 <?php
+
+use Sys25\RnBase\Frontend\Request\Parameters;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -21,9 +24,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('tx_rnbase_mod_IModHandler');
-tx_rnbase::load('tx_t3socials_models_Message');
 
 /**
  * Trigger Handler.
@@ -100,7 +100,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     protected function getFormData()
     {
         if (null === $this->formData) {
-            $data = tx_rnbase_parameters::getPostOrGetParameter('data');
+            $data = Parameters::getPostOrGetParameter('data');
             $data = empty($data) || !is_array($data) ? [] : $data;
             // keine formdaten vorhanden? dann die vom record nutzen!
             if (empty($data) && $this->getTriggerConfig() && $this->getResourceModel()) {
@@ -173,12 +173,12 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      */
     public function handleRequest(tx_rnbase_mod_IModule $mod)
     {
-        $submitted = tx_rnbase_parameters::getPostOrGetParameter('sendtriggermessage');
+        $submitted = Parameters::getPostOrGetParameter('sendtriggermessage');
         if (!$submitted) {
             return null;
         }
 
-        $networks = tx_rnbase_parameters::getPostOrGetParameter('network');
+        $networks = Parameters::getPostOrGetParameter('network');
 
         // keine netzwerke / accounts gewählt
         if (empty($networks)) {
@@ -372,7 +372,6 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
         if (false === $this->accountSelector) {
             $this->accountSelector = '';
 
-            $formTool = $mod->getFormTool();
             $srv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
 
             $accounts = [];
@@ -412,7 +411,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
         tx_t3socials_models_Network $account,
         tx_rnbase_mod_IModule $mod
     ) {
-        $checked = tx_rnbase_parameters::getPostOrGetParameter('network');
+        $checked = Parameters::getPostOrGetParameter('network');
         $checked = is_array($checked) ? $checked : [];
 
         $uid = $account->getUid();
@@ -440,10 +439,4 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
 
         return $row;
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Trigger.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Trigger.php'];
 }
