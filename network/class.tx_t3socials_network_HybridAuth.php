@@ -40,7 +40,7 @@ class tx_t3socials_network_HybridAuth
      *
      * @var bool
      */
-    const DEBUG_ENABLED = false;
+    public const DEBUG_ENABLED = false;
 
     /**
      * Liefert die Basiskonfiguration für HybridAuth.

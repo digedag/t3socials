@@ -128,7 +128,7 @@ class tx_t3socials_mod_util_Template
             $out = '<br />Template ConfId: communicator.hybridauth.template';
             $out .= '<br />Configured Template: '.$configurations->get('communicator.hybridauth.template');
             $out .= '<br />Missing Subpart Template: ###HYBRIDAUTH_DEFAULT###';
-            $out .= '<br />Template: <pre>'.(htmlspecialchars($templateCode)).'</pre>';
+            $out .= '<br />Template: <pre>'.htmlspecialchars($templateCode).'</pre>';
             $mod->addMessage($out, 'Subpart not Found!', 2);
 
             return '';

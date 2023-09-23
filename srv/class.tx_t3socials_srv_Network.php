@@ -38,7 +38,7 @@ use Sys25\RnBase\Utility\Logger;
  */
 class tx_t3socials_srv_Network extends AbstractService
 {
-    const TABLE_AUTOSEND = 'tx_t3socials_autosends';
+    public const TABLE_AUTOSEND = 'tx_t3socials_autosends';
 
     /**
      * Return name of search class.

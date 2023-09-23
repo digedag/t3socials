@@ -36,11 +36,11 @@ tx_rnbase::load('tx_rnbase_util_Network');
 class tx_t3socials_network_hybridauth_OAuthCall
 {
     // prüft den status und fürt ggf. ein AUTHENTICATE durch
-    const OAUT_CALL_STATE = 'state';
+    public const OAUT_CALL_STATE = 'state';
     // prüft den status und fürt ggf. ein AUTHENTICATE durch
-    const OAUT_CALL_LOGOUT = 'logout';
+    public const OAUT_CALL_LOGOUT = 'logout';
     // authentifiziert sich mit dem service (reserviert für hybridauth)
-    const OAUT_CALL_AUTHENTICATE = 'authenticate';
+    public const OAUT_CALL_AUTHENTICATE = 'authenticate';
 
     /**
      * Liefert die URL für die OAUTH.

@@ -190,7 +190,7 @@ class tx_t3socials_network_MessageBuilder
         }
         $crop2space = true;
         // Kürzen
-        $text = substr($text, 0, ($chars - $this->getStrLen($afterstring)));
+        $text = substr($text, 0, $chars - $this->getStrLen($afterstring));
         $truncAt = strrpos($text, ' ');
         $text = ($truncAt && $crop2space) ? substr($text, 0, $truncAt).$afterstring : $text.$afterstring;
 

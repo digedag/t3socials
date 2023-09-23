@@ -105,9 +105,9 @@ class tx_t3socials_util_TCA
     private static function insertBetween($content, array &$params)
     {
         if (!(
-                isset($params['params']['insertBetween']) && is_array($params['params']['insertBetween'])
-                && !empty($content)
-            )
+            isset($params['params']['insertBetween']) && is_array($params['params']['insertBetween'])
+            && !empty($content)
+        )
         ) {
             return;
         }

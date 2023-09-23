@@ -35,7 +35,7 @@ class TwitterOAuth
     /* Set the useragnet. */
     public $useragent = 'TwitterOAuth v0.2.0-beta2';
     /* Immediately retry the API call if the response was not successful. */
-    //public $retry = TRUE;
+    // public $retry = TRUE;
 
     /**
      * Set API URLS.
@@ -240,13 +240,13 @@ class TwitterOAuth
 
         switch ($method) {
             case 'POST':
-                  curl_setopt($ci, CURLOPT_POST, true);
+                curl_setopt($ci, CURLOPT_POST, true);
                 if (!empty($postfields)) {
                     curl_setopt($ci, CURLOPT_POSTFIELDS, $postfields);
                 }
                 break;
             case 'DELETE':
-                  curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE');
+                curl_setopt($ci, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 if (!empty($postfields)) {
                     $url = "{$url}?{$postfields}";
                 }

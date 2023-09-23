@@ -74,7 +74,7 @@ class tx_t3socials_network_pushd_MessageBuilder
             return $text;
         }
         // Kürzen
-        $text = substr($text, 0, ($chars - strlen($afterstring)));
+        $text = substr($text, 0, $chars - strlen($afterstring));
         $truncAt = strrpos($text, ' ');
         $text = ($truncAt && $crop2space) ?
                     substr($text, 0, $truncAt).$afterstring :

@@ -296,10 +296,10 @@ class OAuthRequest
                   $request_headers['Content-Type'],
                   'application/x-www-form-urlencoded'
               )
-              ) {
+            ) {
                 $post_data = OAuthUtil::parse_parameters(
-                      file_get_contents(self::$POST_INPUT)
-                  );
+                    file_get_contents(self::$POST_INPUT)
+                );
                 $parameters = array_merge($parameters, $post_data);
             }
 
@@ -782,9 +782,9 @@ class OAuthDataStore
     public function new_access_token($token, $consumer, $verifier = null)
     {
         // return a new access token attached to this consumer
-    // for the user associated with this token if the request token
-    // is authorized
-    // should also invalidate the request token
+        // for the user associated with this token if the request token
+        // is authorized
+        // should also invalidate the request token
     }
 }
 

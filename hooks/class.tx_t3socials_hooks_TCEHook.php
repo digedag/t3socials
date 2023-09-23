@@ -51,15 +51,15 @@ class tx_t3socials_hooks_TCEHook
         &$tcemain
     ) {
         if (!(
-                // gibts trigger für die Tabelle?
-                $this->isTriggerable($table)
-                // wurden daten geändert?
-                && !empty($tcemain->datamap)
-                // befinden wir uns im live workspace?
-                && 0 === $tcemain->BE_USER->workspace
-                // nur beim command new und update!
-                && ('new' == $status || 'update' == $status)
-            )
+            // gibts trigger für die Tabelle?
+            $this->isTriggerable($table)
+            // wurden daten geändert?
+            && !empty($tcemain->datamap)
+            // befinden wir uns im live workspace?
+            && 0 === $tcemain->BE_USER->workspace
+            // nur beim command new und update!
+            && ('new' == $status || 'update' == $status)
+        )
         ) {
             return;
         }
@@ -93,14 +93,14 @@ class tx_t3socials_hooks_TCEHook
         $tcemain
     ) {
         if (!(
-                // gibts trigger für die Tabelle?
-                $this->isTriggerable($table)
-                // wurden änderungen am workspace gemacht?
-                && 'version' == $command
-                // wurde die version ausgetauscht?
-                && 'swap' === $value['action']
-                && $value['swapWith'] > 0
-            )
+            // gibts trigger für die Tabelle?
+            $this->isTriggerable($table)
+            // wurden änderungen am workspace gemacht?
+            && 'version' == $command
+            // wurde die version ausgetauscht?
+            && 'swap' === $value['action']
+            && $value['swapWith'] > 0
+        )
         ) {
             return;
         }

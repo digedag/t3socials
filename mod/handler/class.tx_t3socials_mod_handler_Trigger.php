@@ -192,10 +192,10 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
 
         $message = $this->getMessage();
 
-        if (!($message->getHeadline())
-            && !($message->getIntro())
-            && !($message->getMessage())
-            && !($message->getUid())
+        if (!$message->getHeadline()
+            && !$message->getIntro()
+            && !$message->getMessage()
+            && !$message->getUid()
         ) {
             $message = '###LABEL_MESSAGE_EMPTY###';
         }
