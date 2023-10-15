@@ -54,7 +54,7 @@ $t3socials_Network = [
                 'type' => 'select',
                 'renderType' => 'selectSingle',
                 'items' => [['', '']],
-                'itemsProcFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->getNetworks',
+                'itemsProcFunc' => DMK\T3socials\Utility\TcaLookup::class.'->getNetworks',
                 'size' => '1',
                 'maxitems' => '1',
             ],
@@ -93,7 +93,7 @@ $t3socials_Network = [
             'config' => [
                 'type' => 'select',
                 'renderType' => 'selectMultipleSideBySide',
-                'itemsProcFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->getTriggers',
+                'itemsProcFunc' => DMK\T3socials\Utility\TcaLookup::class.'->getTriggers',
                 'size' => '5',
                 'maxitems' => '999',
             ],
@@ -128,7 +128,7 @@ $t3socials_Network = [
             'displayCond' => 'FIELD:network:REQ:TRUE',
             'config' => [
                 'type' => 'user',
-                'userFunc' => 'EXT:t3socials/util/class.tx_t3socials_util_TCA.php:tx_t3socials_util_TCA->insertNetworkDescription',
+                'userFunc' => DMK\T3socials\Utility\TcaLookup::class.'->insertNetworkDescription',
             ],
         ],
     ],

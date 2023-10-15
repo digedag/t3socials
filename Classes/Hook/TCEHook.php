@@ -1,8 +1,11 @@
 <?php
+
+namespace DMK\T3socials\Hook;
+
 /***************************************************************
 *  Copyright notice
 *
- * (c) 2013 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2013-2023 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,7 +24,13 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Typo3Classes');
+
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Utility\Misc;
+use Sys25\RnBase\Utility\Typo3Classes;
+use tx_t3socials_srv_ServiceRegistry;
+use tx_t3socials_trigger_Config;
+use tx_t3socials_util_Message;
 
 /**
  * TCE-HOOK.
@@ -30,7 +39,7 @@ tx_rnbase::load('tx_rnbase_util_Typo3Classes');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_hooks_TCEHook
+class TCEHook
 {
     /**
      * Nachbearbeitungen, unmittelbar NACHDEM die Daten gespeichert wurden.
@@ -135,7 +144,6 @@ class tx_t3socials_hooks_TCEHook
     {
         $networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
         $states = $networkSrv->exeuteAutoSend($table, $uid);
-        tx_rnbase::load('tx_t3socials_util_Message');
         /* @var $state tx_t3socials_models_State */
         foreach ($states as $state) {
             // wir zeigen nur erfolgsmeldungen an,
@@ -166,12 +174,10 @@ class tx_t3socials_hooks_TCEHook
         // weche manuell getriggert werden können.
         // wir bauen also die nachricht zusammen
         if (!empty($networks)) {
-            tx_rnbase::load('tx_rnbase_util_Misc');
-            tx_rnbase::load('Tx_Rnbase_Backend_Utility');
-            $url = Tx_Rnbase_Backend_Utility::getModuleUrl(
+            $url = BackendUtility::getModuleUrl(
                 'user_txt3socialsM1',
                 [
-                        'returnUrl' => rawurlencode(tx_rnbase_util_Misc::getIndpEnv('REQUEST_URI')),
+                        'returnUrl' => rawurlencode(Misc::getIndpEnv('REQUEST_URI')),
                         'SET' => [
                             'function' => 'tx_t3socials_mod_Trigger',
                             'trigger' => reset($triggers),
@@ -185,7 +191,7 @@ class tx_t3socials_hooks_TCEHook
                     'Wechseln Sie in das BE Modul von T3 SOCIALS oder rufen Sie die folgende URL auf, um die Nachricht '.
                     'anzupassen und einen manuellen Versand durchzuführen: '.$url
             ;
-            $flashMessageClass = tx_rnbase_util_Typo3Classes::getFlashMessageClass();
+            $flashMessageClass = Typo3Classes::getFlashMessageClass();
             $message = [
                 'message' => $msg,
                 'title' => 'T3 SOCIALS',
@@ -194,14 +200,8 @@ class tx_t3socials_hooks_TCEHook
                 // speichern und schließen" ausgegeben wird.
                 'storeinsession' => true,
             ];
-            tx_rnbase::load('tx_t3socials_util_Message');
             tx_t3socials_util_Message::showFlashMessage($message);
         }
     }
 }
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/hooks/class.tx_t3socials_hooks_TCEHook.php'];
-}

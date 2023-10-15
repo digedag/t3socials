@@ -156,7 +156,7 @@ class tx_t3socials_srv_Network extends AbstractService
                         'Message successfully send to network! '.$msgId
                     );
                 }
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 Logger::fatal(
                     'Error sending message! '.$msgId,
                     't3socials',

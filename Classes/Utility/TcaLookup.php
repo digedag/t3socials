@@ -1,8 +1,15 @@
 <?php
+
+namespace DMK\T3socials\Utility;
+
+use Exception;
+use tx_t3socials_network_Config;
+use tx_t3socials_trigger_Config;
+
 /***************************************************************
 *  Copyright notice
 *
- * (c) 2014 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2014-2023 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -29,7 +36,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_util_TCA
+class TcaLookup
 {
     /**
      * Insert default TS configuration of the given indexer.
@@ -197,8 +204,4 @@ class tx_t3socials_util_TCA
 
         return $content;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_TCA.php'];
 }

@@ -20,7 +20,6 @@ Entweder man legt nun eine eigene Klasse an, welche von dem Basismodel erbt und 
 Die Verwendung ist dabei identisch zu der network-config eines Netzwerks.
 
 ~~~~ {.sourceCode .php}
-tx_rnbase::load('tx_t3socials_models_NetworkConfig');
 class tx_t3socials_network_twitter_NetworkConfig
    extends tx_t3socials_models_NetworkConfig {
    protected function initConfig() {
@@ -29,7 +28,7 @@ class tx_t3socials_network_twitter_NetworkConfig
       $this->setProperty('table', 'tt_news');
       $this->setProperty(
          'message_builder',
-         'tx_t3socials_trigger_news_MessageBuilder'
+         DMK\T3socials\Trigger\TtNews\MessageBuilder::class
       );
    }
 }
@@ -98,8 +97,9 @@ Dazu muss dann lediglich die Methode *buildMessage* angelegt werden.
 Hier ein kleines Beispiel für einen tt\_news Datensatz:
 
 ~~~~ {.sourceCode .php}
-tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
-class tx_t3socials_trigger_news_MessageBuilder
+namespace DMK\T3socials\Trigger\TtNews;
+
+class MessageBuilder
    extends tx_t3socials_trigger_MessageBuilder {
    protected function buildMessage(
       tx_t3socials_models_Message $message,
@@ -123,8 +123,9 @@ Die Konfiguration eines Links wird im Abschnitt accounts erklärt.
 Wie im MessageBuilder auf diese Konfiguration zugegriffen und eine dynamische URL zusammen gebaut werden kann, zeigt folgendes Beispiel:
 
 ~~~~ {.sourceCode .php}
-tx_rnbase::load('tx_t3socials_trigger_MessageBuilder');
-class tx_t3socials_trigger_news_MessageBuilder
+namespace DMK\T3socials\Trigger\TtNews;
+
+class MessageBuilder
    extends tx_t3socials_trigger_MessageBuilder {
 
    ...
@@ -153,7 +154,6 @@ class tx_t3socials_trigger_news_MessageBuilder
       }
       // wenn realURL oder eine ähnliche Extension installiert ist
       // müssen wir uns im BE um die Umwandlung der URL kümmern!
-      tx_rnbase::load('tx_t3socials_util_Link');
       $url = tx_t3socials_util_Link::getRealUrlAbsUrlForLink($link);
 
       $message->setUrl($url);
@@ -176,8 +176,7 @@ Beispiel der Registrierung:
 /* *** **************** *** *
  * *** Register Trigger *** *
  * *** **************** *** */
-tx_rnbase::load('tx_t3socials_trigger_Config');
 tx_t3socials_trigger_Config::registerTrigger(
-   'tx_t3socials_trigger_news_TriggerConfig'
+   DMK\T3socials\Trigger\TtNews\TriggerConfig::class
 );
 ~~~~

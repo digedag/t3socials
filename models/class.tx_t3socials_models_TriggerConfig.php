@@ -22,8 +22,6 @@
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_models_Base');
-
 /**
  * Model einer trigger Konfiguration.
  *
@@ -131,10 +129,4 @@ class tx_t3socials_models_TriggerConfig extends tx_t3socials_models_Base
     {
         return $this->getProperty('double_sent_allowed');
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_TriggerConfig.php'];
 }

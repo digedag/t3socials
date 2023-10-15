@@ -23,7 +23,8 @@
             <label index="tx_t3socials_network_googleplus">Google+</label>
             <label index="tx_t3socials_network_pushd">Pushd</label>
 
-            <label index="tx_t3socials_trigger_news">News</label>
+            <label index="tx_t3socials_trigger_news">News (tt_news)</label>
+            <label index="tx_t3socials_trigger_txnews">News (tx_news)</label>
 
         </languageKey>
         <languageKey index="de" type="array">
