@@ -49,7 +49,6 @@
     },
     "autoload": {
         "classmap": [
-            "hooks/",
             "lib/",
             "mod/",
             "models/",
