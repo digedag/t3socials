@@ -1,5 +1,6 @@
 <?php
 
+
 if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
 }
@@ -7,38 +8,42 @@ if (!defined('TYPO3_MODE')) {
 /* *** **************** *** *
  * *** BE Module Config *** *
  * *** **************** *** */
-if (TYPO3_MODE == 'BE') {
-    // Einbindung einer PageTSConfig
-    tx_rnbase_util_Extensions::addPageTSConfig(
-        '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.'t3socials'.'/mod/pageTSconfig.txt">'
-    );
+if (\Sys25\RnBase\Utility\Environment::isBackend()) {
+    if (!\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
+        $modName = 'web_T3socialsM1';
 
-    tx_rnbase_util_Extensions::registerModule(
-        't3socials',
-        'web',
-        'M1',
-        'bottom',
-        [],
-        [
-            'access' => 'user,group',
-            'routeTarget' => 'tx_t3socials_mod_Module',
-            'icon' => 'EXT:t3socials/mod/moduleicon.png',
-            'labels' => 'LLL:EXT:t3socials/mod/locallang.xml',
-        ]
-    );
+        // Einbindung einer PageTSConfig
+        \Sys25\RnBase\Utility\Extensions::addPageTSConfig(
+            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.'t3socials'.'/mod/pageTSconfig.txt">'
+        );
 
-    // communicator
-    tx_rnbase_util_Extensions::insertModuleFunction(
-        'web_T3socialsM1',
-        'tx_t3socials_mod_Communicator',
-        tx_rnbase_util_Extensions::extPath('t3socials', 'mod/class.tx_t3socials_mod_Communicator.php'),
-        'LLL:EXT:t3socials/mod/locallang.xml:label_t3socials_connector'
-    );
-    // trigger
-    tx_rnbase_util_Extensions::insertModuleFunction(
-        'web_T3socialsM1',
-        'tx_t3socials_mod_Trigger',
-        tx_rnbase_util_Extensions::extPath('t3socials', 'mod/class.tx_t3socials_mod_Trigger.php'),
-        'LLL:EXT:t3socials/mod/locallang.xml:label_t3socials_trigger'
-    );
+        \Sys25\RnBase\Utility\Extensions::registerModule(
+            't3socials',
+            'web',
+            'M1',
+            'bottom',
+            [],
+            [
+                'access' => 'user,group',
+                'routeTarget' => DMK\T3socials\Backend\Module\T3socialsModule::class,
+                'icon' => 'EXT:t3socials/mod/moduleicon.png',
+                'labels' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_mod.xlf',
+            ]
+        );
+
+        // communicator
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction(
+            $modName,
+            DMK\T3socials\Backend\Controller\Communicator::class,
+            '',
+            'LLL:EXT:t3socials/Resources/Private/Language/locallang_mod.xlf:label_t3socials_connector'
+        );
+        // trigger
+        \Sys25\RnBase\Utility\Extensions::insertModuleFunction(
+            $modName,
+            DMK\T3socials\Backend\Controller\Trigger::class,
+            '',
+            'LLL:EXT:t3socials/Resources/Private/Language/locallang_mod.xlf:label_t3socials_trigger'
+        );
+    }
 }

@@ -1,4 +1,6 @@
 <?php
+namespace DMK\T3socials\Backend\Module;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,6 +24,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use Sys25\RnBase\Backend\Module\BaseModule;
+
 /**
  * Backend Modul für t3socials.
  *
@@ -29,7 +33,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
+class T3socialsModule extends BaseModule
 {
     /**
      * {@inheritDoc}
@@ -39,7 +43,7 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
     public function init()
     {
         parent::init();
-        $GLOBALS['LANG']->includeLLFile('EXT:t3socials/mod/locallang.xml');
+        $GLOBALS['LANG']->includeLLFile('EXT:t3socials/Resources/Private/Language/locallang_mod.xlf');
         $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);
     }
 
@@ -51,5 +55,10 @@ class tx_t3socials_mod_Module extends tx_rnbase_mod_BaseModule
     public function getExtensionKey()
     {
         return 't3socials';
+    }
+
+    protected function getModuleTemplate()
+    {
+        return 'EXT:t3socials/Resources/Private/Templates/module.html';
     }
 }

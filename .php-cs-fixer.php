@@ -16,6 +16,12 @@ return $config->setFinder($finder)
         'no_superfluous_phpdoc_tags' => false,
         'fully_qualified_strict_types' => false,
         'php_unit_method_casing' => false,
+        'global_namespace_import' => [
+            'import_classes' => true, 'import_constants' => false, 'import_functions' => false
+        ],
+        'phpdoc_separation' => [
+            'skip_unlisted_annotations' => true,
+        ],
     ])
     ->setLineEnding("\n")
 ;
