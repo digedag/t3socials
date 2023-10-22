@@ -292,8 +292,7 @@ class Trigger extends BaseModFunc
                         $options
                     );
                 }
-
-                $entries = ['', ''];
+                $entries = ['' => ''];
                 foreach ($rows as $record) {
                     $entries[$record['uid']] = $record[$labelField];
                 }
@@ -321,8 +320,4 @@ class Trigger extends BaseModFunc
 
         return empty($menue['menu']) ? '###LABEL_NO_TRIGGER_SELECTED###' : $menue['menu'];
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php'];
 }

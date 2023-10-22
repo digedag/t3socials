@@ -50,7 +50,6 @@
     "autoload": {
         "classmap": [
             "lib/",
-            "mod/",
             "models/",
             "network/",
             "provider/",

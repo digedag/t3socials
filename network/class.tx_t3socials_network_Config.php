@@ -47,9 +47,6 @@ class tx_t3socials_network_Config
     {
         if (!$config instanceof tx_t3socials_models_NetworkConfig) {
             $config = (string) $config;
-            if (!tx_rnbase::load($config)) {
-                throw new Exception('Could not load network configuration: '.$config);
-            }
             $config = tx_rnbase::makeInstance($config, $config);
             if (!$config instanceof tx_t3socials_models_NetworkConfig) {
                 throw new Exception('The network configuration "'.get_class($config).'" has to implement the interface "tx_t3socials_models_NetworkConfig".');

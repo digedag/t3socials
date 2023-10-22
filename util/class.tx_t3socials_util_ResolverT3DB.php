@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_util_IResolver');
+use Sys25\RnBase\Database\Connection;
 
 /**
  * Resolver for default Typo3 Database.
@@ -48,7 +48,7 @@ class tx_t3socials_util_ResolverT3DB implements tx_t3socials_util_IResolver
         $options['where'] = 'uid = '.(int) $uid;
         // wir wollen nur daten, welche auch im fe sichtbar sind!
         $options['enablefieldsfe'] = true;
-        $rows = tx_rnbase_util_DB::doSelect('*', $tableName, $options);
+        $rows = Connection::getInstance()->doSelect('*', $tableName, $options);
         /* @var $item tx_t3socials_models_Base */
         $item = empty($rows) ? null : reset($rows);
         // Den Tabellennamen im Model setzen.
@@ -58,8 +58,4 @@ class tx_t3socials_util_ResolverT3DB implements tx_t3socials_util_IResolver
 
         return $item;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_ResolverT3DB.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/util/class.tx_t3socials_util_ResolverT3DB.php'];
 }

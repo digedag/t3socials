@@ -12,8 +12,10 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
         $modName = 'web_T3socialsM1';
 
         // Einbindung einer PageTSConfig
-        \Sys25\RnBase\Utility\Extensions::addPageTSConfig(
-            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3socials/mod/pageTSconfig.txt">');
+        if (!\Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
+            \Sys25\RnBase\Utility\Extensions::addPageTSConfig(
+                '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3socials/Configuration/page.tsconfig">');
+        }
 
         \Sys25\RnBase\Utility\Extensions::registerModule(
             't3socials',

@@ -68,7 +68,6 @@ Sys25\RnBase\Utility\Extensions::addService(
         'title' => 'Social network accounts', 'description' => 'Handles accounts of social networks', 'subtype' => 'network',
         'available' => true, 'priority' => 50, 'quality' => 50,
         'os' => '', 'exec' => '',
-        'classFile' => Sys25\RnBase\Utility\Extensions::extPath($_EXTKEY, 'srv/class.tx_t3socials_srv_Network.php'),
         'className' => 'tx_t3socials_srv_Network',
     ]
 );
@@ -81,11 +80,9 @@ defined('LF') || define('LF', chr(10));
 defined('CR') || define('CR', chr(13));
 defined('CRLF') || define('CRLF', CR.LF);
 
-if (Sys25\RnBase\Utility\TYPO3::isTYPO76OrHigher()) {
-    // eigenes input Feld wegen Vorbelegung vom config Feld
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['t3socials_networkConfigField'] = [
-        'nodeName' => 'networkConfigField',
-        'priority' => '70',
-        'class' => \DMK\T3socials\Backend\Form\Element\NetworkConfigField::class,
-    ];
-}
+// eigenes input Feld wegen Vorbelegung vom config Feld
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['formEngine']['nodeRegistry']['t3socials_networkConfigField'] = [
+    'nodeName' => 'networkConfigField',
+    'priority' => '70',
+    'class' => \DMK\T3socials\Backend\Form\Element\NetworkConfigField::class,
+];
