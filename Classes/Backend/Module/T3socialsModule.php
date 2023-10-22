@@ -1,4 +1,7 @@
 <?php
+
+namespace DMK\T3socials\Backend\Module;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,33 +25,41 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use Sys25\RnBase\Backend\Module\BaseModule;
+
 /**
- * Util für Nachrichten.
+ * Backend Modul für t3socials.
  *
- * @author Michael Wagner <dev@dmk-ebusiness.de>
+ * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_util_Message
+class T3socialsModule extends BaseModule
 {
     /**
-     * Erzeugt eine Flash Message.
+     * {@inheritDoc}
      *
-     * @param string|array $message
-     *
-     * @return void
-     *
-     * @deprecated use tx_t3socials_util_Message::showFlashMessage instead
+     * @see tx_rnbase_mod_BaseModule::init()
      */
-    public static function showMessage($message)
+    public function init()
     {
-        tx_rnbase::load('tx_t3socials_util_Message');
-        tx_t3socials_util_Message::showFlashMessage($message);
+        parent::init();
+        $GLOBALS['LANG']->includeLLFile('EXT:t3socials/Resources/Private/Language/locallang_mod.xlf');
+        $GLOBALS['BE_USER']->modAccess($this->MCONF, 1);
     }
-}
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php'];
+    /**
+     * Method to get the extension key.
+     *
+     * @return string Extension key
+     */
+    public function getExtensionKey()
+    {
+        return 't3socials';
+    }
+
+    protected function getModuleTemplate()
+    {
+        return 'EXT:t3socials/Resources/Private/Templates/module.html';
+    }
 }

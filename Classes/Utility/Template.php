@@ -1,4 +1,7 @@
 <?php
+
+namespace DMK\T3socials\Utility;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -21,8 +24,18 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Files');
-tx_rnbase::load('tx_rnbase_util_Network');
+
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Utility\Files;
+use Sys25\RnBase\Utility\Network;
+use Throwable;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_Network;
+use tx_t3socials_network_Config;
+use tx_t3socials_network_hybridauth_Interface;
+use tx_t3socials_network_hybridauth_OAuthCall;
+use tx_t3socials_srv_ServiceRegistry;
 
 /**
  * Basis handler für HybridAuth.
@@ -31,13 +44,13 @@ tx_rnbase::load('tx_rnbase_util_Network');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_util_Template
+class Template
 {
     /**
      * Display the user interface for this handler.
      *
      * @param string $template the subpart for handler in func template
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param tx_t3socials_models_Base $formData
      * @param array $formFields
      * @param array $options
@@ -46,7 +59,7 @@ class tx_t3socials_mod_util_Template
      */
     public static function parseMessageFormFields(
         $template,
-        tx_rnbase_mod_IModule $mod,
+        IModule $mod,
         tx_t3socials_models_Base $formData,
         array $formFields,
         array $options = []
@@ -93,7 +106,7 @@ class tx_t3socials_mod_util_Template
         $markerArr['###BTN_SEND###'] = $formTool->createSubmit($submitName, '###LABEL_SEND_MESSAGE###');
         $wrappedSubpartArr['###SEND_FORM###'] = '';
 
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
 
         return $out;
     }
@@ -101,18 +114,18 @@ class tx_t3socials_mod_util_Template
     /**
      * Erzeugt ein Default Template.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param array $options
      *
      * @return string
      */
-    public static function getDefaultMessageTemplate(tx_rnbase_mod_IModule $mod, $options)
+    public static function getDefaultMessageTemplate(IModule $mod, $options)
     {
         $configurations = $mod->getConfigurations();
 
         $file = $configurations->get('communicator.hybridauth.template');
-        $file = tx_rnbase_util_Files::getFileAbsFileName($file);
-        $templateCode = tx_rnbase_util_Network::getURL($file);
+        $file = Files::getFileAbsFileName($file);
+        $templateCode = Network::getURL($file);
 
         if (empty($templateCode)) {
             $out = '<br />Template ConfId: communicator.hybridauth.template';
@@ -122,7 +135,7 @@ class tx_t3socials_mod_util_Template
             return '';
         }
 
-        $template = tx_rnbase_util_Templates::getSubpart($templateCode, '###HYBRIDAUTH_DEFAULT###');
+        $template = Templates::getSubpart($templateCode, '###HYBRIDAUTH_DEFAULT###');
 
         if (empty($template)) {
             $out = '<br />Template ConfId: communicator.hybridauth.template';
@@ -152,6 +165,8 @@ class tx_t3socials_mod_util_Template
         if (!$network) {
             return '';
         }
+
+        /** @var tx_t3socials_models_Network $network */
         $network = $network instanceof tx_t3socials_models_Network ? $network : tx_t3socials_srv_ServiceRegistry::getNetworkService()->get($network);
 
         $connection = tx_t3socials_network_Config::getNetworkConnection($network);
@@ -166,7 +181,7 @@ class tx_t3socials_mod_util_Template
             /* @var $adapter Hybrid_Provider_Model_OAuth1 */
             $adapter = $connection->getProvider()->adapter;
             $connected = $adapter->isUserConnected();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $errMsg = $e->getMessage();
         }
         $out = '<div class="typo3-message '.($connected ? 'message-ok' : 'message-error').'">';
@@ -206,10 +221,4 @@ class tx_t3socials_mod_util_Template
 
         return $out;
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php'];
 }

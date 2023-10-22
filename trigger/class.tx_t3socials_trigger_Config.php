@@ -44,9 +44,6 @@ class tx_t3socials_trigger_Config
     {
         if (!$config instanceof tx_t3socials_models_TriggerConfig) {
             $config = (string) $config;
-            if (!tx_rnbase::load($config)) {
-                throw new Exception('Could not load trigger configuration: '.$config);
-            }
             $config = tx_rnbase::makeInstance($config, $config);
             if (!$config instanceof tx_t3socials_models_TriggerConfig) {
                 throw new Exception('The trigger configuration "'.get_class($config).'" has to extend the class "tx_t3socials_models_TriggerConfig".');
@@ -88,9 +85,8 @@ class tx_t3socials_trigger_Config
      *
      * @param string $trigger
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_models_TriggerConfig
+     * @throws Exception
      */
     public static function getTriggerConfig($trigger)
     {
@@ -147,9 +143,8 @@ class tx_t3socials_trigger_Config
      *
      * @param string|tx_t3socials_models_TriggerConfig $trigger
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_network_IConnection
+     * @throws Exception
      */
     public static function getMessageBuilder($trigger)
     {
@@ -174,9 +169,8 @@ class tx_t3socials_trigger_Config
      *
      * @param string|tx_t3socials_models_TriggerConfig $trigger
      *
+     * @return tx_t3socials_util_IResolver
      * @throws Exception
-     *
-     * @return tx_t3socials_network_IConnection
      */
     public static function getResolver($trigger)
     {

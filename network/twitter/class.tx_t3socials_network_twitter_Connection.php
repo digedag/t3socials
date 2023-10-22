@@ -122,9 +122,8 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
      *
      * @deprecated
      *
-     * @throws Exception
-     *
      * @return void
+     * @throws Exception
      */
     protected function handleErrorsFromResult(stdClass $result)
     {
@@ -213,8 +212,8 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
     }
 }
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
+if (defined('TYPO3_MODE')
+    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
 ) {
     include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php'];
 }

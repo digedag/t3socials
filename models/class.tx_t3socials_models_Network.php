@@ -37,7 +37,7 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     /**
      * @var tx_rnbase_configurations
      */
-    private $configurations = null;
+    private $configurations;
 
     /**
      * Inits the model instance either with uid or a complete data record.
@@ -145,8 +145,8 @@ class tx_t3socials_models_Network extends tx_t3socials_models_Base
     }
 }
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Network.php']
+if (defined('TYPO3_MODE')
+    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Network.php']
 ) {
     include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Network.php'];
 }

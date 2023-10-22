@@ -1,8 +1,17 @@
 <?php
+
+namespace DMK\T3socials\Backend\Controller;
+
+use DMK\T3socials\Backend\Handler\Trigger;
+use Sys25\RnBase\Backend\Module\ExtendedModFunc;
+use Sys25\RnBase\Utility\Misc;
+use tx_rnbase;
+use tx_t3socials_network_Config;
+
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2014 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+* (c) 2014-2023 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
 * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -22,8 +31,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
-
 /**
  * Backend Modul für Nachrichtenversand.
  *
@@ -32,7 +39,7 @@ tx_rnbase::load('tx_rnbase_mod_ExtendedModFunc');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
+class Communicator extends ExtendedModFunc
 {
     /**
      * Method getFuncId.
@@ -54,9 +61,9 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
         $menuItems = tx_t3socials_network_Config::getNewtorkCommunicators();
         array_unshift(
             $menuItems,
-            tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger')
+            tx_rnbase::makeInstance(Trigger::class)
         );
-        tx_rnbase_util_Misc::callHook(
+        Misc::callHook(
             't3socials',
             'modCommunicator_tabItems',
             ['tabItems' => &$menuItems],
@@ -78,10 +85,4 @@ class tx_t3socials_mod_Communicator extends tx_rnbase_mod_ExtendedModFunc
     {
         return false;
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Communicator.php'];
 }

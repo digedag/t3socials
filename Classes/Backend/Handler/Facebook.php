@@ -1,4 +1,9 @@
 <?php
+
+namespace DMK\T3socials\Backend\Handler;
+
+use tx_t3socials_models_Message;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,8 +27,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_mod_handler_HybridAuth');
-
 /**
  * XING Handler.
  *
@@ -31,7 +34,7 @@ tx_rnbase::load('tx_t3socials_mod_handler_HybridAuth');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_handler_Facebook extends tx_t3socials_mod_handler_HybridAuth
+class Facebook extends HybridAuth
 {
     /**
      * liefert die network id. (twitter, xing, ...).
@@ -67,10 +70,4 @@ class tx_t3socials_mod_handler_Facebook extends tx_t3socials_mod_handler_HybridA
 
         return $message;
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Facebook.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Facebook.php'];
 }
