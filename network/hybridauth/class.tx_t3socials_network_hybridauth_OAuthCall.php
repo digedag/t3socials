@@ -152,12 +152,14 @@ class tx_t3socials_network_hybridauth_OAuthCall
                 } // Wenn nicht angemeldet, Anmeldeprozess durchführen!
                 else {
                     $connection->getProvider()->login();
+
                     // Hybrid_Auth::authenticate($network->getNetwork());
                     return 'REDIRECT TO AUTH PAGE!';
                 }
             } // abmelden
             elseif (self::OAUT_CALL_LOGOUT === $type) {
                 $connection->getProvider()->logout();
+
                 // @TODO: template erstellen.
                 return
                 '<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" '.
@@ -182,8 +184,8 @@ class tx_t3socials_network_hybridauth_OAuthCall
     }
 }
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
+if (defined('TYPO3_MODE')
+    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
 ) {
     include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'];
 }

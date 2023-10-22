@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_models_Base');
-
 /**
  * Model einer netzwerk Konfiguration.
  *
@@ -45,11 +43,11 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
     {
         // wir haben bereits einen record
         if (is_array($rowOrUid)) {
-            $this->uid = isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['provider_id'];
+            $this->setUid(isset($rowOrUid['uid']) ? $rowOrUid['uid'] : $rowOrUid['provider_id']);
             $this->setProperty($rowOrUid);
         } // wir haben nur eine uid
         else {
-            $this->uid = $rowOrUid;
+            $this->setUid($rowOrUid);
             $this->setProperty([]);
         }
         $this->initConfig();
@@ -105,7 +103,7 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
      */
     public function getProviderId()
     {
-        return $this->uid;
+        return $this->getProperty('provider_id');
     }
 
     /**
@@ -167,10 +165,4 @@ class tx_t3socials_models_NetworkConfig extends tx_t3socials_models_Base
     {
         return $this->getProperty('communicator');
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_NetworkConfig.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_NetworkConfig.php'];
 }

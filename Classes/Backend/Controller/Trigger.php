@@ -1,14 +1,18 @@
 <?php
+
 namespace DMK\T3socials\Backend\Controller;
 
+use DMK\T3socials\Backend\Handler\Trigger as HandlerTrigger;
 use Sys25\RnBase\Backend\Module\BaseModFunc;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Database\Connection;
 use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\Parameters;
 use tx_rnbase;
-use tx_t3socials_mod_util_Message;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_TriggerConfig;
 use tx_t3socials_trigger_Config;
+use tx_t3socials_util_Message;
 
 /***************************************************************
 *  Copyright notice
@@ -155,14 +159,14 @@ class Trigger extends BaseModFunc
         $module = $this->getModule();
 
         $options = [];
-        /* @var $handler tx_t3socials_mod_handler_Trigger */
-        $handler = tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger');
+        /** @var HandlerTrigger $handler */
+        $handler = tx_rnbase::makeInstance(HandlerTrigger::class);
         $handler->setTriggerConfig($this->getTrigger());
         $handler->setResourceModel($this->getResource());
 
         $message = $handler->handleRequest($module);
         if ($message) {
-            tx_t3socials_mod_util_Message::showMessage($message);
+            tx_t3socials_util_Message::showFlashMessage($message);
         }
 
         // wir übergeben mit absicht ein leeres template, um das default zu nutzen

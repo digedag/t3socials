@@ -1,6 +1,21 @@
 <?php
 
+namespace DMK\T3socials\Backend\Handler;
+
+use DMK\T3socials\Utility\Template;
+use Sys25\RnBase\Backend\Module\IModHandler;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\Parameters;
+use Throwable;
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_Message;
+use tx_t3socials_models_Network;
+use tx_t3socials_models_TriggerConfig;
+use tx_t3socials_network_Config;
+use tx_t3socials_srv_ServiceRegistry;
+use tx_t3socials_trigger_Config;
 
 /***************************************************************
 *  Copyright notice
@@ -32,7 +47,7 @@ use Sys25\RnBase\Frontend\Request\Parameters;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
+class Trigger implements IModHandler
 {
     private $triggerConfig = false;
     private $resourceModel = false;
@@ -40,14 +55,14 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     /**
      * @var Tx_Rnbase_Domain_Model_Base
      */
-    private $formData = null;
+    private $formData;
 
     /**
      * Setzt den Trigger.
      *
      * @param tx_t3socials_models_TriggerConfig $triggerConfig
      *
-     * @return tx_t3socials_mod_handler_Trigger
+     * @return self
      */
     public function setTriggerConfig(
         tx_t3socials_models_TriggerConfig $triggerConfig
@@ -72,7 +87,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      *
      * @param tx_t3socials_models_Base $resourceModel
      *
-     * @return tx_t3socials_mod_handler_Trigger
+     * @return self
      */
     public function setResourceModel(
         tx_t3socials_models_Base $resourceModel
@@ -107,7 +122,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                 $builder = tx_t3socials_trigger_Config::getMessageBuilder($this->getTriggerConfig());
                 $this->formData = $builder->buildGenericMessage($this->getResourceModel());
             } else {
-                $this->formData = tx_rnbase::makeInstance('tx_t3socials_models_Base', $data);
+                $this->formData = tx_rnbase::makeInstance(tx_t3socials_models_Base::class, $data);
             }
         }
 
@@ -167,11 +182,11 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      * This method is called each time the method func is clicked,
      * to handle request data.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      *
      * @return string|null
      */
-    public function handleRequest(tx_rnbase_mod_IModule $mod)
+    public function handleRequest(IModule $mod)
     {
         $submitted = Parameters::getPostOrGetParameter('sendtriggermessage');
         if (!$submitted) {
@@ -246,7 +261,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
                     $mod->addMessage('###LABEL_MESSAGE_SENT###', '###LABEL_NOTE### ('.$account->getName().')', 0);
                     $hasSend = true;
                 }
-            } catch (Exception $e) {
+            } catch (Throwable $e) {
                 $mod->addMessage($e->getMessage(), '###LABEL_ERROR### ('.$account->getName().')', 2);
             }
         }
@@ -265,15 +280,15 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      * Display the user interface for this handler.
      *
      * @param string $template
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param array $options
      *
      * @return string
      */
-    public function showScreen($template, tx_rnbase_mod_IModule $mod, $options)
+    public function showScreen($template, IModule $mod, $options)
     {
         $options['submitname'] = empty($options['submitname']) ? 'sendtriggermessage' : $options['submitname'];
-        $out = tx_t3socials_mod_util_Template::parseMessageFormFields(
+        $out = Template::parseMessageFormFields(
             $template,
             $mod,
             $this->getFormData(),
@@ -287,7 +302,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
         $markerArr['###AUTH_STATE###'] = $this->getResourceModelInfo($mod);
         $markerArr['###ACCOUNT_SEL###'] = $this->getAccountSelector($mod);
         $markerArr['###ACCOUNT_EDITLINK###'] = '';
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($out, $markerArr);
+        $out = Templates::substituteMarkerArrayCached($out, $markerArr);
 
         return $out;
     }
@@ -295,11 +310,11 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     /**
      * Liefert eine Kurze Info über das verwendete Resource-Model.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      *
      * @return string
      */
-    protected function getResourceModelInfo(tx_rnbase_mod_IModule $mod)
+    protected function getResourceModelInfo(IModule $mod)
     {
         $out = '';
         $model = $this->getResourceModel();
@@ -363,11 +378,11 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
     /**
      * Liefert alle Accounts für die Auswahl zum versenden.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      *
      * @return array
      */
-    private function getAccountSelector(tx_rnbase_mod_IModule $mod)
+    private function getAccountSelector(IModule $mod)
     {
         if (false === $this->accountSelector) {
             $this->accountSelector = '';
@@ -403,13 +418,13 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
      * Erzeugt das HTML für den Select eines Netzwerks.
      *
      * @param tx_t3socials_models_Network $account
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      *
      * @return array
      */
     protected function getAccountRow(
         tx_t3socials_models_Network $account,
-        tx_rnbase_mod_IModule $mod
+        IModule $mod
     ) {
         $checked = Parameters::getPostOrGetParameter('network');
         $checked = is_array($checked) ? $checked : [];
@@ -435,7 +450,7 @@ class tx_t3socials_mod_handler_Trigger implements tx_rnbase_mod_IModHandler
         $html .= ' </label>';
         $row[] = $html;
 
-        $row[] = tx_t3socials_mod_util_Template::getAuthentificationState($account);
+        $row[] = Template::getAuthentificationState($account);
 
         return $row;
     }

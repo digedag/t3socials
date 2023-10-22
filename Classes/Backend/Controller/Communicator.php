@@ -2,6 +2,7 @@
 
 namespace DMK\T3socials\Backend\Controller;
 
+use DMK\T3socials\Backend\Handler\Trigger;
 use Sys25\RnBase\Backend\Module\ExtendedModFunc;
 use Sys25\RnBase\Utility\Misc;
 use tx_rnbase;
@@ -29,7 +30,6 @@ use tx_t3socials_network_Config;
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-
 
 /**
  * Backend Modul für Nachrichtenversand.
@@ -61,7 +61,7 @@ class Communicator extends ExtendedModFunc
         $menuItems = tx_t3socials_network_Config::getNewtorkCommunicators();
         array_unshift(
             $menuItems,
-            tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger')
+            tx_rnbase::makeInstance(Trigger::class)
         );
         Misc::callHook(
             't3socials',

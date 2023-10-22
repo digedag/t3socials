@@ -2,6 +2,8 @@
 
 namespace DMK\T3socials\Backend\Form\Element;
 
+use tx_rnbase_tests_BaseTestCase;
+
 /**
  *  Copyright notice.
  *
@@ -32,7 +34,7 @@ namespace DMK\T3socials\Backend\Form\Element;
  * @license         http://www.gnu.org/licenses/lgpl.html
  *                  GNU Lesser General Public License, version 3 or later
  */
-class NetworkConfigFieldTest extends \tx_rnbase_tests_BaseTestCase
+class NetworkConfigFieldTest extends tx_rnbase_tests_BaseTestCase
 {
     /**
      * @group unit

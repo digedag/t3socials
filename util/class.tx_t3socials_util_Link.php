@@ -26,7 +26,6 @@ use Sys25\RnBase\Utility\Link;
 use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Typo3Classes;
 
-
 /**
  * Util zum handeln von Links und URLs.
  *

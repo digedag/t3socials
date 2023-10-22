@@ -22,6 +22,9 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use Sys25\RnBase\Backend\Module\IModHandler;
+use Sys25\RnBase\Utility\Misc;
+
 /**
  * Netzwerk Config.
  *
@@ -72,9 +75,8 @@ class tx_t3socials_network_Config
      *
      * @param string|tx_t3socials_models_Network $network
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_models_NetworkConfig
+     * @throws Exception
      */
     public static function getNetworkConfig($network)
     {
@@ -101,7 +103,7 @@ class tx_t3socials_network_Config
                 continue;
             }
             $communicator = tx_rnbase::makeInstance($class);
-            if (!$communicator instanceof tx_rnbase_mod_IModHandler) {
+            if (!$communicator instanceof IModHandler) {
                 throw new Exception('The $communicator "'.get_class($communicator).'" has to implement the interface "tx_rnbase_mod_IModHandler".');
             }
             $return[] = $communicator;
@@ -115,9 +117,8 @@ class tx_t3socials_network_Config
      *
      * @param string|tx_t3socials_models_Network $network
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_network_IConnection
+     * @throws Exception
      */
     public static function getNetworkConnection($network)
     {
@@ -163,7 +164,7 @@ class tx_t3socials_network_Config
     public static function translateNetwork($network)
     {
         $id = $network instanceof tx_t3socials_models_Network ? $network->getNetwork() : $network;
-        $title = tx_rnbase_util_Misc::translateLLL(
+        $title = Misc::translateLLL(
             'LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:'.
                 'tx_t3socials_network_'.$id
         );

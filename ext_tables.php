@@ -1,6 +1,5 @@
 <?php
 
-
 if (!defined('TYPO3_MODE')) {
     exit('Access denied.');
 }
@@ -14,8 +13,7 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
 
         // Einbindung einer PageTSConfig
         \Sys25\RnBase\Utility\Extensions::addPageTSConfig(
-            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:'.'t3socials'.'/mod/pageTSconfig.txt">'
-        );
+            '<INCLUDE_TYPOSCRIPT: source="FILE:EXT:t3socials/mod/pageTSconfig.txt">');
 
         \Sys25\RnBase\Utility\Extensions::registerModule(
             't3socials',

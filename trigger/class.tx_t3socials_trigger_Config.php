@@ -88,9 +88,8 @@ class tx_t3socials_trigger_Config
      *
      * @param string $trigger
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_models_TriggerConfig
+     * @throws Exception
      */
     public static function getTriggerConfig($trigger)
     {
@@ -147,9 +146,8 @@ class tx_t3socials_trigger_Config
      *
      * @param string|tx_t3socials_models_TriggerConfig $trigger
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_network_IConnection
+     * @throws Exception
      */
     public static function getMessageBuilder($trigger)
     {
@@ -174,9 +172,8 @@ class tx_t3socials_trigger_Config
      *
      * @param string|tx_t3socials_models_TriggerConfig $trigger
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_network_IConnection
+     * @throws Exception
      */
     public static function getResolver($trigger)
     {

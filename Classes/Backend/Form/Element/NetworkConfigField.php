@@ -2,6 +2,9 @@
 
 namespace DMK\T3socials\Backend\Form\Element;
 
+use Exception;
+use tx_t3socials_network_Config;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -45,9 +48,9 @@ class NetworkConfigField extends \TYPO3\CMS\Backend\Form\Element\TextElement
         $network = $this->data['databaseRow']['network'][0];
         if (!$this->data['databaseRow']['config'] && $network) {
             try {
-                $config = \tx_t3socials_network_Config::getNetworkConfig($network);
+                $config = tx_t3socials_network_Config::getNetworkConfig($network);
                 $this->data['parameterArray']['itemFormElValue'] = $config->getDefaultConfiguration();
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
             }
         }
 

@@ -1,4 +1,9 @@
 <?php
+
+namespace DMK\T3socials\Backend\Handler;
+
+use tx_t3socials_models_Message;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -23,32 +28,46 @@
 ***************************************************************/
 
 /**
- * Util für Nachrichten.
+ * XING Handler.
  *
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_util_Message
+class Facebook extends HybridAuth
 {
     /**
-     * Erzeugt eine Flash Message.
+     * liefert die network id. (twitter, xing, ...).
      *
-     * @param string|array $message
-     *
-     * @return void
-     *
-     * @deprecated use tx_t3socials_util_Message::showFlashMessage instead
+     * @return string
      */
-    public static function showMessage($message)
+    protected function getNetworkId()
     {
-        tx_rnbase::load('tx_t3socials_util_Message');
-        tx_t3socials_util_Message::showFlashMessage($message);
+        return 'facebook';
     }
-}
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/util/class.tx_t3socials_mod_util_Template.php'];
+    /**
+     * Liefert alle im Default Formular sichtbaren Felder.
+     *
+     * @return array
+     */
+    protected function getVisibleFormFields()
+    {
+        return ['message', 'url'];
+    }
+
+    /**
+     * Kann in der Kindklasse überschrieben werden
+     * um die Message anzupassen oder zu validieren.
+     *
+     * @param tx_t3socials_models_Message $message
+     *
+     * @return tx_t3socials_models_Message|string with error message
+     */
+    protected function prepareMessage(tx_t3socials_models_Message $message)
+    {
+        $message = parent::prepareMessage($message);
+
+        return $message;
+    }
 }

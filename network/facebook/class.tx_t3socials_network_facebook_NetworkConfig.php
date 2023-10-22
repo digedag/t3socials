@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use DMK\T3socials\Backend\Handler\Facebook;
+
 tx_rnbase::load('tx_t3socials_models_NetworkConfig');
 
 /**
@@ -41,10 +43,10 @@ class tx_t3socials_network_facebook_NetworkConfig extends tx_t3socials_models_Ne
     protected function initConfig()
     {
         parent::initConfig();
-        $this->setProperty('provider_id', $this->uid = 'facebook');
+        $this->setProperty('provider_id', 'facebook');
         $this->setProperty('hybridauth_provider', 'Facebook');
         $this->setProperty('connector', 'tx_t3socials_network_facebook_Connection');
-        $this->setProperty('communicator', 'tx_t3socials_mod_handler_Facebook');
+        $this->setProperty('communicator', Facebook::class);
         $this->setProperty(
             'description',
             'Please enter the customer key into the field "Username"'.
@@ -65,8 +67,8 @@ class tx_t3socials_network_facebook_NetworkConfig extends tx_t3socials_models_Ne
     }
 }
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
+if (defined('TYPO3_MODE')
+    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
 ) {
     include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php'];
 }

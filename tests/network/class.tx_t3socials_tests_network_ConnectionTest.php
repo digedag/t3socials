@@ -138,9 +138,8 @@ abstract class tx_t3socials_tests_network_ConnectionTest extends tx_t3socials_te
     /**
      * returns object of network.
      *
-     * @throws Exception
-     *
      * @return tx_t3socials_models_Network
+     * @throws Exception
      */
     protected function getNetworkMock()
     {
