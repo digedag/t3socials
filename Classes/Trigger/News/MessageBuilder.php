@@ -52,6 +52,7 @@ class MessageBuilder extends tx_t3socials_trigger_MessageBuilder
         $message->setIntro($model->getShort());
         $message->setMessage($model->getBodytext());
         $message->setData($model);
+        $message->setMessageType('news');
 
         return $message;
     }

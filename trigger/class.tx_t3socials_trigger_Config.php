@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use Sys25\RnBase\Utility\Misc;
+
 /**
  * Netzwerk Config.
  *
@@ -147,6 +149,7 @@ class tx_t3socials_trigger_Config
      *
      * @param string|tx_t3socials_models_TriggerConfig $trigger
      *
+     * @return tx_t3socials_trigger_MessageBuilder
      * @throws Exception
      *
      * @return tx_t3socials_network_IConnection
@@ -203,13 +206,8 @@ class tx_t3socials_trigger_Config
     public static function translateTrigger($trigger)
     {
         $id = $trigger instanceof tx_t3socials_models_TriggerConfig ? $trigger->getTriggerId() : $trigger;
-        tx_rnbase::load('tx_rnbase_util_Misc');
-        $title = tx_rnbase_util_Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_trigger_'.$id);
+        $title = Misc::translateLLL('LLL:EXT:t3socials/Resources/Private/Language/locallang_db.xml:tx_t3socials_trigger_'.$id);
 
         return empty($title) ? $id : $title;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_Config.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/trigger/class.tx_t3socials_trigger_Config.php'];
 }
