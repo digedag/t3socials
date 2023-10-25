@@ -39,7 +39,7 @@ abstract class tx_t3socials_trigger_MessageBuilder implements tx_t3socials_trigg
      *
      * @var tx_t3socials_models_TriggerConfig
      */
-    private $trigger = null;
+    private $trigger;
 
     /**
      * Erzeugt eine generische Nachricht für den versand über die Netzwerke.

@@ -8,11 +8,11 @@ mod {
     t3socials {
         template = EXT:t3socials/mod/template.html
         communicator {
-            hybridauth.template = EXT:t3socials/mod/templates/moduleHybridauthDefault.html
-            template = EXT:t3socials/mod/templates/module.html
+            hybridauth.template = EXT:t3socials/Resources/Private/Templates/moduleHybridauthDefault.html
+            template = EXT:t3socials/Resources/Private/Templates/module2.html
         }
         trigger {
-            template = EXT:t3socials/mod/templates/trigger.html
+            template = EXT:t3socials/Resources/Private/Templates/trigger.html
         }
     }
 }

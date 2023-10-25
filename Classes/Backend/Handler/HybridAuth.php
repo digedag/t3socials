@@ -1,6 +1,20 @@
 <?php
 
+namespace DMK\T3socials\Backend\Handler;
+
+use DMK\T3socials\Utility\Template;
+use Sys25\RnBase\Backend\Module\IModHandler;
+use Sys25\RnBase\Backend\Module\IModule;
+use Sys25\RnBase\Frontend\Marker\Templates;
 use Sys25\RnBase\Frontend\Request\Parameters;
+use Throwable;
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_Message;
+use tx_t3socials_network_Config;
+use tx_t3socials_network_hybridauth_Interface;
+use tx_t3socials_network_hybridauth_OAuthCall;
+use tx_t3socials_srv_ServiceRegistry;
 
 /***************************************************************
 *  Copyright notice
@@ -32,12 +46,12 @@ use Sys25\RnBase\Frontend\Request\Parameters;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IModHandler
+abstract class HybridAuth implements IModHandler
 {
     /**
      * @var Tx_Rnbase_Domain_Model_Base
      */
-    private $formData = null;
+    private $formData;
 
     /**
      * liefert die network id. (twitter, xing, ...).
@@ -119,7 +133,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
         if (is_null($this->formData)) {
             $data = Parameters::getPostOrGetParameter('data');
             $data = empty($data) || !is_array($data) ? [] : $data;
-            $this->formData = tx_rnbase::makeInstance('tx_t3socials_models_Base', $data);
+            $this->formData = tx_rnbase::makeInstance(tx_t3socials_models_Base::class, $data);
         }
 
         return $this->formData;
@@ -151,11 +165,11 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
      * This method is called each time the method func is clicked,
      * to handle request data.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      *
      * @return string|null
      */
-    public function handleRequest(tx_rnbase_mod_IModule $mod)
+    public function handleRequest(IModule $mod)
     {
         $submitted = Parameters::getPostOrGetParameter($this->getSubmitName());
         if (!$submitted) {
@@ -190,7 +204,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
             else {
                 $mod->addMessage('###LABEL_MESSAGE_SENT###', '###LABEL_MESSAGE###', 0);
             }
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $mod->addMessage($e->getMessage(), '###LABEL_ERROR###', 2);
         }
 
@@ -201,15 +215,15 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
      * Display the user interface for this handler.
      *
      * @param string $template the subpart for handler in func template
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param array $options
      *
      * @return string
      */
-    public function showScreen($template, tx_rnbase_mod_IModule $mod, $options)
+    public function showScreen($template, IModule $mod, $options)
     {
         if (empty($template)) {
-            $template = tx_t3socials_mod_util_Template::getDefaultMessageTemplate($mod, $options);
+            $template = Template::getDefaultMessageTemplate($mod, $options);
             if (empty($template)) {
                 return '';
             }
@@ -239,10 +253,10 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
             $accMenu = $this->getAccountSelector($mod, $accounts);
             $markerArr['###ACCOUNT_SEL###'] = $accMenu['menu'];
             $markerArr['###ACCOUNT_EDITLINK###'] = $formTool->createEditLink('tx_t3socials_networks', $accMenu['value']);
-            $markerArr['###AUTH_STATE###'] = tx_t3socials_mod_util_Template::getAuthentificationState((int) $accMenu['value']);
+            $markerArr['###AUTH_STATE###'] = Template::getAuthentificationState((int) $accMenu['value']);
 
             $options['submitname'] = $this->getSubmitName();
-            $template = tx_t3socials_mod_util_Template::parseMessageFormFields(
+            $template = Template::parseMessageFormFields(
                 $template,
                 $mod,
                 $this->getFormData(),
@@ -251,7 +265,7 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
             );
         }
 
-        $out = tx_rnbase_util_Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
+        $out = Templates::substituteMarkerArrayCached($template, $markerArr, $subpartArr, $wrappedSubpartArr);
 
         return $out;
     }
@@ -318,12 +332,12 @@ abstract class tx_t3socials_mod_handler_HybridAuth implements tx_rnbase_mod_IMod
     /**
      * Returns all rounds of current bet game.
      *
-     * @param tx_rnbase_mod_IModule $mod
+     * @param IModule $mod
      * @param array $accounts
      *
      * @return array
      */
-    private function getAccountSelector(tx_rnbase_mod_IModule $mod, $accounts)
+    private function getAccountSelector(IModule $mod, $accounts)
     {
         $entries = ['' => ''];
         foreach ($accounts as $account) {

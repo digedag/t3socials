@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use DMK\T3socials\Backend\Handler\Pushd;
+
 tx_rnbase::load('tx_t3socials_models_NetworkConfig');
 
 /**
@@ -41,9 +43,9 @@ class tx_t3socials_network_pushd_NetworkConfig extends tx_t3socials_models_Netwo
     protected function initConfig()
     {
         parent::initConfig();
-        $this->setProperty('provider_id', $this->uid = 'pushd');
+        $this->setProperty('provider_id', 'pushd');
         $this->setProperty('connector', 'tx_t3socials_network_pushd_Connection');
-        $this->setProperty('communicator', 'tx_t3socials_mod_handler_Pushd');
+        $this->setProperty('communicator', Pushd::class);
         $this->setProperty(
             'default_configuration',
             'pushd {'.CRLF.
@@ -51,10 +53,4 @@ class tx_t3socials_network_pushd_NetworkConfig extends tx_t3socials_models_Netwo
             '}'
         );
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php'];
 }

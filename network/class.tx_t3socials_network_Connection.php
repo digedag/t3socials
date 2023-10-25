@@ -79,9 +79,8 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
      *
      * @param string $confId
      *
-     * @throws Exception
-     *
      * @return mixed
+     * @throws Exception
      */
     protected function getConfigData($confId)
     {
@@ -189,8 +188,8 @@ abstract class tx_t3socials_network_Connection implements tx_t3socials_network_I
     }
 }
 
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Connection.php']
+if (defined('TYPO3_MODE')
+    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Connection.php']
 ) {
     include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_Connection.php'];
 }

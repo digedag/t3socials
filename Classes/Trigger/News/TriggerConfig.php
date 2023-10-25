@@ -42,4 +42,3 @@ class TriggerConfig extends tx_t3socials_models_TriggerConfig
         $this->setProperty('message_builder', MessageBuilder::class);
     }
 }
-

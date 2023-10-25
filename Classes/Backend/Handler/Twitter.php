@@ -1,4 +1,9 @@
 <?php
+
+namespace DMK\T3socials\Backend\Handler;
+
+use tx_t3socials_models_Message;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,16 +27,15 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_mod_handler_HybridAuth');
-
 /**
- * XING Handler.
+ * TWITTER Handler.
  *
+ * @author Rene Nitzsche <rene@system25.de>
  * @author Michael Wagner <dev@dmk-ebusiness.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
+class Twitter extends HybridAuth
 {
     /**
      * liefert die network id. (twitter, xing, ...).
@@ -40,7 +44,7 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
      */
     protected function getNetworkId()
     {
-        return 'xing';
+        return 'twitter';
     }
 
     /**
@@ -50,7 +54,7 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
      */
     protected function getVisibleFormFields()
     {
-        return ['message'];
+        return ['message', 'url'];
     }
 
     /**
@@ -66,9 +70,17 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
         $message = parent::prepareMessage($message);
         if ($message instanceof tx_t3socials_models_Message) {
             $msg = $message->getMessage();
-            if (strlen($msg) > 420) {
-                $info = 'Meldung zu lang. Sie dürfen maximal 420 Zeichen versenden.<br />';
-                $info .= ' Aktuell '.strlen($msg).' Zeichen.';
+            $url = $message->getUrl();
+            $urlLen = strlen($url) ? 20 : 0;
+            if (strlen($msg) + $urlLen > 140) {
+                $info = 'Meldung zu lang. Maximal 140 Zeichen versenden.<br />';
+                // wir haben eine url
+                if ($urlLen) {
+                    $info .= ' Aktuell '.(strlen($msg) + $urlLen).' Zeichen (inkl. URL).';
+                } // wir haben keine url
+                else {
+                    $info .= ' Aktuell '.strlen($msg).' Zeichen.';
+                }
 
                 return $info;
             }
@@ -76,10 +88,4 @@ class tx_t3socials_mod_handler_Xing extends tx_t3socials_mod_handler_HybridAuth
 
         return $message;
     }
-}
-
-if (defined('TYPO3_MODE') &&
-    $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/handler/class.tx_t3socials_mod_handler_Xing.php'];
 }

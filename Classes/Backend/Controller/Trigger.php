@@ -1,8 +1,23 @@
 <?php
+
+namespace DMK\T3socials\Backend\Controller;
+
+use DMK\T3socials\Backend\Handler\Trigger as HandlerTrigger;
+use Sys25\RnBase\Backend\Module\BaseModFunc;
+use Sys25\RnBase\Backend\Utility\BackendUtility;
+use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Frontend\Marker\Templates;
+use Sys25\RnBase\Frontend\Request\Parameters;
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_TriggerConfig;
+use tx_t3socials_trigger_Config;
+use tx_t3socials_util_Message;
+
 /***************************************************************
 *  Copyright notice
 *
-* (c) 2014 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+* (c) 2014-2023 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
 * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -21,9 +36,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('tx_rnbase_mod_BaseModFunc');
-tx_rnbase::load('Tx_Rnbase_Backend_Utility');
 
 /**
  * Backend Modul für Nachrichtenversand.
@@ -32,7 +44,7 @@ tx_rnbase::load('Tx_Rnbase_Backend_Utility');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
+class Trigger extends BaseModFunc
 {
     private $triggerSelector = false;
     private $triggerConfig = false;
@@ -61,10 +73,10 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
      */
     protected function getContent($template, &$configurations, &$formatter, $formTool)
     {
-        if (tx_rnbase_parameters::getPostOrGetParameter('trigger_back_resourceselector')) {
+        if (Parameters::getPostOrGetParameter('trigger_back_resourceselector')) {
             // @TODO: das funktioniert noch nicht wie es soll.
             // daten bleiben teilweise erhalten
-            Tx_Rnbase_Backend_Utility::getModuleData(
+            BackendUtility::getModuleData(
                 ['resource' => ''],
                 ['resource' => ''],
                 $this->getModule()->getName()
@@ -76,15 +88,16 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
 
         $subOut = '';
         if ($this->getTrigger() && $this->getResource()) {
-            $subOut = tx_rnbase_util_Templates::getSubpart($template, '###NETWORKS###');
+            $subOut = Templates::getSubpart($template, '###NETWORKS###');
             $subOut = $this->showNetworks($subOut, $configurations, $formatter, $markerArray);
         } else {
-            $subOut = tx_rnbase_util_Templates::getSubpart($template, '###TRIGGERRESOURCE###');
+            $subOut = Templates::getSubpart($template, '###TRIGGERRESOURCE###');
             $subOut = $this->showResourceSelector($subOut, $configurations, $formatter, $markerArray);
         }
 
+        $content = '';
         // ggf returnUrl auswerten
-        $returnUrl = tx_rnbase_parameters::getPostOrGetParameter('returnUrl');
+        $returnUrl = Parameters::getPostOrGetParameter('returnUrl');
         if ($returnUrl) {
             // returnUrl weiter geben!
             $content .= '<p style="position:absolute; top:-5000px; left:-5000px;">'.
@@ -103,12 +116,12 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
             '###LABEL_BTN_REFRESH###'
         );
 
-        $subOut = tx_rnbase_util_Templates::substituteMarkerArrayCached($subOut, $markerArray);
+        $subOut = Templates::substituteMarkerArrayCached($subOut, $markerArray);
 
         $content = '';
-        $content .= tx_rnbase_util_Templates::getSubpart($template, '###COMMON_START###');
+        $content .= Templates::getSubpart($template, '###COMMON_START###');
         $content .= $subOut;
-        $content .= tx_rnbase_util_Templates::getSubpart($template, '###COMMON_END###');
+        $content .= Templates::getSubpart($template, '###COMMON_END###');
 
         return $content;
     }
@@ -146,14 +159,14 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
         $module = $this->getModule();
 
         $options = [];
-        /* @var $handler tx_t3socials_mod_handler_Trigger */
-        $handler = tx_rnbase::makeInstance('tx_t3socials_mod_handler_Trigger');
+        /** @var HandlerTrigger $handler */
+        $handler = tx_rnbase::makeInstance(HandlerTrigger::class);
         $handler->setTriggerConfig($this->getTrigger());
         $handler->setResourceModel($this->getResource());
 
         $message = $handler->handleRequest($module);
         if ($message) {
-            tx_t3socials_mod_util_Message::showMessage($message);
+            tx_t3socials_util_Message::showFlashMessage($message);
         }
 
         // wir übergeben mit absicht ein leeres template, um das default zu nutzen
@@ -273,14 +286,13 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
                     $labelField = $GLOBALS['TCA'][$tableName]['ctrl']['label'];
 
                     $options = [];
-                    $rows = Tx_Rnbase_Database_Connection::getInstance()->doSelect(
+                    $rows = Connection::getInstance()->doSelect(
                         'uid,'.$labelField,
                         $trigger->getTableName(),
                         $options
                     );
                 }
-
-                $entries = ['', ''];
+                $entries = ['' => ''];
                 foreach ($rows as $record) {
                     $entries[$record['uid']] = $record[$labelField];
                 }
@@ -308,8 +320,4 @@ class tx_t3socials_mod_Trigger extends tx_rnbase_mod_BaseModFunc
 
         return empty($menue['menu']) ? '###LABEL_NO_TRIGGER_SELECTED###' : $menue['menu'];
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/mod/class.tx_t3socials_mod_Trigger.php'];
 }

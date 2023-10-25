@@ -22,6 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use Sys25\RnBase\Domain\Model\BaseModel;
+
 /**
  * Basismodel.
  *
@@ -29,7 +31,7 @@
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_models_Base extends Tx_Rnbase_Domain_Model_Base
+class tx_t3socials_models_Base extends BaseModel
 {
     /**
      * Most model-classes will be initialized by a uid or a database record. So
@@ -43,8 +45,4 @@ class tx_t3socials_models_Base extends Tx_Rnbase_Domain_Model_Base
         parent::__construct($rowOrUid);
         $this->setTableName($tableName);
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/models/class.tx_t3socials_models_Base.php'];
 }

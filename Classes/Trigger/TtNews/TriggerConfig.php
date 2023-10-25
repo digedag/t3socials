@@ -27,7 +27,6 @@ use tx_t3socials_models_TriggerConfig;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-
 /**
  * Model einer trigger Konfiguration.
  *
@@ -50,4 +49,3 @@ class TriggerConfig extends tx_t3socials_models_TriggerConfig
         $this->setProperty('message_builder', MessageBuilder::class);
     }
 }
-

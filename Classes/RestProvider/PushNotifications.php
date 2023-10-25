@@ -22,11 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3rest_models_Provider');
-tx_rnbase::load('tx_t3rest_provider_AbstractBase');
-tx_rnbase::load('tx_t3rest_util_Objects');
-tx_rnbase::load('tx_rnbase_filter_BaseFilter');
-tx_rnbase::load('tx_rnbase_util_Logger');
+use DMK\T3rest\Legacy\Provider\AbstractProvider;
+use Sys25\RnBase\Frontend\Request\Request;
 
 /**
  * This is a REST provider for T3socials pushd network
@@ -37,8 +34,10 @@ tx_rnbase::load('tx_rnbase_util_Logger');
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
+ *
+ * Former class tx_t3socials_provider_PushNotifications
  */
-class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_AbstractBase
+class PushNotifications extends AbstractProvider
 {
     /**
      * @param tx_rnbase_configurations $configurations
@@ -46,9 +45,11 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
      *
      * @return tx_t3socials_model_Network
      */
-    protected function handleRequest($configurations, $confId)
+    protected function handleRequest(Request $request)
     {
-        if ($tableAlias = $configurations->getParameters()->get('get')) {
+        $configurations = $request->getConfigurations();
+        $confId = $request->getConfId();
+        if ($tableAlias = $request->getParameters()->get('get')) {
             $data = $this->getNetwork($tableAlias, $configurations, $confId.'get.');
         }
 
@@ -76,7 +77,7 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
      *
      * @param string $tableAlias string-Identifier
      *
-     * @return tx_t3socials_model_Network
+     * @return tx_t3socials_models_Network
      */
     private function getNetwork($tableAlias, $configurations, $confId)
     {
@@ -117,8 +118,4 @@ class tx_t3socials_provider_PushNotifications extends tx_t3rest_provider_Abstrac
 
         return $entries;
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/provider/class.tx_t3socials_provider_PushNotifications.php'];
 }
