@@ -1,4 +1,6 @@
 <?php
+namespace DMK\T3socials\RestProvider;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,14 +24,24 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use DMK\T3rest\Legacy\Model\GenericModel;
 use DMK\T3rest\Legacy\Provider\AbstractProvider;
+use stdClass;
 use Sys25\RnBase\Frontend\Request\Request;
+use tx_rnbase;
 
 /**
  * This is a REST provider for T3socials pushd network
- * UseCases:
- * get = teamUid -> return a specific team
- * getdefined = cfc1 -> return a specific preconfigured team.
+ * 
+ * Typoscript:
+ * t3socials.pushd.get {
+ *   defined {
+ *     events.network = 3
+ *   }
+ * }
+ * network references social network account which defines events
+ * 
+ * get = events -> return defined push channels
  *
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -40,10 +52,10 @@ use Sys25\RnBase\Frontend\Request\Request;
 class PushNotifications extends AbstractProvider
 {
     /**
-     * @param tx_rnbase_configurations $configurations
+     * @param Request $request
      * @param string $confId
      *
-     * @return tx_t3socials_model_Network
+     * @return array
      */
     protected function handleRequest(Request $request)
     {
@@ -69,7 +81,7 @@ class PushNotifications extends AbstractProvider
      */
     protected function getBaseClass()
     {
-        return 'tx_t3socials_models_Network';
+        return GenericModel::class;
     }
 
     /**
