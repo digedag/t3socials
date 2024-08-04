@@ -1,9 +1,5 @@
 <?php
 
-if (!defined('TYPO3_MODE')) {
-    exit('Access denied.');
-}
-
 $configFieldWizards = tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? [] : [
     'appendDefaultTSConfig' => [
         'type' => 'userFunc',

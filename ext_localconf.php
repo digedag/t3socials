@@ -1,5 +1,7 @@
 <?php
 
+use Sys25\RnBase\Utility\TYPO3;
+
 if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
@@ -38,15 +40,18 @@ if (Sys25\RnBase\Utility\Extensions::isLoaded('news')) {
  * *** HybridAuth (FE/BE) *** *
  * *** ****************** *** */
 // ajax id for BE
-Sys25\RnBase\Utility\Extensions::registerAjaxHandler(
-    't3socials-hybridauth',
-    Sys25\RnBase\Utility\Extensions::extPath(
-        't3socials',
-        'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'
-    ).
-    ':tx_t3socials_network_hybridauth_OAuthCall->ajaxId',
-    false
-);
+if (!TYPO3::isTYPO121OrHigher()) {
+    // FIXME: wird das noch benötigt? 
+    Sys25\RnBase\Utility\Extensions::registerAjaxHandler(
+        't3socials-hybridauth',
+        Sys25\RnBase\Utility\Extensions::extPath(
+            't3socials',
+            'network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'
+        ).
+        ':tx_t3socials_network_hybridauth_OAuthCall->ajaxId',
+        false
+    );
+}
 
 /* *** ***** *** *
  * *** Hooks *** *
@@ -60,17 +65,20 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
 /* *** ***************** *** *
  * *** Register Services *** *
  * *** ***************** *** */
-Sys25\RnBase\Utility\Extensions::addService(
-    $_EXTKEY,
-    't3socials' /* sv type */ ,
-    'tx_t3socials_srv_Network' /* sv key */ ,
-    [
-        'title' => 'Social network accounts', 'description' => 'Handles accounts of social networks', 'subtype' => 'network',
-        'available' => true, 'priority' => 50, 'quality' => 50,
-        'os' => '', 'exec' => '',
-        'className' => 'tx_t3socials_srv_Network',
-    ]
-);
+// FIXME: Umstellung auf Symfony
+if (!TYPO3::isTYPO121OrHigher()) {
+    Sys25\RnBase\Utility\Extensions::addService(
+        $_EXTKEY,
+        't3socials' /* sv type */ ,
+        'tx_t3socials_srv_Network' /* sv key */ ,
+        [
+            'title' => 'Social network accounts', 'description' => 'Handles accounts of social networks', 'subtype' => 'network',
+            'available' => true, 'priority' => 50, 'quality' => 50,
+            'os' => '', 'exec' => '',
+            'className' => 'tx_t3socials_srv_Network',
+        ]
+    );
+};
 
 /* *** ****************** *** *
  * *** System Enviroments *** *
