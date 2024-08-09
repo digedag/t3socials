@@ -1,7 +1,5 @@
 <?php
 
-use Sys25\RnBase\Utility\TYPO3;
-
 if (!(defined('TYPO3') || defined('TYPO3_MODE'))) {
     exit('Access denied.');
 }
@@ -40,7 +38,7 @@ if (Sys25\RnBase\Utility\Extensions::isLoaded('news')) {
  * *** HybridAuth (FE/BE) *** *
  * *** ****************** *** */
 // ajax id for BE
-if (!TYPO3::isTYPO121OrHigher()) {
+if (!Sys25\RnBase\Utility\TYPO3::isTYPO90OrHigher()) {
     // FIXME: wird das noch benötigt? 
     Sys25\RnBase\Utility\Extensions::registerAjaxHandler(
         't3socials-hybridauth',
@@ -66,7 +64,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
  * *** Register Services *** *
  * *** ***************** *** */
 // FIXME: Umstellung auf Symfony
-if (!TYPO3::isTYPO121OrHigher()) {
+if (!Sys25\RnBase\Utility\TYPO3::isTYPO121OrHigher()) {
     Sys25\RnBase\Utility\Extensions::addService(
         $_EXTKEY,
         't3socials' /* sv type */ ,
