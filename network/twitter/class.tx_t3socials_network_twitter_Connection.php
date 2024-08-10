@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_network_hybridauth_Connection');
-
 /**
  * Twitter Connector.
  *
@@ -210,10 +208,4 @@ class tx_t3socials_network_twitter_Connection extends tx_t3socials_network_hybri
 
         return $data;
     }
-}
-
-if (defined('TYPO3_MODE')
-    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/twitter/class.tx_t3socials_network_twitter_Connection.php'];
 }

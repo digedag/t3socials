@@ -22,9 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_network_IConnection');
-tx_rnbase::load('tx_rnbase_util_Logger');
-
 /**
  * Pushd Connection.
  *

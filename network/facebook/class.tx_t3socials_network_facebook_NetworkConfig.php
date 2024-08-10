@@ -24,8 +24,6 @@
 
 use DMK\T3socials\Backend\Handler\Facebook;
 
-tx_rnbase::load('tx_t3socials_models_NetworkConfig');
-
 /**
  * Facebook Configuration.
  *
@@ -65,10 +63,4 @@ class tx_t3socials_network_facebook_NetworkConfig extends tx_t3socials_models_Ne
             '}'
         );
     }
-}
-
-if (defined('TYPO3_MODE')
-    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/facebook/class.tx_t3socials_network_facebook_Connection.php'];
 }

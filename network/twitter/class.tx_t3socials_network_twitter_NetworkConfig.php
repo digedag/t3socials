@@ -24,7 +24,6 @@
 
 use DMK\T3socials\Backend\Handler\Twitter;
 
-tx_rnbase::load('tx_t3socials_models_NetworkConfig');
 
 /**
  * XING Configuration.
@@ -70,10 +69,4 @@ class tx_t3socials_network_twitter_NetworkConfig extends tx_t3socials_models_Net
             '}'
         );
     }
-}
-
-if (defined('TYPO3_MODE')
-    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/xing/class.tx_t3socials_network_xing_Connection.php'];
 }

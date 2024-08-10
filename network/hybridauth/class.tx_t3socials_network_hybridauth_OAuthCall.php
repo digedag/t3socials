@@ -21,9 +21,6 @@
 *
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
-tx_rnbase::load('tx_rnbase_util_Misc');
-tx_rnbase::load('tx_rnbase_parameters');
-tx_rnbase::load('tx_rnbase_util_Network');
 
 /**
  * OAuth Klasse für die Authentifizierung für HybridAuth.
@@ -182,12 +179,6 @@ class tx_t3socials_network_hybridauth_OAuthCall
             '</body></html>';
         }
     }
-}
-
-if (defined('TYPO3_MODE')
-    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/hybridauth/class.tx_t3socials_network_hybridauth_OAuthCall.php'];
 }
 
 // eid Aufruf?

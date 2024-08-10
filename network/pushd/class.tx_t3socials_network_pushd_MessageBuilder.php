@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_Logger');
-
 /**
  * @author Rene Nitzsche <rene@system25.de>
  * @license http://www.gnu.org/licenses/lgpl.html
@@ -82,10 +80,4 @@ class tx_t3socials_network_pushd_MessageBuilder
 
         return $text;
     }
-}
-
-if (defined('TYPO3_MODE')
-    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/pushd/class.tx_t3socials_network_pushd_MessageBuilder.php'];
 }

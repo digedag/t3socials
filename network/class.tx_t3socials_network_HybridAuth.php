@@ -22,8 +22,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_network_hybridauth_OAuthCall');
-
 /**
  * HybridAut Utilities.
  *
@@ -188,10 +186,4 @@ class tx_t3socials_network_HybridAuth
         unset($data['HA::STORE']);
         unset($data['HA::CONFIG']);
     }
-}
-
-if (defined('TYPO3_MODE')
-    && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php']
-) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/network/class.tx_t3socials_network_HybridAuth.php'];
 }

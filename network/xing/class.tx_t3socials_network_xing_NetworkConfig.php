@@ -24,8 +24,6 @@
 
 use DMK\T3socials\Backend\Handler\Xing;
 
-tx_rnbase::load('tx_t3socials_models_NetworkConfig');
-
 /**
  * XING Configuration.
  *
