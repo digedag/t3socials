@@ -26,7 +26,7 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
             [
                 'access' => 'user,group',
                 'routeTarget' => DMK\T3socials\Backend\Module\T3socialsModule::class,
-                'icon' => 'EXT:t3socials/mod/moduleicon.png',
+                'icon' => 'EXT:t3socials/Resource/Public/Icons/moduleicon.png',
                 'labels' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_mod.xlf',
             ]
         );
