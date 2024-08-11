@@ -26,7 +26,7 @@ $t3socials_Network = [
             'disabled' => 'hidden',
         ],
         'requestUpdate' => 'network',
-        'iconfile' => 'EXT:t3socials/ext_icon.gif',
+        'iconfile' => 'EXT:t3socials/Resource/Public/Icons/ext_icon.gif',
     ],
     'interface' => [
         'showRecordFieldList' => 'hidden,name,username,autosend',
