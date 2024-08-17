@@ -6,28 +6,28 @@ return [
         'position' => ['bottom'],
         'access' => 'user',
         'workspaces' => '*',
-        'iconIdentifier' => 'ext-cfcleague-ext-default',
-        'path' => '/module/web/t3sports',
-        'labels' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang_mod.xlf',
-        'extensionName' => 'CfcLeague',
+        'iconIdentifier' => 'ext-t3socials-ext-default',
+        'path' => '/module/web/t3socials',
+        'labels' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang_mod.xlf',
+        'extensionName' => 'T3socials',
         'routes' => [
             '_default' => [
-                'target' => System25\T3sports\Module\T3sportsModule::class,
+                'target' => DMK\T3socials\Backend\Controller\Communicator::class,
             ],
         ],
     ],
-    'web_CfcLeagueM1_competition' => [
-        'parent' => 'web_CfcLeagueM1',
+    'web_T3socialsM1_communicator' => [
+        'parent' => 'web_T3socialsM1',
         'access' => 'user,group',
         'workspaces' => '*',
-        'iconIdentifier' => 'ext-cfcleague-ext-default',
+        'iconIdentifier' => 'ext-t3socials-ext-default',
         'path' => '/module/web/t3sports/competition',
         'labels' => [
-            'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_competition',
+            'title' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang.xlf:mod_competition',
         ],
         'routes' => [
             '_default' => [
-                'target' => System25\T3sports\Controller\Competition::class.'::main',
+                'target' => DMK\T3socials\Backend\Controller\Communicator::class.'::main',
             ],
         ],
         'moduleData' => [
@@ -36,78 +36,18 @@ return [
             'depth' => 0,
         ],
     ],
-    'web_CfcLeagueM1_ticker' => [
-        'parent' => 'web_CfcLeagueM1',
+    'web_T3socialsM1_trigger' => [
+        'parent' => 'web_T3socialsM1',
         'access' => 'user,group',
         'workspaces' => '*',
-        'iconIdentifier' => 'ext-cfcleague-ext-default',
-        'path' => '/module/web/t3sports/ticker',
+        'iconIdentifier' => 'ext-t3socials-ext-default',
+        'path' => '/module/web/t3sports/trigger',
         'labels' => [
-            'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:match_ticker',
+            'title' => 'LLL:EXT:t3socials/Resources/Private/Language/locallang.xlf:match_ticker',
         ],
         'routes' => [
             '_default' => [
-                'target' => System25\T3sports\Controller\MatchTicker::class.'::main',
-            ],
-        ],
-        'moduleData' => [
-            'langFiles' => [],
-            'pages' => '0',
-            'depth' => 0,
-        ],
-    ],
-    'web_CfcLeagueM1_team' => [
-        'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
-        'workspaces' => '*',
-        'iconIdentifier' => 'ext-cfcleague-ext-default',
-        'path' => '/module/web/t3sports/team',
-        'labels' => [
-            'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_team',
-        ],
-        'routes' => [
-            '_default' => [
-                'target' => System25\T3sports\Controller\Team::class.'::main',
-            ],
-        ],
-        'moduleData' => [
-            'langFiles' => [],
-            'pages' => '0',
-            'depth' => 0,
-        ],
-    ],
-    'web_CfcLeagueM1_club' => [
-        'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
-        'workspaces' => '*',
-        'iconIdentifier' => 'ext-cfcleague-ext-default',
-        'path' => '/module/web/t3sports/club',
-        'labels' => [
-            'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_club',
-        ],
-        'routes' => [
-            '_default' => [
-                'target' => System25\T3sports\Controller\Club::class.'::main',
-            ],
-        ],
-        'moduleData' => [
-            'langFiles' => [],
-            'pages' => '0',
-            'depth' => 0,
-        ],
-    ],
-    'web_CfcLeagueM1_profiles' => [
-        'parent' => 'web_CfcLeagueM1',
-        'access' => 'user,group',
-        'workspaces' => '*',
-        'iconIdentifier' => 'ext-cfcleague-ext-default',
-        'path' => '/module/web/t3sports/profile',
-        'labels' => [
-            'title' => 'LLL:EXT:cfc_league/Resources/Private/Language/locallang.xlf:mod_profiles',
-        ],
-        'routes' => [
-            '_default' => [
-                'target' => System25\T3sports\Controller\Profile::class.'::main',
+                'target' => DMK\T3socials\Backend\Controller\Trigger::class.'::main',
             ],
         ],
         'moduleData' => [

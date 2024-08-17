@@ -46,4 +46,14 @@ if (\Sys25\RnBase\Utility\Environment::isBackend()) {
             'LLL:EXT:t3socials/Resources/Private/Language/locallang_mod.xlf:label_t3socials_trigger'
         );
     }
+
+    $iconRegistry = tx_rnbase::makeInstance(TYPO3\CMS\Core\Imaging\IconRegistry::class);
+    $icons = [
+        'ext-t3socials-ext-default' => 'moduleicon.png',
+    ];
+    foreach ($icons as $identifier => $path) {
+        $iconRegistry->registerIcon($identifier, TYPO3\CMS\Core\Imaging\IconProvider\BitmapIconProvider::class, [
+            'source' => 'EXT:t3socials/Resources/Public/Icons/'.$path,
+        ]);
+    }
 }
