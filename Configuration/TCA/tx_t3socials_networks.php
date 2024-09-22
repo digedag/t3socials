@@ -1,6 +1,6 @@
 <?php
 
-$configFieldWizards = tx_rnbase_util_TYPO3::isTYPO76OrHigher() ? [] : [
+$configFieldWizards = Sys25\RnBase\Utility\TYPO3::isTYPO76OrHigher() ? [] : [
     'appendDefaultTSConfig' => [
         'type' => 'userFunc',
         'notNewRecords' => 1,
@@ -26,7 +26,7 @@ $t3socials_Network = [
             'disabled' => 'hidden',
         ],
         'requestUpdate' => 'network',
-        'iconfile' => 'EXT:t3socials/Resource/Public/Icons/ext_icon.gif',
+        'iconfile' => 'EXT:t3socials/Resources/Public/Icons/ext_icon.gif',
     ],
     'interface' => [
         'showRecordFieldList' => 'hidden,name,username,autosend',
