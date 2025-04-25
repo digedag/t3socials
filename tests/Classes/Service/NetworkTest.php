@@ -1,4 +1,9 @@
 <?php
+
+namespace DMK\T3socials\Service;
+
+use tx_t3socials_tests_BaseTestCase;
+
 /***************************************************************
 *  Copyright notice
 *
@@ -22,8 +27,6 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_t3socials_srv_Network');
-tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
 
 /**
  * Network Testcase.
@@ -32,7 +35,7 @@ tx_rnbase::load('tx_t3socials_tests_BaseTestCase');
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_tests_srv_NetworkTest extends tx_t3socials_tests_BaseTestCase
+class NetworkTest extends tx_t3socials_tests_BaseTestCase
 {
     /**
      * Testet die getByRefererCallsSearchCorrect Methode.
@@ -52,7 +55,7 @@ class tx_t3socials_tests_srv_NetworkTest extends tx_t3socials_tests_BaseTestCase
         $fields['NETWORK.autosend'][OP_EQ_INT] = $autosend;
 
         $service = $this->getMock(
-            'tx_t3socials_srv_Network',
+            Network::class,
             ['search']
         );
         $service->expects($this->once())

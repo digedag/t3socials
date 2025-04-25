@@ -1,14 +1,24 @@
 <?php
 
+namespace DMK\T3socials\Service;
+
 use Sys25\RnBase\Database\Connection;
+use Sys25\RnBase\Domain\Model\RecordInterface;
 use Sys25\RnBase\Search\SearchBase;
 use Sys25\RnBase\Typo3Wrapper\Service\AbstractService;
 use Sys25\RnBase\Utility\Logger;
+use Throwable;
+use tx_rnbase;
+use tx_t3socials_models_Base;
+use tx_t3socials_models_Message;
+use tx_t3socials_models_State;
+use tx_t3socials_network_Config;
+use tx_t3socials_trigger_Config;
 
 /***************************************************************
 *  Copyright notice
 *
- * (c) 2014 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
+ * (c) 2014-2025 DMK E-BUSINESS GmbH <dev@dmk-ebusiness.de>
  * All rights reserved
 *
 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -36,7 +46,7 @@ use Sys25\RnBase\Utility\Logger;
  * @license http://www.gnu.org/licenses/lgpl.html
  *          GNU Lesser General Public License, version 3 or later
  */
-class tx_t3socials_srv_Network extends AbstractService
+class Network extends AbstractService
 {
     public const TABLE_AUTOSEND = 'tx_t3socials_autosends';
 
@@ -56,7 +66,7 @@ class tx_t3socials_srv_Network extends AbstractService
      * @param string $table
      * @param int $uid
      *
-     * @return array[tx_t3socials_models_State]
+     * @return tx_t3socials_models_State[]
      *         Enthält eine statusmeldung für jedes netzwerk
      */
     public function exeuteAutoSend($table, $uid)
@@ -103,14 +113,14 @@ class tx_t3socials_srv_Network extends AbstractService
 
     /**
      * @param tx_t3socials_models_Message $message
-     * @param array[tx_t3socials_models_Network] $accounts
+     * @param tx_t3socials_models_Network[] $accounts
      *
-     * @return array[tx_t3socials_models_State]
+     * @return tx_t3socials_models_State[]
      */
     public function sendMessage($message, $accounts, $builder, $triggerConfig)
     {
         $states = [];
-        /* @var tx_t3socials_models_Network $network */
+        /** @var tx_t3socials_models_Network $network */
         foreach ($accounts as $network) {
             /* @var $state tx_t3socials_models_State */
             $state = tx_rnbase::makeInstance(
@@ -296,7 +306,7 @@ class tx_t3socials_srv_Network extends AbstractService
     /**
      * Find all records.
      *
-     * @return array[Tx_Rnbase_Domain_Model_RecordInterface]
+     * @return RecordInterface[]
      */
     public function findAll()
     {
@@ -308,7 +318,7 @@ class tx_t3socials_srv_Network extends AbstractService
      *
      * @param int $ct
      *
-     * @return Tx_Rnbase_Domain_Model_RecordInterface
+     * @return RecordInterface
      */
     public function get($uid)
     {

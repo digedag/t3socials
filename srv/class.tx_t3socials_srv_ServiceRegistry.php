@@ -22,7 +22,8 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-tx_rnbase::load('tx_rnbase_util_Misc');
+use DMK\T3socials\Service\Network;
+use Sys25\RnBase\Utility\Misc;
 
 /**
  * Access a service instance.
@@ -36,14 +37,10 @@ class tx_t3socials_srv_ServiceRegistry
     /**
      * Liefert den Network-Service.
      *
-     * @return tx_t3socials_srv_Network
+     * @return Network
      */
     public static function getNetworkService()
     {
-        return tx_rnbase_util_Misc::getService('t3socials', 'network');
+        return Misc::getService('t3socials', 'network');
     }
-}
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php']) {
-    include_once $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/t3socials/srv/class.tx_t3socials_srv_ServiceRegistry.php'];
 }

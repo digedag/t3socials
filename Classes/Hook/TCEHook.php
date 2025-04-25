@@ -25,9 +25,11 @@ namespace DMK\T3socials\Hook;
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
+use DMK\T3socials\Service\Network;
 use Sys25\RnBase\Backend\Utility\BackendUtility;
 use Sys25\RnBase\Utility\Misc;
 use Sys25\RnBase\Utility\Typo3Classes;
+use tx_rnbase;
 use tx_t3socials_srv_ServiceRegistry;
 use tx_t3socials_trigger_Config;
 use tx_t3socials_util_Message;
@@ -41,6 +43,13 @@ use tx_t3socials_util_Message;
  */
 class TCEHook
 {
+    private $networkSrv = null;
+
+    public function __construct(?Network $networkSrv = null)
+    {
+        $this->networkSrv = $networkSrv ?? tx_t3socials_srv_ServiceRegistry::getNetworkService();
+    }
+
     /**
      * Nachbearbeitungen, unmittelbar NACHDEM die Daten gespeichert wurden.
      *
@@ -142,7 +151,7 @@ class TCEHook
      */
     protected function handleAutoSend($table, $uid)
     {
-        $networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
+        $networkSrv = $this->networkSrv;
         $states = $networkSrv->exeuteAutoSend($table, $uid);
         /* @var $state tx_t3socials_models_State */
         foreach ($states as $state) {
@@ -168,8 +177,7 @@ class TCEHook
     protected function handleInfo($table, $uid)
     {
         $triggers = tx_t3socials_trigger_Config::getTriggerNamesForTable($table);
-        $networkSrv = tx_t3socials_srv_ServiceRegistry::getNetworkService();
-        $networks = $networkSrv->findAccountsByTriggers($triggers, false);
+        $networks = $this->networkSrv->findAccountsByTriggers($triggers, false);
         // wir haben Konfigurierte Netzwerke,
         // weche manuell getriggert werden können.
         // wir bauen also die nachricht zusammen

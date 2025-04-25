@@ -42,7 +42,7 @@ class NetworkConfigField extends \TYPO3\CMS\Backend\Form\Element\TextElement
      *
      * @see TYPO3\CMS\Backend\Form\Element\TextElement::render()
      */
-    public function render()
+    public function render(): array
     {
         // je nach Type gibt es verschiedene Vorlagen
         $network = $this->data['databaseRow']['network'][0];
